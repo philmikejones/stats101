@@ -24,10 +24,6 @@ dat = readRDS("data/dat.rds")
 
 # Introduction
 
-These are my notes on statistical analysis and quantitative methods for social science researchers.
-They're available here in case they're of any use to anyone, but I offer no guarantee or warranty as to their accuracy.
-You're welcome to use or adapt them, for example to share with colleagues, but you cannot sell them.
-
 
 ## Why use statistics?
 
@@ -56,17 +52,3 @@ knitr::include_graphics("images/coffee.jpg")
 
 Obtaining knowledge about a *population* by *inferring* from a *sample* is the cornerstone of quantitative social science research, and uses many statistical techniques to be able to do this.
 The good news is the most difficult challenge is often deciding which technique to use; using the technique is often like following a recipe.
-
-
-## License
-
-&copy; 2018 Phil Mike Jones.
-
-```{r cc, fig.cap="CC BY-NC", out.width="300px", include=TRUE, echo=FALSE}
-knitr::include_graphics("images/cc-by-nc.png")
-```
-
-- Content and text: [CC BY-NC](https://creativecommons.org/licenses/by-nc/4.0/)
-- Code: MIT
-
-You are welcome to use or share these notes, but you must provide an attribution or reference, and you cannot sell them or make money from them.
