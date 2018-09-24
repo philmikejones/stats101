@@ -9,6 +9,10 @@ github-repo: philmikejones/stats101
 description: "Introduction to statistics and quantitative analysis for social scientists."
 ---
 
+```{r setup}
+options(scipen = 99)
+```
+
 ```{r packages}
 library("tidyverse")
 ```

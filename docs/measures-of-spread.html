@@ -142,6 +142,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="4" data-path="measures-of-spread.html"><a href="measures-of-spread.html"><i class="fa fa-check"></i><b>4</b> Measures of spread</a><ul>
 <li class="chapter" data-level="4.1" data-path="measures-of-spread.html"><a href="measures-of-spread.html#variance"><i class="fa fa-check"></i><b>4.1</b> Variance</a></li>
+<li class="chapter" data-level="4.2" data-path="measures-of-spread.html"><a href="measures-of-spread.html#standard-deviation"><i class="fa fa-check"></i><b>4.2</b> Standard deviation</a></li>
 </ul></li>
 </ul>
 
@@ -169,9 +170,9 @@ Both are easy to calculate, and even easier to convert between each other.</p>
 <div id="variance" class="section level2">
 <h2><span class="header-section-number">4.1</span> Variance</h2>
 <p>Lets recap: this is what the income data looks like:</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1">dat <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb21-2" data-line-number="2"><span class="st">  </span><span class="kw">unlist</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb21-3" data-line-number="3"><span class="st">  </span><span class="kw">as.vector</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">dat <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb22-2" data-line-number="2"><span class="st">  </span><span class="kw">unlist</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb22-3" data-line-number="3"><span class="st">  </span><span class="kw">as.vector</span>()</a></code></pre></div>
 <pre><code>##  [1]    6762.511    9793.139   11752.264   13249.284   14484.484
 ##  [6]   15550.132   16496.807   17355.421   18146.349   18883.788
 ## [11]   19578.068   20236.974   20866.546   21471.585   22055.995
@@ -203,9 +204,25 @@ Both are easy to calculate, and even easier to convert between each other.</p>
 \tag{4.1}
 \frac{\Sigma (x - \bar{x}) ^ 2}{N-1}
 \]</span></p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1"><span class="kw">var</span>(dat<span class="op">$</span>income)</a></code></pre></div>
-<pre><code>## [1] 88642982</code></pre>
 <p>Using <span class="math inline">\(n - 1\)</span> rather than simply the number of observations is known as <a href="https://en.wikipedia.org/wiki/Bessel%27s_correction">Bessel’s correction</a>.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1"><span class="kw">var</span>(dat<span class="op">$</span>income)</a></code></pre></div>
+<pre><code>## [1] 88642982</code></pre>
+</div>
+<div id="standard-deviation" class="section level2">
+<h2><span class="header-section-number">4.2</span> Standard deviation</h2>
+<p>As you’ve probably noticed the variance is not in the units of the original data (otherwise the variance would be £88642981.9934468).
+This is where the standard deviation comes in.
+In fact the unit of the variance is the <em>square</em> of the unit of the original data.
+The standard deviation is therefore a measure of spread in the unit of the original data, and is calculated simply by square rooting the variance.</p>
+<p><span class="math display" id="eq:standard-deviation">\[
+\tag{4.2}
+\sqrt{\frac{\Sigma (x - \bar{x}) ^ 2}{N-1}}
+\]</span></p>
+<p>The standard deviation of the income is therefore:</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1"><span class="kw">sd</span>(dat<span class="op">$</span>income)</a></code></pre></div>
+<pre><code>## [1] 9415.04</code></pre>
+<p>The standard deviation is a measure of how far the data points are on average from the mean.
+A small standard deviation means the mean fairly accurately represents the data; a large standard deviation means the mean does not represent the data well.</p>
 
 </div>
 </div>

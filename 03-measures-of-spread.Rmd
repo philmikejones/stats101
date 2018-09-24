@@ -29,9 +29,30 @@ $$
 \frac{\Sigma (x - \bar{x}) ^ 2}{N-1}
 $$
 
+Using $n - 1$ rather than simply the number of observations is known as [Bessel's correction](https://en.wikipedia.org/wiki/Bessel%27s_correction).
 
 ```{r income-variance}
 var(dat$income)
 ```
 
-Using $n - 1$ rather than simply the number of observations is known as [Bessel's correction](https://en.wikipedia.org/wiki/Bessel%27s_correction).
+
+## Standard deviation
+
+As you've probably noticed the variance is not in the units of the original data (otherwise the variance would be £`r var(dat$income)`).
+This is where the standard deviation comes in.
+In fact the unit of the variance is the *square* of the unit of the original data.
+The standard deviation is therefore a measure of spread in the unit of the original data, and is calculated simply by square rooting the variance.
+
+$$
+(\#eq:standard-deviation)
+\sqrt{\frac{\Sigma (x - \bar{x}) ^ 2}{N-1}}
+$$
+
+The standard deviation of the income is therefore:
+
+```{r income-sd}
+sd(dat$income)
+```
+
+The standard deviation is a measure of how far the data points are on average from the mean.
+A small standard deviation means the mean fairly accurately represents the data; a large standard deviation means the mean does not represent the data well.
