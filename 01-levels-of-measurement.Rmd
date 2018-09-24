@@ -1,0 +1,40 @@
+# Levels of measurement
+
+
+Levels of measurement describe the nature of your data point.
+They are important because they determine what statistical tests you can perform on them.
+The four levels of measurement are:
+
+
+## Nominal
+
+Also known as **categorical**.
+These are labels such as male/female; no religion/religion.
+They have no inherent order; one response is not 'better' or 'higher' than another.
+As social scientists you'll find these are pretty common.
+
+
+## Ordinal
+
+Similar to nominal in that they are labels (rather than numbers), but the labels have a rank or order.
+For example, a 'strongly disagree' to 'strongly agree' scale is ordinal.
+Another example would be 'guilty' and 'not guilty'.
+
+
+## Interval
+
+Interval data is numerical but does not have a meaningful zero value.
+The most common example often given is temperature expressed in degrees celcius.
+A temperature of 20&deg;C is not twice as hot as 10&deg;C, because 0&deg;C is arbitrary rather than based on the absence of heat.
+
+A more common example in the social sciences is date.
+Years are based on an arbitrary zero (0AD); months are based on twelve months that do not have a 'zero'; days do not have a zero and reset each month.
+
+
+## Ratio
+
+Ratio data is again numerical, but differs from interval because it has a meaningful, non--arbitrary, zero.
+As we saw above dates are interval, but age in years is ratio because zero years old is the lowest age you can be.
+
+It is more common for numerical data to be ratio than interval.
+Other examples include income and number of events (e.g. number of crimes in an area).

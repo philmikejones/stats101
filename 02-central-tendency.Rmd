@@ -1,0 +1,69 @@
+# Central tendency
+
+```{r setup, include=FALSE, echo=FALSE}
+suppressMessages(library("tidyverse"))
+```
+
+
+Measures of central tendency is a fancy phrase for 'average'.
+They are a single data point used to represent a 'typical' value from your data.
+Depending on your level of measurement you can use one or more measures of central tendency.
+
+
+## Mode
+
+The most common unique value.
+For example, 10 people are asked their favourite drink and you have the following results:
+
+```{r drinks, include=TRUE, echo=FALSE}
+drinks = tibble(
+  choice = c(
+    "espresso", "latte", "tea", "tea", "earl gray", "americano", 
+    "hot chocolate", "tea", "hot chocolate", "tea"
+  )
+)
+
+drinks$choice
+```
+
+The most common result (mode) is `tea`, which we can confirm with a quick frequency table:
+
+```{r table-drinks}
+drinks %>% 
+  count(choice) %>% 
+  arrange(desc(n))
+```
+
+Mode is the only measure of central tendency you can provide for [nominal data](../levels-of-measurement#nominal).
+
+
+## Median
+
+The median is the 'middle' point.
+It's only appropriate for ordered data and is calculated by arranging your data in order and selecting the mid--point.
+Consider the following incomes:
+
+```{r median, include=TRUE, echo=FALSE}
+set.seed(42)
+dat = tibble(
+  income = qnorm(seq(0, 1, 0.02), 2.73, 1) * 10000
+) %>% 
+  filter(income > 0, income != Inf)
+
+as.vector(dat$income)
+```
+
+If we arrange these in order from lowest to highest we get:
+
+```{r median-arranged, include=TRUE, echo=FALSE}
+dat %>% 
+  arrange(income) %>%
+  unlist() %>% 
+  as.vector()
+```
+
+The median is the middle point (note that this is not realistic data):
+
+```{r median-result, include=TRUE, echo=FALSE}
+median(dat$income)
+```
