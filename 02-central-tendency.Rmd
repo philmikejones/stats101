@@ -16,21 +16,21 @@ The most common unique value.
 For example, 10 people are asked their favourite drink and you have the following results:
 
 ```{r drinks, include=TRUE, echo=FALSE}
-drinks = tibble(
-  choice = c(
+dat = tibble(
+  drink = c(
     "espresso", "latte", "tea", "tea", "earl gray", "americano", 
     "hot chocolate", "tea", "hot chocolate", "tea"
   )
 )
 
-drinks$choice
+dat$drink
 ```
 
 The most common result (mode) is `tea`, which we can confirm with a quick frequency table:
 
 ```{r table-drinks}
-drinks %>% 
-  count(choice) %>% 
+dat %>% 
+  count(drink) %>% 
   arrange(desc(n))
 ```
 
@@ -106,28 +106,29 @@ This leads to a skew in the income distribution, and this makes out mean higher.
 Let's add a couple of very wealthy individuals to our data set:
 
 ```{r add-millionnaires}
-dat$income[49] = 1200000
-dat$income[48] = 1100000
+dat$income_skewed = dat$income  # first copy the income data
+dat$income_skewed[49] = 1200000
+dat$income_skewed[48] = 1100000
 ```
 
 These individuals have an income of £1.2 and £1.1 million.
 Compare this distribution to our earlier income distribution using the same settings:
 
 ```{r distribution-skewed}
-ggplot(dat) + geom_histogram(aes(income), bins = 100)
+ggplot(dat) + geom_histogram(aes(income_skewed), bins = 100)
 ```
 
 We can see effectively our original plot on the left, but now there are two individuals out on their own earning substantially more than anyone else.
 These individuals don't affect the median:
 
 ```{r median-skewed}
-median(dat$income)
+median(dat$income_skewed)
 ```
 
 But the mean is now:
 
 ```{r mean-skewed}
-mean(dat$income)
+mean(dat$income_skewed)
 ```
 
 This is now no longer representative of any individual in the data set; it's floating out in the gap between observed incomes.

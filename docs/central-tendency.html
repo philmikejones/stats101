@@ -33,7 +33,7 @@
   
   
 <link rel="prev" href="levels-of-measurement.html">
-
+<link rel="next" href="measures-of-spread.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -139,6 +139,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.2" data-path="central-tendency.html"><a href="central-tendency.html#median"><i class="fa fa-check"></i><b>3.2</b> Median</a></li>
 <li class="chapter" data-level="3.3" data-path="central-tendency.html"><a href="central-tendency.html#mean"><i class="fa fa-check"></i><b>3.3</b> Mean</a></li>
 </ul></li>
+<li class="chapter" data-level="4" data-path="measures-of-spread.html"><a href="measures-of-spread.html"><i class="fa fa-check"></i><b>4</b> Measures of spread</a><ul>
+<li class="chapter" data-level="4.1" data-path="measures-of-spread.html"><a href="measures-of-spread.html#variance"><i class="fa fa-check"></i><b>4.1</b> Variance</a></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -169,11 +172,11 @@ For example, 10 people are asked their favourite drink and you have the followin
 ##  [5] &quot;earl gray&quot;     &quot;americano&quot;     &quot;hot chocolate&quot; &quot;tea&quot;          
 ##  [9] &quot;hot chocolate&quot; &quot;tea&quot;</code></pre>
 <p>The most common result (mode) is <code>tea</code>, which we can confirm with a quick frequency table:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">drinks <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="st">  </span><span class="kw">count</span>(choice) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">dat <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="st">  </span><span class="kw">count</span>(drink) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb2-3" data-line-number="3"><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(n))</a></code></pre></div>
 <pre><code>## # A tibble: 6 x 2
-##   choice            n
+##   drink             n
 ##   &lt;chr&gt;         &lt;int&gt;
 ## 1 tea               4
 ## 2 hot chocolate     2
@@ -234,18 +237,19 @@ In the wild, most distributions are not exactly normal (or ideal) so the mean an
 For example with income there are a relatively small number of individuals with an income substantially higher than is typical.
 This leads to a skew in the income distribution, and this makes out mean higher.</p>
 <p>Let’s add a couple of very wealthy individuals to our data set:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">dat<span class="op">$</span>income[<span class="dv">49</span>] =<span class="st"> </span><span class="dv">1200000</span></a>
-<a class="sourceLine" id="cb12-2" data-line-number="2">dat<span class="op">$</span>income[<span class="dv">48</span>] =<span class="st"> </span><span class="dv">1100000</span></a></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">dat<span class="op">$</span>income_skewed =<span class="st"> </span>dat<span class="op">$</span>income  <span class="co"># first copy the income data</span></a>
+<a class="sourceLine" id="cb12-2" data-line-number="2">dat<span class="op">$</span>income_skewed[<span class="dv">49</span>] =<span class="st"> </span><span class="dv">1200000</span></a>
+<a class="sourceLine" id="cb12-3" data-line-number="3">dat<span class="op">$</span>income_skewed[<span class="dv">48</span>] =<span class="st"> </span><span class="dv">1100000</span></a></code></pre></div>
 <p>These individuals have an income of £1.2 and £1.1 million.
 Compare this distribution to our earlier income distribution using the same settings:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw">ggplot</span>(dat) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(income), <span class="dt">bins =</span> <span class="dv">100</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw">ggplot</span>(dat) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(income_skewed), <span class="dt">bins =</span> <span class="dv">100</span>)</a></code></pre></div>
 <p><img src="02-central-tendency_files/figure-html/distribution-skewed-1.png" width="672" /></p>
 <p>We can see effectively our original plot on the left, but now there are two individuals out on their own earning substantially more than anyone else.
 These individuals don’t affect the median:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="kw">median</span>(dat<span class="op">$</span>income)</a></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="kw">median</span>(dat<span class="op">$</span>income_skewed)</a></code></pre></div>
 <pre><code>## [1] 27300</code></pre>
 <p>But the mean is now:</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="kw">mean</span>(dat<span class="op">$</span>income)</a></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="kw">mean</span>(dat<span class="op">$</span>income_skewed)</a></code></pre></div>
 <pre><code>## [1] 72348.07</code></pre>
 <p>This is now no longer representative of any individual in the data set; it’s floating out in the gap between observed incomes.
 For this reason we often consider the median a more <em>robust</em> measure of central tendency than the mean, and why you should be careful when someone presents a mean value without any additional information</p>
@@ -257,8 +261,8 @@ For this reason we often consider the median a more <em>robust</em> measure of c
           </div>
         </div>
       </div>
-<a href="levels-of-measurement.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="levels-of-measurement.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="measures-of-spread.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
