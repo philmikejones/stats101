@@ -1,0 +1,10 @@
+# Measures of spread
+
+We saw in the measures of central tendency chapter that the mean can be a poor representation of data if the data is skewed, and that we should therefore be careful when someone presents us with a mean (or average) without any further information.
+
+One of the types of 'further information' that can help us is a measure of spread of the data around the mean value.
+We usually use the *variance* and the *standard deviation* to quantify measure of spread.
+Both are easy to calculate, and even easier to convert between each other.
+
+
+## Variance
