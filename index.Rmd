@@ -25,7 +25,7 @@ They're available here in case they're of any use to anyone, but I offer no guar
 You're welcome to use or adapt them.
 
 
-## Why bother with statistics?
+## Why use statistics?
 
 As social scientists and researchers we want to answer questions about the social world.
 At its most simplistic (and I completely acknowledge that I'm massively generalising here), we usually seek to describe the world or quantify the world.
