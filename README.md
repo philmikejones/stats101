@@ -14,9 +14,7 @@ You're welcome to use or adapt them, for example to share with colleagues, but y
 
 &copy; 2018 Phil Mike Jones.
 
-```{r cc, fig.cap="CC BY-NC", out.width="300px", include=TRUE, echo=FALSE}
-knitr::include_graphics("images/cc-by-nc.png")
-```
+![CC BY-NC](images/cc-by-nc.png")
 
 - Content and text: [CC BY-NC](https://creativecommons.org/licenses/by-nc/4.0/)
 - Code: MIT
