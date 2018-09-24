@@ -13,12 +13,18 @@ These are labels such as male/female; no religion/religion.
 They have no inherent order; one response is not 'better' or 'higher' than another.
 As social scientists you'll find these are pretty common.
 
+In `R` these are stored as `character` or `factor`.
+Factors were historically more common, but the character class is more flexible and more compatible with other formats.
+A common practice is to set up variables as `character` and convert to `factor` if and when needed.
+
 
 ## Ordinal
 
 Similar to nominal in that they are labels (rather than numbers), but the labels have a rank or order.
 For example, a 'strongly disagree' to 'strongly agree' scale is ordinal.
 Another example would be 'guilty' and 'not guilty'.
+
+In `R` these are stored as `character` or `factor` (with `ordered = TRUE`).
 
 
 ## Interval
@@ -30,6 +36,8 @@ A temperature of 20&deg;C is not twice as hot as 10&deg;C, because 0&deg;C is ar
 A more common example in the social sciences is date.
 Years are based on an arbitrary zero (0AD); months are based on twelve months that do not have a 'zero'; days do not have a zero and reset each month.
 
+In `R` these are stored as `numerical`, of which there are `integer` and `double` classes.
+
 
 ## Ratio
 
@@ -38,3 +46,6 @@ As we saw above dates are interval, but age in years is ratio because zero years
 
 It is more common for numerical data to be ratio than interval.
 Other examples include income and number of events (e.g. number of crimes in an area).
+
+In `R` these are stored as `numerical`, of which there are `integer` and `double` classes.
+`double` is more usualy but integer is useful sometimes, for example for ages.

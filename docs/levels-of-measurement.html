@@ -172,12 +172,16 @@ The four levels of measurement are:</p>
 These are labels such as male/female; no religion/religion.
 They have no inherent order; one response is not ‘better’ or ‘higher’ than another.
 As social scientists you’ll find these are pretty common.</p>
+<p>In <code>R</code> these are stored as <code>character</code> or <code>factor</code>.
+Factors were historically more common, but the character class is more flexible and more compatible with other formats.
+A common practice is to set up variables as <code>character</code> and convert to <code>factor</code> if and when needed.</p>
 </div>
 <div id="ordinal" class="section level2">
 <h2><span class="header-section-number">2.2</span> Ordinal</h2>
 <p>Similar to nominal in that they are labels (rather than numbers), but the labels have a rank or order.
 For example, a ‘strongly disagree’ to ‘strongly agree’ scale is ordinal.
 Another example would be ‘guilty’ and ‘not guilty’.</p>
+<p>In <code>R</code> these are stored as <code>character</code> or <code>factor</code> (with <code>ordered = TRUE</code>).</p>
 </div>
 <div id="interval" class="section level2">
 <h2><span class="header-section-number">2.3</span> Interval</h2>
@@ -186,6 +190,7 @@ The most common example often given is temperature expressed in degrees celcius.
 A temperature of 20°C is not twice as hot as 10°C, because 0°C is arbitrary rather than based on the absence of heat.</p>
 <p>A more common example in the social sciences is date.
 Years are based on an arbitrary zero (0AD); months are based on twelve months that do not have a ‘zero’; days do not have a zero and reset each month.</p>
+<p>In <code>R</code> these are stored as <code>numerical</code>, of which there are <code>integer</code> and <code>double</code> classes.</p>
 </div>
 <div id="ratio" class="section level2">
 <h2><span class="header-section-number">2.4</span> Ratio</h2>
@@ -193,6 +198,8 @@ Years are based on an arbitrary zero (0AD); months are based on twelve months th
 As we saw above dates are interval, but age in years is ratio because zero years old is the lowest age you can be.</p>
 <p>It is more common for numerical data to be ratio than interval.
 Other examples include income and number of events (e.g. number of crimes in an area).</p>
+<p>In <code>R</code> these are stored as <code>numerical</code>, of which there are <code>integer</code> and <code>double</code> classes.
+<code>double</code> is more usualy but integer is useful sometimes, for example for ages.</p>
 
 </div>
 </div>
