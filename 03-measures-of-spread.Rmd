@@ -8,3 +8,11 @@ Both are easy to calculate, and even easier to convert between each other.
 
 
 ## Variance
+
+Lets recap: this is what the income data looks like:
+
+```{r income}
+dat %>% 
+  unlist() %>% 
+  as.vector()
+```

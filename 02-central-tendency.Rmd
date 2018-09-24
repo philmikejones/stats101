@@ -1,9 +1,5 @@
 # Central tendency
 
-```{r setup, include=FALSE, echo=FALSE}
-suppressMessages(library("tidyverse"))
-```
-
 
 Measures of central tendency is a fancy phrase for 'average'.
 They are a single data point used to represent a 'typical' value from your data.
@@ -16,22 +12,18 @@ The most common unique value.
 For example, 10 people are asked their favourite drink and you have the following results:
 
 ```{r drinks, include=TRUE, echo=FALSE}
-dat = tibble(
-  drink = c(
-    "espresso", "latte", "tea", "tea", "earl gray", "americano", 
-    "hot chocolate", "tea", "hot chocolate", "tea"
-  )
+drink = c(
+  "espresso", "latte", "tea", "tea", "earl gray", "americano", 
+  "hot chocolate", "tea", "hot chocolate", "tea"
 )
 
-dat$drink
+drink
 ```
 
 The most common result (mode) is `tea`, which we can confirm with a quick frequency table:
 
 ```{r table-drinks}
-dat %>% 
-  count(drink) %>% 
-  arrange(desc(n))
+table(drink)
 ```
 
 Mode is the only measure of central tendency you can provide for [nominal data](../levels-of-measurement#nominal).
@@ -44,19 +36,7 @@ It's only appropriate for ordered data and is calculated by arranging your data 
 Consider the following incomes:
 
 ```{r median, include=TRUE, echo=FALSE}
-# set.seed() is for reproducibility so you get the same simulation
-set.seed(42)
-
-# qnorm() simulates data from a normal distribution
-# The results are 0 < x < 1 so I multiply by a constant factor to better
-# resemble incomes
-dat = tibble(
-  income = qnorm(seq(0, 1, 0.02), 2.73, 1) * 10000
-) %>% 
-  # Get rid of the -Inf and Inf
-  filter(income > 0, income < 100000)
-
-as.vector(dat$income)
+median(dat$income)
 ```
 
 Which looks like this when we plot it as a distribution:
@@ -66,22 +46,13 @@ ggplot(dat, aes(income)) +
   geom_histogram(bins = 10)
 ```
 
-
-If we arrange these in order from lowest to highest we get:
-
-```{r median-arranged, include=TRUE, echo=FALSE}
-dat %>% 
-  arrange(income) %>%
-  unlist() %>% 
-  as.vector()
-```
-
-The median is the middle point (note that this is not realistic data):
+If we arrange these in order and take the middle point we obtain the median income:
 
 ```{r median-result, include=TRUE, echo=FALSE}
 median(dat$income)
 ```
 
+If your data have an even number of items, the median is the mean (average) of the two points.
 The median is often considered more *robust* than the mean, which means it is less susceptible to outliers, for reasons we'll get to in a moment.
 
 

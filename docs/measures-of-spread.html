@@ -125,8 +125,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Getting started</a><ul>
-<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#license"><i class="fa fa-check"></i><b>1.1</b> License</a></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#why-bother-with-statistics"><i class="fa fa-check"></i><b>1.1</b> Why bother with statistics?</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#license"><i class="fa fa-check"></i><b>1.2</b> License</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="levels-of-measurement.html"><a href="levels-of-measurement.html"><i class="fa fa-check"></i><b>2</b> Levels of measurement</a><ul>
 <li class="chapter" data-level="2.1" data-path="levels-of-measurement.html"><a href="levels-of-measurement.html#nominal"><i class="fa fa-check"></i><b>2.1</b> Nominal</a></li>
@@ -167,6 +168,30 @@ We usually use the <em>variance</em> and the <em>standard deviation</em> to quan
 Both are easy to calculate, and even easier to convert between each other.</p>
 <div id="variance" class="section level2">
 <h2><span class="header-section-number">4.1</span> Variance</h2>
+<p>Lets recap: this is what the income data looks like:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1">dat <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb21-2" data-line-number="2"><span class="st">  </span><span class="kw">unlist</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb21-3" data-line-number="3"><span class="st">  </span><span class="kw">as.vector</span>()</a></code></pre></div>
+<pre><code>##  [1]    6762.511    9793.139   11752.264   13249.284   14484.484
+##  [6]   15550.132   16496.807   17355.421   18146.349   18883.788
+## [11]   19578.068   20236.974   20866.546   21471.585   22055.995
+## [16]   22623.012   23175.369   23715.412   24245.192   24766.529
+## [21]   25281.065   25790.308   26295.663   26798.464   27300.000
+## [26]   27801.536   28304.337   28809.692   29318.935   29833.471
+## [31]   30354.808   30884.588   31424.631   31976.988   32544.005
+## [36]   33128.415   33733.454   34363.026   35021.932   35716.212
+## [41]   36453.651   37244.579   38103.193   39049.868   40115.516
+## [46]   41350.716   42847.736   44806.861   47837.489    6762.511
+## [51]    9793.139   11752.264   13249.284   14484.484   15550.132
+## [56]   16496.807   17355.421   18146.349   18883.788   19578.068
+## [61]   20236.974   20866.546   21471.585   22055.995   22623.012
+## [66]   23175.369   23715.412   24245.192   24766.529   25281.065
+## [71]   25790.308   26295.663   26798.464   27300.000   27801.536
+## [76]   28304.337   28809.692   29318.935   29833.471   30354.808
+## [81]   30884.588   31424.631   31976.988   32544.005   33128.415
+## [86]   33733.454   34363.026   35021.932   35716.212   36453.651
+## [91]   37244.579   38103.193   39049.868   40115.516   41350.716
+## [96]   42847.736 1100000.000 1200000.000</code></pre>
 
 </div>
 </div>

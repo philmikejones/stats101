@@ -9,7 +9,23 @@ github-repo: philmikejones/stats101
 description: "Introduction to statistics and quantitative analysis for social scientists."
 ---
 
-# Getting started
+```{r packages}
+library("tidyverse")
+```
+
+```{r create-data, include=TRUE, echo=FALSE}
+dat = readRDS("data/dat.rds")
+```
+
+
+# Introduction
+
+These are my notes on statistical analysis and quantitative methods for social science researchers.
+They're available here in case they're of any use to anyone, but I offer no guarantee or warranty as to their accuracy.
+You're welcome to use or adapt them.
+
+
+## Why bother with statistics?
 
 As social scientists and researchers we want to answer questions about the social world.
 At its most simplistic (and I completely acknowledge that I'm massively generalising here), we usually seek to describe the world or quantify the world.
@@ -49,6 +65,4 @@ knitr::include_graphics("images/cc-by-nc.png")
 - Content and text: [CC BY-NC](https://creativecommons.org/licenses/by-nc/4.0/)
 - Code: MIT
 
-You are welcome to use or share these notes, but you must provide an attribution or reference, and you cannot sell them or make money from them (for example by running a training course based on them).
-
-You should note that, as part of the MIT license, I make absolutely no guarantees or warranty that anything is accurate or correct, although I do my best to make sure they are.
+You are welcome to use or share these notes, but you must provide an attribution or reference, and you cannot sell them or make money from them.
