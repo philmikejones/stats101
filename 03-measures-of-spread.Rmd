@@ -16,3 +16,22 @@ dat %>%
   unlist() %>% 
   as.vector()
 ```
+
+To calculate the variance:
+
+1. subtract the mean from each score
+1. square the result
+1. sum the results to produce one value
+1. divide by $n - 1$ (number of observations minus one)
+
+$$
+(\#eq:variance)
+\frac{\Sigma (x - \bar{x}) ^ 2}{N-1}
+$$
+
+
+```{r income-variance}
+var(dat$income)
+```
+
+Using $n - 1$ rather than simply the number of observations is known as [Bessel's correction](https://en.wikipedia.org/wiki/Bessel%27s_correction).
