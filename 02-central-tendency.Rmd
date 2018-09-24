@@ -53,6 +53,14 @@ dat = tibble(
 as.vector(dat$income)
 ```
 
+Which looks like this when we plot it as a distribution:
+
+```{r distribution-income, fig.cap="Distribution of simulated income data"}
+ggplot(dat, aes(income)) +
+  geom_histogram(bins = 10)
+```
+
+
 If we arrange these in order from lowest to highest we get:
 
 ```{r median-arranged, include=TRUE, echo=FALSE}
@@ -67,3 +75,60 @@ The median is the middle point (note that this is not realistic data):
 ```{r median-result, include=TRUE, echo=FALSE}
 median(dat$income)
 ```
+
+The median is often considered more *robust* than the mean, which means it is less susceptible to outliers, for reasons we'll get to in a moment.
+
+
+## Mean
+
+The mean is what most people think of when they think of an average.
+You simply "add them all up and divide by how many you have".
+For example, the mean of the incomes we simulated above is:
+
+```{r mean}
+mean(dat$income)
+```
+
+In this case the mean and the median of this variable are the same:
+
+```{r mean-median-equal}
+all.equal(
+  mean(dat$income),
+  median(dat$income)
+)
+```
+
+But this is because this variable is set up to be a normal distribution (more on that later, but for now just think of it as a perfect distribution with perfect properties from a modelling perspective).
+In the wild, most distributions are not exactly normal (or ideal) so the mean and the median differ.
+For example with income there are a relatively small number of individuals with an income substantially higher than is typical.
+This leads to a skew in the income distribution, and this makes out mean higher.
+
+Let's add a couple of very wealthy individuals to our data set:
+
+```{r add-millionnaires}
+dat$income[49] = 1200000
+dat$income[48] = 1100000
+```
+
+These individuals have an income of £1.2 and £1.1 million.
+Compare this distribution to our earlier income distribution using the same settings:
+
+```{r distribution-skewed}
+ggplot(dat) + geom_histogram(aes(income), bins = 100)
+```
+
+We can see effectively our original plot on the left, but now there are two individuals out on their own earning substantially more than anyone else.
+These individuals don't affect the median:
+
+```{r median-skewed}
+median(dat$income)
+```
+
+But the mean is now:
+
+```{r mean-skewed}
+mean(dat$income)
+```
+
+This is now no longer representative of any individual in the data set; it's floating out in the gap between observed incomes.
+For this reason we often consider the median a more *robust* measure of central tendency than the mean, and why you should be careful when someone presents a mean value without any additional information

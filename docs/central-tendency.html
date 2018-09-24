@@ -137,6 +137,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3" data-path="central-tendency.html"><a href="central-tendency.html"><i class="fa fa-check"></i><b>3</b> Central tendency</a><ul>
 <li class="chapter" data-level="3.1" data-path="central-tendency.html"><a href="central-tendency.html#mode"><i class="fa fa-check"></i><b>3.1</b> Mode</a></li>
 <li class="chapter" data-level="3.2" data-path="central-tendency.html"><a href="central-tendency.html#median"><i class="fa fa-check"></i><b>3.2</b> Median</a></li>
+<li class="chapter" data-level="3.3" data-path="central-tendency.html"><a href="central-tendency.html#mean"><i class="fa fa-check"></i><b>3.3</b> Mean</a></li>
 </ul></li>
 </ul>
 
@@ -194,6 +195,16 @@ Consider the following incomes:</p>
 ## [29] 29318.935 29833.471 30354.808 30884.588 31424.631 31976.988 32544.005
 ## [36] 33128.415 33733.454 34363.026 35021.932 35716.212 36453.651 37244.579
 ## [43] 38103.193 39049.868 40115.516 41350.716 42847.736 44806.861 47837.489</code></pre>
+<p>Which looks like this when we plot it as a distribution:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">ggplot</span>(dat, <span class="kw">aes</span>(income)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">bins =</span> <span class="dv">10</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_density</span>()</a></code></pre></div>
+<div class="figure"><span id="fig:distribution-income"></span>
+<img src="02-central-tendency_files/figure-html/distribution-income-1.png" alt="Distribution of simulated income data" width="672" />
+<p class="caption">
+Figure 3.1: Distribution of simulated income data
+</p>
+</div>
 <p>If we arrange these in order from lowest to highest we get:</p>
 <pre><code>##  [1]  6762.511  9793.139 11752.264 13249.284 14484.484 15550.132 16496.807
 ##  [8] 17355.421 18146.349 18883.788 19578.068 20236.974 20866.546 21471.585
@@ -204,6 +215,41 @@ Consider the following incomes:</p>
 ## [43] 38103.193 39049.868 40115.516 41350.716 42847.736 44806.861 47837.489</code></pre>
 <p>The median is the middle point (note that this is not realistic data):</p>
 <pre><code>## [1] 27300</code></pre>
+<p>The median is often considered more <em>robust</em> than the mean, which means it is less susceptible to outliers, for reasons we’ll get to in a moment.</p>
+</div>
+<div id="mean" class="section level2">
+<h2><span class="header-section-number">3.3</span> Mean</h2>
+<p>The mean is what most people think of when they think of an average.
+You simply “add them all up and divide by how many you have”.
+For example, the mean of the incomes we simulated above is:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw">mean</span>(dat<span class="op">$</span>income)</a></code></pre></div>
+<pre><code>## [1] 27300</code></pre>
+<p>In this case the mean and the median of this variable are the same:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw">all.equal</span>(</a>
+<a class="sourceLine" id="cb10-2" data-line-number="2">  <span class="kw">mean</span>(dat<span class="op">$</span>income),</a>
+<a class="sourceLine" id="cb10-3" data-line-number="3">  <span class="kw">median</span>(dat<span class="op">$</span>income)</a>
+<a class="sourceLine" id="cb10-4" data-line-number="4">)</a></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<p>But this is because this variable is set up to be a normal distribution (more on that later, but for now just think of it as a perfect distribution with perfect properties from a modelling perspective).
+In the wild, most distributions are not exactly normal (or ideal) so the mean and the median differ.
+For example with income there are a relatively small number of individuals with an income substantially higher than is typical.
+This leads to a skew in the income distribution, and this makes out mean higher.</p>
+<p>Let’s add a couple of very wealthy individuals to our data set:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">dat<span class="op">$</span>income[<span class="dv">49</span>] =<span class="st"> </span><span class="dv">1200000</span></a>
+<a class="sourceLine" id="cb12-2" data-line-number="2">dat<span class="op">$</span>income[<span class="dv">48</span>] =<span class="st"> </span><span class="dv">1100000</span></a></code></pre></div>
+<p>These individuals have an income of £1.2 and £1.1 million.
+Compare this distribution to our earlier income distribution using the same settings:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw">ggplot</span>(dat) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(income), <span class="dt">bins =</span> <span class="dv">100</span>)</a></code></pre></div>
+<p><img src="02-central-tendency_files/figure-html/distribution-skewed-1.png" width="672" /></p>
+<p>We can see effectively our original plot on the left, but now there are two individuals out on their own earning substantially more than anyone else.
+These individuals don’t affect the median:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="kw">median</span>(dat<span class="op">$</span>income)</a></code></pre></div>
+<pre><code>## [1] 27300</code></pre>
+<p>But the mean is now:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="kw">mean</span>(dat<span class="op">$</span>income)</a></code></pre></div>
+<pre><code>## [1] 72348.07</code></pre>
+<p>This is now no longer representative of any individual in the data set; it’s floating out in the gap between observed incomes.
+For this reason we often consider the median a more <em>robust</em> measure of central tendency than the mean, and why you should be careful when someone presents a mean value without any additional information</p>
 
 </div>
 </div>
