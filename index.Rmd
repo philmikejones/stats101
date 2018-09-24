@@ -6,7 +6,7 @@ site: bookdown::bookdown_site
 documentclass: book
 link-citations: yes
 github-repo: philmikejones/stats101
-description: "Introduction to statistics and quantitative analysis for social scientists."
+description: "Notes on statistics and quantitative methods for social sciences."
 ---
 
 ```{r setup}
