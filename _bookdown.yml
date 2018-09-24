@@ -1,0 +1,3 @@
+output_dir: "docs"
+new_session: yes
+book_filename: "stats101.Rmd"
