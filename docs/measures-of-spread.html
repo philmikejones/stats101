@@ -144,6 +144,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4" data-path="measures-of-spread.html"><a href="measures-of-spread.html"><i class="fa fa-check"></i><b>4</b> Measures of spread</a><ul>
 <li class="chapter" data-level="4.1" data-path="measures-of-spread.html"><a href="measures-of-spread.html#variance"><i class="fa fa-check"></i><b>4.1</b> Variance</a></li>
 <li class="chapter" data-level="4.2" data-path="measures-of-spread.html"><a href="measures-of-spread.html#standard-deviation"><i class="fa fa-check"></i><b>4.2</b> Standard deviation</a></li>
+<li class="chapter" data-level="4.3" data-path="measures-of-spread.html"><a href="measures-of-spread.html#standard-error"><i class="fa fa-check"></i><b>4.3</b> Standard error</a></li>
 </ul></li>
 </ul>
 
@@ -230,6 +231,22 @@ The standard deviation is therefore a measure of spread in the unit of the origi
 <pre><code>## [1] 9415.04</code></pre>
 <p>The standard deviation is a measure of how far the data points are on average from the mean.
 A small standard deviation means the mean fairly accurately represents the data; a large standard deviation means the mean does not represent the data well.</p>
+</div>
+<div id="standard-error" class="section level2">
+<h2><span class="header-section-number">4.3</span> Standard error</h2>
+<p>Standard error is effectively the standard deviation of sample means.
+The standard deviation quantifies how well the sample mean fits the observed (i.e. sample) data, not the population, but we’re really interested in how well our sample mean represents the population.</p>
+<p>One approach would be to take multiple samples.
+The mean of each of these samples would form a sampling distribution due to variation: some sample means would be lower than the population mean; some sample means would be higher than the sample mean; and many would be the same.
+These sample mean values would form a normal distribution around the population mean.</p>
+<p>The standard deviation of these sample means would tell us the sample error; that is it would tell us how well our sample means fit the population mean.
+This is known as the standard error of the mean (<span class="math inline">\(SE_{\bar{x}}\)</span>).</p>
+<p>In practice we can usually only take one sample so we can calculate it with:</p>
+<p><span class="math display" id="eq:standard-error">\[
+\tag{4.3}
+\sigma_{\bar{x}} = \frac{s}{\sqrt{n}}
+\]</span></p>
+<p>where <span class="math inline">\(\sigma\)</span> is the standard error of the population mean, <span class="math inline">\(s\)</span> is the sample standard deviation, and <span class="math inline">\(n\)</span> is the number of observations in the sample.</p>
 
 </div>
 </div>
