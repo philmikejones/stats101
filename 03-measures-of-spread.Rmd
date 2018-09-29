@@ -88,3 +88,31 @@ $$
 $$
 
 where $\sigma$ is the standard error of the population mean, $s$ is the sample standard deviation, and $n$ is the number of observations in the sample.
+
+We can demonstrate this with the census (in fact, we could demonstrate this with any data set and pretend it's the population and take multiple samples from it, but why not just use an actual population?).
+Figure \@ref(fig:age-hist) is a histogram of ages in people in Sheffield from the 2011 Census.
+
+```{r download-sheffield-age, cache=TRUE}
+tempdir = tempdir()
+download.file(
+  "https://www.nomisweb.co.uk/api/v01/dataset/NM_503_1.data.csv?date=latest&geography=1946157123&rural_urban=0&c_age=1...101&measures=20100&signature=NPK-0c73734c0f725c979cee3a:0xa9b892a105be9e9449cdb6c88bdac678e12b229e",
+  destfile = paste0(tempdir, "census.csv")
+)
+
+age = readr::read_csv(paste0(tempdir, "census.csv"))
+
+age =
+  age %>% 
+  select(C_AGE_NAME, OBS_VALUE) %>% 
+  filter(C_AGE_NAME != "Age 100 and over") %>% 
+  mutate(
+    C_AGE_NAME = if_else(C_AGE_NAME == "Age under 1", "0", C_AGE_NAME)
+  ) %>% 
+  mutate(C_AGE_NAME = str_replace(C_AGE_NAME, "Age ", "")) %>% 
+  mutate(C_AGE_NAME = as.integer(C_AGE_NAME)) %>% 
+  uncount(OBS_VALUE)
+```
+
+```{r age-hist, fig.height=3.5, fig.cap="Histogram of ages in Sheffield", cache=TRUE}
+ggplot(age) + geom_histogram(aes(C_AGE_NAME), binwidth = 1)
+```

@@ -247,6 +247,52 @@ This is known as the standard error of the mean (<span class="math inline">\(SE_
 \sigma_{\bar{x}} = \frac{s}{\sqrt{n}}
 \]</span></p>
 <p>where <span class="math inline">\(\sigma\)</span> is the standard error of the population mean, <span class="math inline">\(s\)</span> is the sample standard deviation, and <span class="math inline">\(n\)</span> is the number of observations in the sample.</p>
+<p>We can demonstrate this with the census (in fact, we could demonstrate this with any data set and pretend it’s the population and take multiple samples from it, but why not just use an actual population?).
+Figure <a href="measures-of-spread.html#fig:age-hist">4.1</a> is a histogram of ages in people in Sheffield from the 2011 Census.</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1">tempdir =<span class="st"> </span><span class="kw">tempdir</span>()</a>
+<a class="sourceLine" id="cb28-2" data-line-number="2"><span class="kw">download.file</span>(</a>
+<a class="sourceLine" id="cb28-3" data-line-number="3">  <span class="st">&quot;https://www.nomisweb.co.uk/api/v01/dataset/NM_503_1.data.csv?date=latest&amp;geography=1946157123&amp;rural_urban=0&amp;c_age=1...101&amp;measures=20100&amp;signature=NPK-0c73734c0f725c979cee3a:0xa9b892a105be9e9449cdb6c88bdac678e12b229e&quot;</span>,</a>
+<a class="sourceLine" id="cb28-4" data-line-number="4">  <span class="dt">destfile =</span> <span class="kw">paste0</span>(tempdir, <span class="st">&quot;census.csv&quot;</span>)</a>
+<a class="sourceLine" id="cb28-5" data-line-number="5">)</a>
+<a class="sourceLine" id="cb28-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb28-7" data-line-number="7">age =<span class="st"> </span>readr<span class="op">::</span><span class="kw">read_csv</span>(<span class="kw">paste0</span>(tempdir, <span class="st">&quot;census.csv&quot;</span>))</a></code></pre></div>
+<pre><code>## Parsed with column specification:
+## cols(
+##   .default = col_integer(),
+##   DATE_TYPE = col_character(),
+##   GEOGRAPHY_NAME = col_character(),
+##   GEOGRAPHY_CODE = col_character(),
+##   GEOGRAPHY_TYPE = col_character(),
+##   RURAL_URBAN_NAME = col_character(),
+##   RURAL_URBAN_TYPE = col_character(),
+##   C_AGE_NAME = col_character(),
+##   C_AGE_CODE = col_character(),
+##   C_AGE_TYPE = col_character(),
+##   MEASURES_NAME = col_character(),
+##   OBS_STATUS = col_character(),
+##   OBS_STATUS_NAME = col_character(),
+##   OBS_CONF = col_logical(),
+##   OBS_CONF_NAME = col_character(),
+##   URN = col_character()
+## )</code></pre>
+<pre><code>## See spec(...) for full column specifications.</code></pre>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1">age =</a>
+<a class="sourceLine" id="cb31-2" data-line-number="2"><span class="st">  </span>age <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb31-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(C_AGE_NAME, OBS_VALUE) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb31-4" data-line-number="4"><span class="st">  </span><span class="kw">filter</span>(C_AGE_NAME <span class="op">!=</span><span class="st"> &quot;Age 100 and over&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb31-5" data-line-number="5"><span class="st">  </span><span class="kw">mutate</span>(</a>
+<a class="sourceLine" id="cb31-6" data-line-number="6">    <span class="dt">C_AGE_NAME =</span> <span class="kw">if_else</span>(C_AGE_NAME <span class="op">==</span><span class="st"> &quot;Age under 1&quot;</span>, <span class="st">&quot;0&quot;</span>, C_AGE_NAME)</a>
+<a class="sourceLine" id="cb31-7" data-line-number="7">  ) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb31-8" data-line-number="8"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">C_AGE_NAME =</span> <span class="kw">str_replace</span>(C_AGE_NAME, <span class="st">&quot;Age &quot;</span>, <span class="st">&quot;&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb31-9" data-line-number="9"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">C_AGE_NAME =</span> <span class="kw">as.integer</span>(C_AGE_NAME)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb31-10" data-line-number="10"><span class="st">  </span><span class="kw">uncount</span>(OBS_VALUE)</a></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1"><span class="kw">ggplot</span>(age) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(C_AGE_NAME), <span class="dt">binwidth =</span> <span class="dv">1</span>)</a></code></pre></div>
+<div class="figure"><span id="fig:age-hist"></span>
+<img src="stats101_files/figure-html/age-hist-1.png" alt="Histogram of ages in Sheffield" width="672" />
+<p class="caption">
+Figure 4.1: Histogram of ages in Sheffield
+</p>
+</div>
 
 </div>
 </div>
