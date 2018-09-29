@@ -41,7 +41,7 @@ median(dat$income)
 
 Which looks like this when we plot it as a distribution:
 
-```{r distribution-income, fig.cap="Distribution of simulated income data"}
+```{r distribution-income, fig.cap="Distribution of simulated income data", cache=TRUE}
 ggplot(dat, aes(income)) +
   geom_histogram(bins = 10)
 ```
@@ -91,7 +91,7 @@ dat$income_skewed[48] = 1100000
 These individuals have an income of £1.2 and £1.1 million.
 Compare this distribution to our earlier income distribution using the same settings:
 
-```{r distribution-skewed}
+```{r distribution-skewed, cache=TRUE}
 ggplot(dat) + geom_histogram(aes(income_skewed), bins = 100)
 ```
 
