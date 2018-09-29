@@ -142,7 +142,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4" data-path="measures-of-spread.html"><a href="measures-of-spread.html"><i class="fa fa-check"></i><b>4</b> Measures of spread</a><ul>
 <li class="chapter" data-level="4.1" data-path="measures-of-spread.html"><a href="measures-of-spread.html#variance"><i class="fa fa-check"></i><b>4.1</b> Variance</a></li>
 <li class="chapter" data-level="4.2" data-path="measures-of-spread.html"><a href="measures-of-spread.html#standard-deviation"><i class="fa fa-check"></i><b>4.2</b> Standard deviation</a></li>
-<li class="chapter" data-level="4.3" data-path="measures-of-spread.html"><a href="measures-of-spread.html#standard-error"><i class="fa fa-check"></i><b>4.3</b> Standard error</a></li>
+<li class="chapter" data-level="4.3" data-path="measures-of-spread.html"><a href="measures-of-spread.html#standard-error-and-confidence-intervals"><i class="fa fa-check"></i><b>4.3</b> Standard error and confidence intervals</a></li>
 </ul></li>
 </ul>
 
@@ -230,8 +230,8 @@ The standard deviation is therefore a measure of spread in the unit of the origi
 <p>The standard deviation is a measure of how far the data points are on average from the mean.
 A small standard deviation means the mean fairly accurately represents the data; a large standard deviation means the mean does not represent the data well.</p>
 </div>
-<div id="standard-error" class="section level2">
-<h2><span class="header-section-number">4.3</span> Standard error</h2>
+<div id="standard-error-and-confidence-intervals" class="section level2">
+<h2><span class="header-section-number">4.3</span> Standard error and confidence intervals</h2>
 <p>Standard error is effectively the standard deviation of the population mean.
 The standard deviation quantifies how well the sample mean fits the observed (i.e. sample) data, not the population, but we’re really interested in how well our sample mean represents the population.</p>
 <p>Because any sample we take from the population is going to be slightly different from all other samples (because everything varies) each sample mean is going to be slightly different from every other.
@@ -248,51 +248,78 @@ This is known as the standard error of the mean (<span class="math inline">\(SE_
 \]</span></p>
 <p>where <span class="math inline">\(\sigma\)</span> is the standard error of the population mean, <span class="math inline">\(s\)</span> is the sample standard deviation, and <span class="math inline">\(n\)</span> is the number of observations in the sample.</p>
 <p>We can demonstrate this with the census (in fact, we could demonstrate this with any data set and pretend it’s the population and take multiple samples from it, but why not just use an actual population?).
-Figure <a href="measures-of-spread.html#fig:age-hist">4.1</a> is a histogram of ages in people in Sheffield from the 2011 Census.</p>
+I’m using ages of all people in Sheffield in 2011 to illustrate this, which I download from Nomisweb:</p>
 <div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1">tempdir =<span class="st"> </span><span class="kw">tempdir</span>()</a>
 <a class="sourceLine" id="cb28-2" data-line-number="2"><span class="kw">download.file</span>(</a>
 <a class="sourceLine" id="cb28-3" data-line-number="3">  <span class="st">&quot;https://www.nomisweb.co.uk/api/v01/dataset/NM_503_1.data.csv?date=latest&amp;geography=1946157123&amp;rural_urban=0&amp;c_age=1...101&amp;measures=20100&amp;signature=NPK-0c73734c0f725c979cee3a:0xa9b892a105be9e9449cdb6c88bdac678e12b229e&quot;</span>,</a>
 <a class="sourceLine" id="cb28-4" data-line-number="4">  <span class="dt">destfile =</span> <span class="kw">paste0</span>(tempdir, <span class="st">&quot;census.csv&quot;</span>)</a>
 <a class="sourceLine" id="cb28-5" data-line-number="5">)</a>
 <a class="sourceLine" id="cb28-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb28-7" data-line-number="7">age =<span class="st"> </span>readr<span class="op">::</span><span class="kw">read_csv</span>(<span class="kw">paste0</span>(tempdir, <span class="st">&quot;census.csv&quot;</span>))</a></code></pre></div>
-<pre><code>## Parsed with column specification:
-## cols(
-##   .default = col_integer(),
-##   DATE_TYPE = col_character(),
-##   GEOGRAPHY_NAME = col_character(),
-##   GEOGRAPHY_CODE = col_character(),
-##   GEOGRAPHY_TYPE = col_character(),
-##   RURAL_URBAN_NAME = col_character(),
-##   RURAL_URBAN_TYPE = col_character(),
-##   C_AGE_NAME = col_character(),
-##   C_AGE_CODE = col_character(),
-##   C_AGE_TYPE = col_character(),
-##   MEASURES_NAME = col_character(),
-##   OBS_STATUS = col_character(),
-##   OBS_STATUS_NAME = col_character(),
-##   OBS_CONF = col_logical(),
-##   OBS_CONF_NAME = col_character(),
-##   URN = col_character()
-## )</code></pre>
-<pre><code>## See spec(...) for full column specifications.</code></pre>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1">age =</a>
-<a class="sourceLine" id="cb31-2" data-line-number="2"><span class="st">  </span>age <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb31-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(C_AGE_NAME, OBS_VALUE) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb31-4" data-line-number="4"><span class="st">  </span><span class="kw">filter</span>(C_AGE_NAME <span class="op">!=</span><span class="st"> &quot;Age 100 and over&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb31-5" data-line-number="5"><span class="st">  </span><span class="kw">mutate</span>(</a>
-<a class="sourceLine" id="cb31-6" data-line-number="6">    <span class="dt">C_AGE_NAME =</span> <span class="kw">if_else</span>(C_AGE_NAME <span class="op">==</span><span class="st"> &quot;Age under 1&quot;</span>, <span class="st">&quot;0&quot;</span>, C_AGE_NAME)</a>
-<a class="sourceLine" id="cb31-7" data-line-number="7">  ) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb31-8" data-line-number="8"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">C_AGE_NAME =</span> <span class="kw">str_replace</span>(C_AGE_NAME, <span class="st">&quot;Age &quot;</span>, <span class="st">&quot;&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb31-9" data-line-number="9"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">C_AGE_NAME =</span> <span class="kw">as.integer</span>(C_AGE_NAME)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb31-10" data-line-number="10"><span class="st">  </span><span class="kw">uncount</span>(OBS_VALUE)</a></code></pre></div>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1"><span class="kw">ggplot</span>(age) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(C_AGE_NAME), <span class="dt">binwidth =</span> <span class="dv">1</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb28-7" data-line-number="7">age =<span class="st"> </span>readr<span class="op">::</span><span class="kw">read_csv</span>(<span class="kw">paste0</span>(tempdir, <span class="st">&quot;census.csv&quot;</span>))</a>
+<a class="sourceLine" id="cb28-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb28-9" data-line-number="9">age =</a>
+<a class="sourceLine" id="cb28-10" data-line-number="10"><span class="st">  </span>age <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb28-11" data-line-number="11"><span class="st">  </span><span class="kw">select</span>(C_AGE_NAME, OBS_VALUE) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb28-12" data-line-number="12"><span class="st">  </span><span class="kw">filter</span>(C_AGE_NAME <span class="op">!=</span><span class="st"> &quot;Age 100 and over&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb28-13" data-line-number="13"><span class="st">  </span><span class="kw">mutate</span>(</a>
+<a class="sourceLine" id="cb28-14" data-line-number="14">    <span class="dt">C_AGE_NAME =</span> <span class="kw">if_else</span>(C_AGE_NAME <span class="op">==</span><span class="st"> &quot;Age under 1&quot;</span>, <span class="st">&quot;0&quot;</span>, C_AGE_NAME)</a>
+<a class="sourceLine" id="cb28-15" data-line-number="15">  ) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb28-16" data-line-number="16"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">C_AGE_NAME =</span> <span class="kw">str_replace</span>(C_AGE_NAME, <span class="st">&quot;Age &quot;</span>, <span class="st">&quot;&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb28-17" data-line-number="17"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">C_AGE_NAME =</span> <span class="kw">as.integer</span>(C_AGE_NAME)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb28-18" data-line-number="18"><span class="st">  </span><span class="kw">uncount</span>(OBS_VALUE)</a></code></pre></div>
+<p>Figure <a href="measures-of-spread.html#fig:age-hist">4.1</a> is a histogram of ages in people in Sheffield from the 2011 Census.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1"><span class="kw">ggplot</span>(age) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(C_AGE_NAME), <span class="dt">binwidth =</span> <span class="dv">1</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb29-2" data-line-number="2"><span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Age&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Frequency&quot;</span>)</a></code></pre></div>
 <div class="figure"><span id="fig:age-hist"></span>
 <img src="stats101_files/figure-html/age-hist-1.png" alt="Histogram of ages in Sheffield" width="672" />
 <p class="caption">
 Figure 4.1: Histogram of ages in Sheffield
 </p>
 </div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1">mode_age =</a>
+<a class="sourceLine" id="cb30-2" data-line-number="2"><span class="st">  </span>age <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb30-3" data-line-number="3"><span class="st">  </span><span class="kw">count</span>(C_AGE_NAME) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb30-4" data-line-number="4"><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(n)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb30-5" data-line-number="5"><span class="st">  </span><span class="kw">filter</span>(<span class="kw">row_number</span>() <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb30-6" data-line-number="6"><span class="st">  </span><span class="kw">select</span>(C_AGE_NAME) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb30-7" data-line-number="7"><span class="st">  </span><span class="kw">unlist</span>()</a></code></pre></div>
+<p>The modal age is 20; the median age is 36; and crucially the mean age is 37.8605181.</p>
+<p>Let’s take 1,000 samples from the population, and make a sampling distribution of these means:</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">42</span>)</a>
+<a class="sourceLine" id="cb31-2" data-line-number="2">samples =<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">1000</span>, <span class="kw">sample_n</span>(age, <span class="dv">1000</span>))</a>
+<a class="sourceLine" id="cb31-3" data-line-number="3">samples =<span class="st"> </span><span class="kw">map</span>(samples, mean)</a>
+<a class="sourceLine" id="cb31-4" data-line-number="4">samples =<span class="st"> </span><span class="kw">do.call</span>(rbind, samples)</a>
+<a class="sourceLine" id="cb31-5" data-line-number="5"><span class="kw">colnames</span>(samples) =<span class="st"> &quot;mean_age&quot;</span></a>
+<a class="sourceLine" id="cb31-6" data-line-number="6">samples =<span class="st"> </span><span class="kw">as.data.frame</span>(samples)</a></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1"><span class="kw">ggplot</span>(samples) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(mean_age), <span class="dt">bins =</span> <span class="dv">50</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb32-2" data-line-number="2"><span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Sample mean age&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Frequency&quot;</span>)</a></code></pre></div>
+<div class="figure"><span id="fig:samples-age-hist"></span>
+<img src="stats101_files/figure-html/samples-age-hist-1.png" alt="Histogram of samples from age data set" width="672" />
+<p class="caption">
+Figure 4.2: Histogram of samples from age data set
+</p>
+</div>
+<p>From Figure <a href="measures-of-spread.html#fig:samples-age-hist">4.2</a> most sample means are around 38, although a few are as low as 36 and as high as 40.
+Remember we know are population mean is 37.8605181 but we wouldn’t normally know this.
+If we just had access to one sample, how would we know if the resultant sample mean was close to the population mean.
+From the histogram of sample means we can see that it’s more likely to end up with a sample mean that’s close to the population mean than one that’s incorrect, and we can quantify this with a confidence interval.</p>
+<p>Let’s take a sample of 1000 random cases from this data set and pretend it’s all we have access to:</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" data-line-number="1">age_sample =</a>
+<a class="sourceLine" id="cb33-2" data-line-number="2"><span class="st">  </span>age <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb33-3" data-line-number="3"><span class="st">  </span><span class="kw">sample_n</span>(<span class="dv">1000</span>)</a></code></pre></div>
+<p>The mean of this sample is 38.78, very close to the population mean but not quite the same.
+The standard error of this sample is:</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" data-line-number="1">se_age =<span class="st"> </span><span class="kw">sd</span>(age_sample<span class="op">$</span>C_AGE_NAME) <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">nrow</span>(age_sample))</a>
+<a class="sourceLine" id="cb34-2" data-line-number="2">se_age</a></code></pre></div>
+<pre><code>## [1] 0.7465514</code></pre>
+<p>We know that an ideal normal distribution will have <a href="https://en.wikipedia.org/wiki/Normal_distribution#Standard_deviation_and_coverage">95% of cases within 1.96 standard deviations of the mean</a>.
+If we multiply our standard error by <span class="math inline">\(\pm\)</span> 1.96 that therefore defines a 95% confidence interval.
+In this case 37.3167593 to 40.2432407.
+This effectively estimates that if we were to take 100 samples the population mean would fall within these bounds 95 times.
+In our example the population mean is indeed within the 95% confidence interval of the sample mean.</p>
+<p>To calculate 99% confidence intervals use 2.58 standard deviations rather than 1.96, in this example resulting in a confidence interval between 36.8538975 and 40.7061025
+Perhaps counterintuitively this results in a wider interval (because the interval ensures the population mean falls within these bounds 99 times instead of 95); it is not more precise.</p>
+<p>From the standard error of the mean and confidence interval we can therefore quantify how confident we are that the sample mean is close to the true population mean.</p>
 
 </div>
 </div>
