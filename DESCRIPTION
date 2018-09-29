@@ -1,0 +1,14 @@
+Package: stats101
+Title: Introduction to statistics for social scientists
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Phil Mike",
+           family = "Jones",
+           role = c("aut", "cre"),
+           email = "philmikejones@gmail.com")
+Description: Introduction to statistics and quantitative methods for social scientists.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Imports: 
+    readr
