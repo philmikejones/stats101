@@ -25,7 +25,7 @@
 <meta name="author" content="Phil Mike Jones">
 
 
-<meta name="date" content="2018-09-28">
+<meta name="date" content="2018-09-29">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -52,7 +52,7 @@
 <style type="text/css">
 a.sourceLine { display: inline-block; line-height: 1.25; }
 a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; position: absolute; }
+a.sourceLine:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
@@ -65,13 +65,11 @@ code.sourceCode { white-space: pre-wrap; }
 a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
 pre.numberSource a.sourceLine
-  { position: relative; }
-pre.numberSource a.sourceLine:empty
-  { position: absolute; }
+  { position: relative; left: -4em; }
 pre.numberSource a.sourceLine::before
   { content: attr(data-line-number);
-    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all;
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -234,12 +232,14 @@ A small standard deviation means the mean fairly accurately represents the data;
 </div>
 <div id="standard-error" class="section level2">
 <h2><span class="header-section-number">4.3</span> Standard error</h2>
-<p>Standard error is effectively the standard deviation of sample means.
+<p>Standard error is effectively the standard deviation of the population mean.
 The standard deviation quantifies how well the sample mean fits the observed (i.e. sample) data, not the population, but we’re really interested in how well our sample mean represents the population.</p>
-<p>One approach would be to take multiple samples.
-The mean of each of these samples would form a sampling distribution due to variation: some sample means would be lower than the population mean; some sample means would be higher than the sample mean; and many would be the same.
+<p>Because any sample we take from the population is going to be slightly different from all other samples (because everything varies) each sample mean is going to be slightly different from every other.
+The standard error of the mean is a measure of how confident our sample mean matches the population mean.</p>
+<p>One approach to calculate the standard error of the mean would be to take multiple samples.
+The mean of each of these samples would form a sampling distribution due to variation: some sample means would be lower than the population mean; some sample means would be higher than the population mean; and many would be the same.
 These sample mean values would form a normal distribution around the population mean.</p>
-<p>The standard deviation of these sample means would tell us the sample error; that is it would tell us how well our sample means fit the population mean.
+<p>The standard deviation of these sample means would tell us how well our sample means fit the population mean.
 This is known as the standard error of the mean (<span class="math inline">\(SE_{\bar{x}}\)</span>).</p>
 <p>In practice we can usually only take one sample so we can calculate it with:</p>
 <p><span class="math display" id="eq:standard-error">\[
