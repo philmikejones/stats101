@@ -44,3 +44,9 @@ docs/*.md
 
 # rds data file
 /*.rds
+
+# zip files
+inst/extdata/*.zip
+
+# raw data
+inst/extdata/UKDA-*
