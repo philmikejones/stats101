@@ -50,7 +50,11 @@ The good news is the most difficult challenge is often deciding which technique 
 
 ## Getting started
 
-These tutorials use `Python3`, and use a number of teaching data sets available from the [UK Data Service](https://www.ukdataservice.ac.uk/) under terms of the [Open Government License](http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/).
+These tutorials use a number of teaching data sets available from the [UK Data Service](https://www.ukdataservice.ac.uk/) under terms of the [Open Government License](http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/):
+
+> Office for National Statistics, University of Manchester, Cathie Marsh Institute for Social Research (CMIST), UK Data Service, 2016, Living Costs and Food Survey, 2013: Unrestricted Access Teaching Dataset, [data collection], Office for National Statistics, 2nd Edition, Office for National Statistics, [original data producer(s)]. Accessed 1 October 2018. SN: 7932, http://doi.org/10.5255/UKDA-SN-7932-2. Contains public sector information licensed under the Open Government Licence v2.0
+
+I use `python3` to process and analyse the data.
 
 ```{python, libraries}
 import os
