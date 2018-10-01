@@ -10,15 +10,9 @@ description: "Notes on statistics and quantitative methods for social sciences."
 ---
 
 ```{r setup}
-options(scipen = 99)
-```
-
-```{r packages}
-library("tidyverse")
-```
-
-```{r create-data, include=TRUE, echo=FALSE}
-dat = readRDS("data/dat.rds")
+knitr::opts_chunk$set(engine.path = list(
+  python = "~/miniconda3/bin/python3"
+))
 ```
 
 
@@ -52,3 +46,29 @@ knitr::include_graphics("images/coffee.jpg")
 
 Obtaining knowledge about a *population* by *inferring* from a *sample* is the cornerstone of quantitative social science research, and uses many statistical techniques to be able to do this.
 The good news is the most difficult challenge is often deciding which technique to use; using the technique is often like following a recipe.
+
+
+## Getting started
+
+These tutorials use `Python3`, and use a number of teaching data sets available from the [UK Data Service](https://www.ukdataservice.ac.uk/) under terms of the [Open Government License](http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/).
+
+```{python, libraries}
+import os
+import requests
+import zipfile
+```
+
+```{python make-directories}
+os.makedirs("inst/extdata/", exist_ok = True)
+```
+
+```{python, load-food-data}
+food = "https://beta.ukdataservice.ac.uk/Umbraco/Surface/Discover/GetDownload?studyNumber=7932&fileName=7932tab_818dcb297393b2557b07f05acaae70b9.zip"
+food = requests.get(food)
+food = food.content
+```
+
+```{python}
+outfile = open("inst/extdata/food.zip", "wb")
+outfile.write(food)
+```
