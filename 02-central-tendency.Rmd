@@ -5,25 +5,19 @@ Measures of central tendency is a fancy phrase for 'average'.
 They are a single data point used to represent a 'typical' value from your data.
 Depending on your level of measurement you can use one or more measures of central tendency.
 
+```{r average-meme, cache=TRUE, fig.cap="What if I told you... there's more than one type of average"}
+knitr::include_graphics("images/average-meme.jpg")
+```
+
 
 ## Mode
 
 The most common unique value.
-For example, 10 people are asked their favourite drink and you have the following results:
+For example, in our `food` data set the variable `A121r` is the tenure type of each respondent.
+A crosstab of this variable shows that response level `3` is the most frequent, which corresponds to owned tenure type.
 
-```{r drinks, include=TRUE, echo=FALSE}
-drink = c(
-  "espresso", "latte", "tea", "tea", "earl gray", "americano", 
-  "hot chocolate", "tea", "hot chocolate", "tea"
-)
-
-drink
-```
-
-The most common result (mode) is `tea`, which we can confirm with a quick frequency table:
-
-```{r table-drinks}
-table(drink)
+```{python tenure-mode}
+print(pd.crosstab(food["A121r"], "count"))
 ```
 
 Mode is the only measure of central tendency you can provide for [nominal data](../levels-of-measurement#nominal).
@@ -35,8 +29,8 @@ The median is the 'middle' point.
 It's only appropriate for ordered data and is calculated by arranging your data in order and selecting the mid--point.
 Consider the following incomes:
 
-```{r median, include=TRUE, echo=FALSE}
-median(dat$income)
+```{python food-income-median}
+print(food.P344pr.median())
 ```
 
 Which looks like this when we plot it as a distribution:
