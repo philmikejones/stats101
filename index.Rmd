@@ -66,9 +66,6 @@ os.makedirs("inst/extdata/", exist_ok = True)
 food = "https://beta.ukdataservice.ac.uk/Umbraco/Surface/Discover/GetDownload?studyNumber=7932&fileName=7932tab_818dcb297393b2557b07f05acaae70b9.zip"
 food = requests.get(food)
 food = food.content
-```
-
-```{python}
 outfile = open("inst/extdata/food.zip", "wb")
 outfile.write(food)
 ```
