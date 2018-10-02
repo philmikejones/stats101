@@ -10,6 +10,8 @@ description: "Notes on statistics and quantitative methods for social sciences."
 ---
 
 ```{r setup}
+# list available environments with which -a python
+# alternatives are also listed in miniconda/bin
 knitr::opts_chunk$set(engine.path = list(
   python = "~/miniconda3/bin/python3"
 ))
