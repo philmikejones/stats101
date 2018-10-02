@@ -1,6 +1,5 @@
 # Central tendency
 
-
 Measures of central tendency is a fancy phrase for 'average'.
 They are a single data point used to represent a 'typical' value from your data.
 Depending on your level of measurement you can use one or more measures of central tendency.
@@ -8,22 +7,21 @@ Depending on your level of measurement you can use one or more measures of centr
 
 ## Mode
 
-The most common unique value.
-For example, 10 people are asked their favourite drink and you have the following results:
+The most common value.
 
-```{r drinks, include=TRUE, echo=FALSE}
-drink = c(
-  "espresso", "latte", "tea", "tea", "earl gray", "americano", 
-  "hot chocolate", "tea", "hot chocolate", "tea"
-)
+For example, the variable `A121r` in our food data set is of household tenure type.
+The available options are:
 
-drink
-```
+1. public rented (i.e. rented from a council)
+2. private rented (i.e. rented from a landlord)
+3. owned
 
-The most common result (mode) is `tea`, which we can confirm with a quick frequency table:
+A frequency (count) table of this variable shows that `owned` is the most common type of tenure:
 
-```{r table-drinks}
-table(drink)
+```{python}
+food["A121r"] = food["A121r"].astype("category")
+food["A121r"].cat.categories = ["public rented", "private rented", "owned"]
+food["A121r"].value_counts()
 ```
 
 Mode is the only measure of central tendency you can provide for [nominal data](../levels-of-measurement#nominal).
