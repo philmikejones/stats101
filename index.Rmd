@@ -80,3 +80,10 @@ outfile.write(food)
 ```{python extract-food-data}
 shutil.unpack_archive("inst/extdata/food.zip", extract_dir = "inst/extdata/")
 ```
+
+```{python load-data}
+food = pd.read_csv(
+    "inst/extdata/UKDA-7932-tab/tab/lcfs_2013_teaching.tab",
+    sep = "\t"
+)
+```
