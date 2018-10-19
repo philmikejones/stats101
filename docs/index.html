@@ -17923,7 +17923,7 @@ $$</p>
 <p>where $E_{ij}$ is the expected frequency of cell in row $_i$ and column $_j$; $T_i$ is the total of row $_i$; $T_j$ is the total of column $_j$; and $N$ is the table grand total.
 So the expected frequency for row 1, column 1 is:</p>
 <p>$$
-E_{1, 1}\frac{1589 x 880}{5144}
+E_{1, 1} = \frac{1589 x 880}{5144}
 $$</p>
 
 </div>
@@ -17970,6 +17970,14 @@ $$</p>
 <p>When running a chi--square test on a 2x2 contingency table it is likely to produce p values that are too small (i.e. it's more likely to make a false positive or a <a href="#interpreting-the-results">type I error</a>.
 To correct this <code>scipy.stats.chi_contingency()</code> automatically applies the <a href="https://en.wikipedia.org/wiki/Yates%27s_correction_for_continuity"><strong>Yates's continuity correction</strong></a> if you're performing a test on a 2x2 table.
 I've never worried about what this is or how it works (although Andy Field's textbook, as usual, covers it in an accessible way); just know that it has been applied when reporting on a 2x2 table.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Interpreting-the-results">Interpreting the results<a class="anchor-link" href="#Interpreting-the-results">&#182;</a></h2><p>There are two problems to be aware of when interpreting the results of a hypothesis test.
 The hypothesis test does not <em>prove</em> an association between our variables; it gives us a statistical level of confidence that there is an association.</p>
 <p>There is always a risk that we might reject the null hypothesis (i.e. state that there is an association) when there isn't one.
@@ -17981,6 +17989,14 @@ This is known as a <strong>Type II (two) error</strong>.</p>
 <p>Depending on our research question, one or the other errors might be more problematic.
 For example, if we are testing a new drug we want to make sure it is effective, so we do not want to make a type I error (i.e. state that there is an association when there isn't one).
 But if we're testing the drug for side effects we want to make sure we don't make a type II error (i.e. assert that there are no side effects when, in fact, there are).</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Directional-tests">Directional tests<a class="anchor-link" href="#Directional-tests">&#182;</a></h2><p>Two--tailed tests are the default, and what you should use unless you have a very good (and documented!) reason for using a one--tailed test.</p>
 <p>One--tailed tests are used when we are carrying out a <em>directional</em> test.
 For example, we previously tested if there is an association between employment grade (NS--SEC) and housing tenure.
@@ -17997,6 +18013,14 @@ Therefore one--tailed tests tend to be used when previous literature identifies 
 <p>The reason for this skepticism of one--tailed tests is that they require a smaller difference between the two variables to be statistically significant.
 If you are performing a non--directional (two--tailed test) at a confidence level of 0.05, your have half of this at each end of your distribution (0.025) to work with to detect a difference.
 If you specify a directional (i.e. one--tailed test) you have more of the distribution to work with to detect a significant difference.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="Effect-sizes">Effect sizes<a class="anchor-link" href="#Effect-sizes">&#182;</a></h1><p>Determining that there <em>is</em> an association is all very well and good, but it tells us nothing of what the size of the effect is.
 For example, our hypothesis test has determined it is probable that there is an association between the employment grade of the household reference person and tenure, but it does not tell us <em>how much</em> more likely they are to own their home.</p>
 <p>The most common measures of effect size are:</p>
