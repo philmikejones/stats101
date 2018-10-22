@@ -11724,12 +11724,6 @@ ul.typeahead-list > li > a {
 @font-face {
  font-family: "Roboto Mono";
  font-weight: normal;
- font-style: normal;
- src: local('"Roboto Mono"'), url('fonts/roboto.ttf') format('truetype');
-}
-@font-face {
- font-family: "Roboto Mono";
- font-weight: normal;
  font-style: italic;
  src: local('"Roboto Mono"'), url('fonts/roboto-italic.ttf') format('truetype');
 }
@@ -11744,6 +11738,12 @@ ul.typeahead-list > li > a {
  font-weight: normal;
  font-style: italic;
  src: local('"Roboto Mono"'), url('fonts/roboto-italic.ttf') format('truetype');
+}
+@font-face {
+ font-family: "Roboto Mono";
+ font-weight: normal;
+ font-style: normal;
+ src: local('"Roboto Mono"'), url('fonts/roboto.ttf') format('truetype');
 }
 div#notebook {
  font-family: "Roboto Mono", monospace;
@@ -12273,11 +12273,11 @@ p.navbar-text.indicator_area {
 }
 .navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > li > a:focus {
- color: #2f2f2f;
- background-color: rgba(180,180,180,.14);
- border-color: #d4d4d4;
+ color: #2f2f2f !important;
+ background-color: rgba(180,180,180,.14) !important;
+ border-color: #d4d4d4 !important;
  line-height: 1.5em;
- transition: 200ms ease;
+ transition: 80ms ease;
 }
 .navbar-default .navbar-nav > .open > a,
 .navbar-default .navbar-nav > .open > a:hover,
@@ -12286,7 +12286,6 @@ p.navbar-text.indicator_area {
  background-color: #dedede;
  border-color: #dedede;
  line-height: 1.5em;
- transition: 200ms ease;
 }
 .navbar-nav > li > .dropdown-menu {
  margin-top: 0px;
@@ -12352,22 +12351,10 @@ div.notification_widget.info,
  display: none !important;
 }
 .edit_mode .modal_indicator:before {
- font-size: 18px;
- color: #ff7823;
- opacity: 1.0;
- padding-bottom: 0px;
- vertical-align: -webkit-baseline-middle;
- margin-left: 1px;
- margin-bottom: 0px;
+ display: none;
 }
 .command_mode .modal_indicator:before {
- font-family: "Roboto Mono", monospace;
- font-size: 18px;
- color: #ff7823;
- padding-bottom: 0px;
- vertical-align: -webkit-baseline-middle;
- margin-left: 1px;
- margin-bottom: 0px;
+ display: none;
 }
 .item_icon {
  color: #126dce;
@@ -12398,13 +12385,26 @@ div.notification_widget.info,
 #notification_trusted {
  font-family: "Roboto Mono", monospace;
  font-size: 17px !important;
- color: #126dce;
  border: none;
  background: transparent;
  background-color: transparent;
  margin-bottom: 0px !important;
- margin-top: 11px !important;
- vertical-align: middle !important;
+ vertical-align: bottom !important;
+ color: #828892 !important;
+ cursor: default !important;
+}
+#notification_area,
+div.notification_area {
+ float: right !important;
+ position: static;
+ cursor: pointer;
+ padding-top: 7px;
+ padding-right: 4px;
+}
+div#notification_notebook.notification_widget.btn.btn-xs.navbar-btn {
+ font-size: 9pt !important;
+ z-index: 0;
+ margin-top: -5px !important;
 }
 #modal_indicator {
  float: right !important;
@@ -12424,6 +12424,7 @@ div.notification_widget.info,
  padding-bottom: 4px;
  margin-top: 8px !important;
  margin-left: -2px;
+ padding-left: 5px !important;
 }
 #kernel_indicator .kernel_indicator_name {
  font-size: 17px;
@@ -12433,7 +12434,7 @@ div.notification_widget.info,
  padding-left: 5px;
  padding-right: 5px;
  margin-top: 4px;
- vertical-align: -webkit-baseline-middle;
+ vertical-align: text-top;
  padding-bottom: 0px;
 }
 .kernel_idle_icon:before {
@@ -12445,7 +12446,7 @@ div.notification_widget.info,
  cursor: pointer;
  margin-left: 0px !important;
  opacity: 0.7;
- vertical-align: middle;
+ vertical-align: bottom;
  margin-top: 1px;
  content: "\f1db";
 }
@@ -12459,7 +12460,7 @@ div.notification_widget.info,
  -webkit-font-smoothing: antialiased;
  cursor: pointer;
  margin-left: 0px !important;
- vertical-align: middle;
+ vertical-align: bottom;
  margin-top: 1px;
  content: "\f111";
 }
@@ -12484,9 +12485,6 @@ div.notification_widget.info,
   -webkit-transform: scale(1.0,1.0);
   opacity: 0.8;
  }
-}
-i#kernel_indicator_icon {
- vertical-align: sub;
 }
 div.notification_widget.info,
 .notification_widget.info,
@@ -12545,7 +12543,7 @@ i.fa.fa-icon {
  box-shadow: none;
  padding: 0px;
  text-align: left;
- border: 2px solid #dedede;
+ border: none;
  background-color: #dedede;
  background: #dedede;
  line-height: 1;
@@ -12556,7 +12554,7 @@ i.fa.fa-icon {
  box-shadow: none;
  padding: 0px;
  text-align: left;
- border: 2px solid #dedede;
+ border: none;
  background-color: #dedede;
  box-shadow: none;
  line-height: 1;
@@ -12564,7 +12562,6 @@ i.fa.fa-icon {
 .dropdown-menu > li > a {
  font-family: "Roboto Mono", monospace;
  font-size: 10.0pt;
- line-height: 1.1;
  display: block;
  padding: 10px 20px 9px 10px;
  color: #303030;
@@ -12586,7 +12583,8 @@ i.fa.fa-icon {
  background-color: rgba(180,180,180,.30);
 }
 .dropdown-submenu > .dropdown-menu {
- top: 0px;
+ display: none;
+ top: 2px !important;
  left: 100%;
  margin-top: -2px;
  margin-left: 0px;
@@ -12603,13 +12601,13 @@ i.fa.fa-icon {
  padding: none;
  display: block;
  clear: both;
- line-height: 1.1;
  white-space: nowrap;
 }
 .dropdown-submenu > a:after {
  color: #303030;
  margin-right: -16px;
  margin-top: 0px;
+ display: inline-block;
 }
 .dropdown-submenu:hover > a:after,
 .dropdown-submenu:active > a:after,
@@ -12617,6 +12615,7 @@ i.fa.fa-icon {
 .dropdown-submenu:visited > a:after {
  color: #ff7823;
  margin-right: -16px;
+ display: inline-block !important;
 }
 div.kse-dropdown > .dropdown-menu,
 .kse-dropdown > .dropdown-menu {
@@ -12840,7 +12839,8 @@ div.dynamic-buttons > button,
  margin: 6px 6px 0px !important;
 }
 span#last-modified.btn.btn-xs.btn-default.sort-action,
-span#sort-name.btn.btn-xs.btn-default.sort-action {
+span#sort-name.btn.btn-xs.btn-default.sort-action,
+span#file-size.btn.btn-xs.btn-default.sort-action {
  font-family: "Roboto Mono", monospace;
  font-size: 16px;
  background-color: transparent;
@@ -13077,6 +13077,9 @@ div.form-control,
  border-color: #dedede;
  margin-bottom: 0px;
 }
+.form-group .input-group {
+ float: left;
+}
 input,
 button,
 select,
@@ -13190,35 +13193,35 @@ div.input_area {
  padding-right: 1.2em;
  border: 0px;
  border-radius: 0px;
- border-top-right-radius: 3px;
- border-bottom-right-radius: 3px;
+ border-top-right-radius: 4px;
+ border-bottom-right-radius: 4px;
 }
 div.cell {
  padding: 0px;
- background: #ffffff;
- background-color: #ffffff;
+ background: #ededed;
+ background-color: #ededed;
  border: medium solid #ffffff;
- border-radius: 0px;
+ border-radius: 4px;
  top: 0;
 }
 div.cell.selected {
- background: #ffffff;
- background-color: #ffffff;
+ background: #ededed;
+ background-color: #ededed;
  border: medium solid #ffffff;
  padding: 0px;
- border-radius: 3px;
+ border-radius: 5px;
 }
 .edit_mode div.cell.selected {
  padding: 0px;
- background: #ffffff;
- background-color: #ffffff;
+ background: #ededed;
+ background-color: #ededed;
  border: medium solid #ffffff;
- border-radius: 3px;
+ border-radius: 5px;
 }
 div.cell.edit_mode {
  padding: 0px;
- background: #ffffff;
- background-color: #ffffff;
+ background: #ededed;
+ background-color: #ededed;
 }
 div.CodeMirror-sizer {
  margin-left: 0px;
@@ -13229,8 +13232,11 @@ div.CodeMirror-sizer {
  padding-bottom: 0px;
  margin-top: 0px;
 }
-div.cell.selected:before {
- background: #ededed;
+div.cell.selected:before,
+.edit_mode div.cell.selected:before,
+div.cell.selected:before,
+div.cell.selected.jupyter-soft-selected:before {
+ background: #ededed !important;
  border: none;
  border-radius: 3px;
  position: absolute;
@@ -13240,16 +13246,13 @@ div.cell.selected:before {
  width: 0px;
  height: 100%;
 }
-.edit_mode div.cell.selected:before {
- background: #ffffff;
- border: none;
- border-radius: 3px;
- position: absolute;
- display: block;
- top: 0px;
- left: 0px;
- width: 0px;
- height: 100%;
+div.cell.text_cell.selected::before,
+.edit_mode div.cell.text_cell.selected:before,
+div.cell.text_cell.selected:before,
+div.cell.text_cell.selected.jupyter-soft-selected:before {
+ background: #ffffff !important;
+ background-color: #ffffff !important;
+ border-color: #f2f2f2 !important;
 }
 div.cell.code_cell .input {
  border-left: 5px solid #ededed !important;
@@ -13265,16 +13268,10 @@ div.cell.code_cell.selected .input {
  border-left: 5px solid #ffd5bb !important;
  border-radius: 3px;
 }
-div.cell.selected:before,
-div.cell.selected.jupyter-soft-selected:before {
- position: absolute;
- display: block;
- top: -1px;
- left: -1px;
- width: 5px;
- height: calc(102%);
- content: '';
- background: transparent !important;
+.edit_mode div.cell.selected:before {
+ height: 100%;
+ border-left: 5px solid #ffd5bb !important;
+ border-radius: 3px;
 }
 div.cell.jupyter-soft-selected,
 div.cell.selected.jupyter-soft-selected {
@@ -13288,18 +13285,6 @@ div.cell.selected.jupyter-soft-selected {
 }
 div.cell.selected.jupyter-soft-selected .input {
  border-left: 5px solid #ededed !important;
-}
-div.cell.selected.jupyter-soft-selected:before,
-.edit_mode div.cell.selected:before .input {
- background: #ffd5bb !important;
- border: 2px solid #ffd5bb !important;
- border-radius: 6px !important;
- position: absolute !important;
- display: block !important;
- top: 0px !important;
- left: 0px !important;
- width: 6px !important;
- height: 100% !important;
 }
 div.cell.selected.jupyter-soft-selected {
  border-left-color: #ff7823;
@@ -13320,17 +13305,6 @@ div.cell.text_cell.selected.jupyter-soft-selected .prompt {
 div.cell.text_cell.selected.jupyter-soft-selected .input_prompt {
  border-left: none !important;
 }
-div.cell.text_cell.selected.jupyter-soft-selected:before {
- background: #f2f2f2 !important;
- border: 2px solid #f2f2f2 !important;
- border-radius: 6px !important;
- position: absolute !important;
- display: block !important;
- top: 0px !important;
- left: 0px !important;
- width: 6px !important;
- height: 100% !important;
-}
 div.cell.text_cell.jupyter-soft-selected,
 div.cell.text_cell.selected.jupyter-soft-selected {
  border-left-color: #f2f2f2 !important;
@@ -13340,6 +13314,10 @@ div.cell.text_cell.selected.jupyter-soft-selected {
  border-right-width: 0px !important;
  background: #f2f2f2 !important;
  border-radius: 6px !important;
+}
+div.cell.jupyter-soft-selected .input,
+div.cell.selected.jupyter-soft-selected .input {
+ border-left-color: #ffd5bb !important;
 }
 div.prompt,
 .prompt {
@@ -13353,8 +13331,8 @@ div.prompt,
  padding-left: 0px;
  padding-right: 1px;
  text-align: right !important;
- min-width: 12.5ex !important;
- width: 12.5ex !important;
+ min-width: 11.5ex !important;
+ width: 11.5ex !important;
 }
 div.prompt.input_prompt {
  font-size: 9pt !important;
@@ -13364,8 +13342,8 @@ div.prompt.input_prompt {
  border-bottom-left-radius: 0px;
  border-bottom-right-radius: 0px;
  padding-right: 3px;
- min-width: 12.5ex;
- width: 12.5ex !important;
+ min-width: 11.5ex;
+ width: 11.5ex !important;
 }
 div.cell.code_cell .input_prompt {
  border-right: 2px solid rgba(240,147,43,.50);
@@ -13378,6 +13356,47 @@ div.cell.selected .prompt {
 }
 .edit_mode div.cell.selected .prompt {
  top: 0;
+}
+.run_this_cell {
+ visibility: hidden;
+ color: transparent;
+ padding-top: 0px;
+ padding-bottom: 0px;
+ padding-left: 3px;
+ padding-right: 12px;
+ width: 1.5ex;
+ width: 0ex;
+ background: transparent;
+ background-color: transparent;
+}
+div.code_cell:hover div.input .run_this_cell {
+ visibility: visible;
+}
+div.cell.code_cell.rendered.selected .run_this_cell:hover {
+ background-color: #e3e3e3;
+ background: #e3e3e3;
+ color: #ff7823 !important;
+}
+div.cell.code_cell.rendered.unselected .run_this_cell:hover {
+ background-color: #e3e3e3;
+ background: #e3e3e3;
+ color: #ff7823 !important;
+}
+i.fa-step-forward.fa {
+ display: inline-block;
+ font: normal normal normal 9px "FontAwesome";
+}
+.fa-step-forward:before {
+ content: "\f04b";
+}
+div.cell.selected.jupyter-soft-selected .run_this_cell,
+div.cell.selected.jupyter-soft-selected .run_this_cell:hover,
+div.cell.unselected.jupyter-soft-selected .run_this_cell:hover,
+div.cell.code_cell.rendered.selected.jupyter-soft-selected .run_this_cell:hover,
+div.cell.code_cell.rendered.unselected.jupyter-soft-selected .run_this_cell:hover {
+ background-color: #ffd5bb !important;
+ background: #ffd5bb !important;
+ color: #ffd5bb !important;
 }
 div.output_wrapper {
  background-color: #ffffff;
@@ -13444,8 +13463,8 @@ div.prompt.output_prompt {
  border-top-right-radius: 0px;
  border-top-left-radius: 0px;
  border-bottom-right-radius: 0px;
- min-width: 12.5ex !important;
- width: 12.5ex !important;
+ min-width: 14.5ex !important;
+ width: 14.5ex !important;
  border-right: 2px solid transparent;
 }
 div.out_prompt_overlay.prompt {
@@ -13457,8 +13476,8 @@ div.out_prompt_overlay.prompt {
  border-top-right-radius: 0px;
  border-top-left-radius: 0px;
  border-bottom-right-radius: 0px;
- min-width: 12.5ex !important;
- width: 12.5ex !important;
+ min-width: 14.5ex !important;
+ width: 14.5ex !important;
  border-right: 2px solid transparent;
  color: transparent;
 }
@@ -13471,8 +13490,8 @@ div.out_prompt_overlay.prompt:hover {
  -moz-border-radius: 2px;
  border-top-right-radius: 0px;
  border-top-left-radius: 0px;
- min-width: 12.5ex !important;
- width: 12.5ex !important;
+ min-width: 14.5ex !important;
+ width: 14.5ex !important;
  border-right: 2px solid #f7f7f7 !important;
 }
 div.cell.code_cell .output_prompt {
@@ -13561,68 +13580,48 @@ div.edit_mode div.text_cell.unrendered {
  background-color: #ffffff;
  border-radius: 0px;
 }
-div.cell.text_cell.selected:before {
- background: #f2f2f2;
- border: 2px solid #f2f2f2;
- border-top-left-radius: 2px;
- border-bottom-left-radius: 2px;
- position: absolute;
- display: block;
- top: 0px;
- left: 0px;
- width: 5px;
- height: 100%;
-}
-.edit_mode div.cell.text_cell.selected:before {
- background: #f2f2f2;
- border: 2px solid #f2f2f2;
- border-top-left-radius: 2px;
- border-bottom-left-radius: 2px;
- position: absolute;
- display: block;
- top: 0px;
- left: 0px;
- width: 5px;
- height: 100%;
-}
 div.cell.text_cell .prompt {
  border-right: 0;
+ min-width: 11.5ex !important;
+ width: 11.5ex !important;
 }
 div.cell.text_cell.rendered .prompt {
  font-family: "Fira Code", monospace, monospace;
- font-size: 9.5pt;
+ font-size: 9.5pt !important;
  font-weight: normal;
  color: #828892 !important;
  text-align: right !important;
- min-width: 12.5ex !important;
- width: 12.5ex !important;
+ min-width: 14.5ex !important;
+ width: 14.5ex !important;
  background-color: #ffffff;
  border-right: 2px solid transparent;
- border-left: 5px solid #ffffff;
+ border-left: 4px solid #ffffff;
 }
 div.cell.text_cell.unrendered .prompt {
  font-family: "Fira Code", monospace, monospace;
- font-size: 9.5pt;
+ font-size: 9.5pt !important;
  font-weight: normal;
  color: #828892 !important;
  text-align: right !important;
- min-width: 12.5ex !important;
- width: 12.5ex !important;
+ min-width: 14.5ex !important;
+ width: 14.5ex !important;
  border-right: 2px solid transparent;
- border-left: 5px solid #ffffff;
+ border-left: 4px solid #ffffff;
+ background-color: #ffffff;
 }
 div.cell.text_cell.rendered .prompt {
  border-right: 2px solid transparent;
 }
 div.cell.text_cell.rendered.selected .prompt {
  top: 0;
- border-left: 5px solid #f2f2f2;
+ border-left: 4px solid #f2f2f2;
  border-right: 2px solid transparent;
 }
-div.text_cell.unrendered.selected .prompt {
+div.text_cell.unrendered.selected .prompt,
+div.text_cell.rendered.selected .prompt {
  top: 0;
  background: #ffffff;
- border-left: 5px solid #f2f2f2;
+ border-left: 4px solid #f2f2f2;
  border-right: 2px solid transparent;
 }
 div.rendered_html code {
@@ -13685,7 +13684,7 @@ div.rendered_html pre {
  font-family: "Fira Code", monospace, monospace;
  font-size: 11pt !important;
  line-height: 170% !important;
- color: #353535;
+ color: #353535 !important;
  background: #efefef;
  background-color: #efefef;
  max-width: 80%;
@@ -13739,40 +13738,39 @@ div.rendered_html h5 {
 }
 .rendered_html h1,
 .text_cell_render h1 {
- color: #126dce;
+ color: #126dce !important;
  font-size: 200%;
- text-align: center;
+ text-align: left;
  font-style: normal;
- font-weight: lighter;
+ font-weight: normal;
 }
 .rendered_html h2,
 .text_cell_render h2 {
- text-align: left;
+ color: #126dce !important;
  font-size: 170%;
- color: #3f3d46;
  font-style: normal;
- font-weight: lighter;
+ font-weight: normal;
 }
 .rendered_html h3,
 .text_cell_render h3 {
+ color: #126dce !important;
  font-size: 140%;
- color: #3f3d46;
  font-style: normal;
- font-weight: lighter;
+ font-weight: normal;
 }
 .rendered_html h4,
 .text_cell_render h4 {
+ color: #126dce !important;
  font-size: 110%;
- color: #3f3d46;
  font-style: normal;
- font-weight: lighter;
+ font-weight: normal;
 }
 .rendered_html h5,
 .text_cell_render h5 {
+ color: #126dce !important;
  font-size: 100%;
- color: #2f2f2f;
  font-style: normal;
- font-weight: lighter;
+ font-weight: normal;
 }
 hr {
  margin-top: 8px;
@@ -13958,7 +13956,7 @@ div.cell.text_cell a.anchor-link:link {
 }
 div.cell.text_cell a.anchor-link:link:hover {
  font-size: inherit;
- color: #828892;
+ color: #de6d25;
 }
 .navbar-text {
  margin-top: 4px;
@@ -14073,13 +14071,13 @@ span.rendered_html code {
  padding-right: 0px;
 }
 .nbext-filter-menu {
- max-height: 50vh;
+ max-height: 55vh !important;
  overflow-y: auto;
  outline: none;
- border: 2px solid #dedede;
+ border: none;
 }
 .nbext-filter-menu:hover {
- border: 2px solid #dedede;
+ border: none;
 }
 .alert-warning {
  background-color: #f4f4f4;
@@ -14242,6 +14240,40 @@ div.collapsible_headings_toggle .fa-caret-right:before {
  -o-transform: inherit !important;
  transform: inherit !important;
  padding-right: 0px !important;
+}
+#toc-wrapper {
+ z-index: 90;
+ position: fixed !important;
+ display: flex;
+ flex-direction: column;
+ overflow: hidden;
+ padding: 10px;
+ border-style: solid;
+ border-width: thin;
+ border-right-width: medium !important;
+ background-color: #ffffff !important;
+}
+#toc-wrapper.ui-draggable.ui-resizable.sidebar-wrapper {
+ border-color: rgba(180,180,180,.14) !important;
+}
+#toc a,
+#navigate_menu a,
+.toc {
+ color: #303030 !important;
+ font-size: 11pt !important;
+}
+#toc li > span:hover {
+ background-color: #d4d4d4 !important;
+}
+#toc a:hover,
+#navigate_menu a:hover,
+.toc {
+ color: #1c1c1c !important;
+ font-size: 11pt !important;
+}
+#toc-wrapper .toc-item-num {
+ color: #ff7823 !important;
+ font-size: 11pt !important;
 }
 input.raw_input {
  font-family: "Fira Code", monospace, monospace;
@@ -14418,6 +14450,15 @@ body > div.modal.cmd-palette.in > div {
  background-color: #009e07;
  border-color: #009e07;
  border-radius: 0px;
+}
+.jupyter-dashboard-menu-item.selected::before {
+ font-family: 'FontAwesome' !important;
+ content: '\f00c' !important;
+ position: absolute !important;
+ color: #ff7823 !important;
+ left: 0px !important;
+ top: 13px !important;
+ font-size: 12px !important;
 }
 .shortcut_key,
 span.shortcut_key {
@@ -14821,18 +14862,18 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {
 div.cell.text_cell .cm-s-default .cm-header {
  font-family: "Roboto Mono", monospace;
  font-weight: normal;
- color: #126dce;
+ color: #126dce !important;
  margin-top: 0.3em !important;
  margin-bottom: 0.3em !important;
 }
 div.cell.text_cell .cm-s-default span.cm-variable-2 {
- color: #353535;
+ color: #353535 !important;
 }
 div.cell.text_cell .cm-s-default span.cm-variable-3 {
- color: #aa22ff;
+ color: #aa22ff !important;
 }
 .cm-s-default span.cm-comment {
- color: #8d8d8d;
+ color: #8d8d8d !important;
 }
 .cm-s-default .cm-tag {
  color: #009fb7;
@@ -15012,7 +15053,7 @@ In the UK, the <a href="https://www.statista.com/statistics/697383/favorite-hot-
 <p><img src="images/coffee.jpg" alt="Coffee is clearly superior to tea"></p>
 <p>Obtaining knowledge about a <em>population</em> by <em>inferring</em> from a <em>sample</em> is the cornerstone of quantitative social science research, and uses many statistical techniques to be able to do this.
 The good news is the most difficult challenge is often deciding which technique to use; using the technique is often like following a recipe.</p>
-<h2 id="Packages">Packages<a class="anchor-link" href="#Packages">&#182;</a></h2><p>I use <code>python3</code> to process and analyse the data, and a number of packages install through anaconda.</p>
+<h2 id="Packages">Packages<a class="anchor-link" href="#Packages">&#182;</a></h2><p>I use <code>python3</code> to process and analyse the data, and a number of packages installed through <a href="https://www.anaconda.com/distribution/">anaconda</a>.</p>
 
 </div>
 </div>
@@ -15250,7 +15291,7 @@ These are labels such as male/female; no religion/religion.
 They have no inherent order; one response is not 'better' or 'higher' than another.
 As social scientists you'll find these are pretty common.</p>
 <h2 id="Ordinal">Ordinal<a class="anchor-link" href="#Ordinal">&#182;</a></h2><p>Similar to nominal in that they are labels (rather than numbers), but the labels have a rank or order.
-For example, a 'strongly disagree' to 'strongly agree' scale is ordinal.
+For example, a 'strongly disagree' to 'strongly agree' scale (sometimes called a <a href="https://en.wikipedia.org/wiki/Likert_scale">Likert scale</a>) is ordinal.
 Another example would be 'guilty' and 'not guilty'.</p>
 <h2 id="Interval">Interval<a class="anchor-link" href="#Interval">&#182;</a></h2><p>Interval data is numerical but does not have a meaningful zero value.
 The most common example often given is temperature expressed in degrees celcius.
@@ -15258,18 +15299,19 @@ A temperature of 20&deg;C is not twice as hot as 10&deg;C, because 0&deg;C is ar
 <p>A more common example in the social sciences is date.
 Years are based on an arbitrary zero (0AD); months are based on twelve months that do not have a 'zero'; days do not have a zero and reset each month.</p>
 <h2 id="Ratio">Ratio<a class="anchor-link" href="#Ratio">&#182;</a></h2><p>Ratio data is again numerical, but differs from interval because it has a meaningful, non--arbitrary, zero.
-As we saw above dates are interval, but age in years is ratio because zero years old is the lowest age you can be.</p>
+As we saw above dates are interval, but age is ratio because it has a meaningful zero (i.e. birth).
+It is correct to say that someone who is ten years old is twice as old as someone who is five years old.</p>
 <p>It is more common for numerical data to be ratio than interval.
 Other examples include income and number of events (e.g. number of crimes in an area).</p>
 <h2 id="Discrete-and-continuous-data">Discrete and continuous data<a class="anchor-link" href="#Discrete-and-continuous-data">&#182;</a></h2><p>One additional thing to bear in mind for interval and ratio data is that it can be discrete or continuous.</p>
 <ul>
 <li>Discrete means it can only take on certain (discrete) values, usually integers (1, 2, 3...)</li>
-<li>Continuous means it can take on any numerical value (1.23, 4.56, 7.89)</li>
+<li>Continuous means it can take on any numerical value (1.23, 4.56, 7.897126534).</li>
 </ul>
 <p>Discrete data is usually count data (i.e. frequencies things occur) which are quite common in the social sciences.
 It is not possible to own 1.6 cars or have 2.4 children, for example.</p>
 <p>Continuous data can take on any value and is usually measured.
-Examples include height, weight, and age (although this is usually measured on a discrete scale, number of years).</p>
+Examples include height, weight, and age (although this is usually measured on a discrete scale; number of years).</p>
 <p>Income is the most common 'unusual' one, in that it can be a decimal (i.e. pence) but is discrete because you can only have a limited range of values less than 1.0 (i.e. you cannot have 0.3 pence).
 It is, however, most commonly treated as continuous and in most models this works well.</p>
 
@@ -16502,7 +16544,7 @@ I'm using ages of all people in Sheffield in 2011 to illustrate this, which I do
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Most sample means are around 38, although a few are as low as 32 and as high as 45. Remember we know the population mean, but we wouldn't normally know this.
+<p>Most sample means are around 38, although a few are lower than 32 and higher than 45. Remember  in this case we know the population mean, but we wouldn't normally know this.
 If we just had access to one sample, how would we know if the resultant sample mean was close to the population mean?</p>
 <p>From the histogram of sample means we can see that it's more likely to end up with a sample mean that's close to the population mean than one that's further away, and we can quantify this with a confidence interval.</p>
 <p>Let's take one sample of 1000 random cases from the original data set and pretend it's all we have access to:</p>
@@ -16827,6 +16869,14 @@ In our example the population mean is indeed within the 95% confidence interval 
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Perhaps counterintuitively this results in a wider interval (because the interval ensures the population mean falls within these bounds 99 times instead of 95); it is not 'more precise'.</p>
 <p>From the standard error of the mean and confidence interval we can therefore quantify how confident we are that the sample mean is close to the true population mean.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Comparing-means-and-confidence-intervals">Comparing means and confidence intervals<a class="anchor-link" href="#Comparing-means-and-confidence-intervals">&#182;</a></h2><p>A useful property of confidence intervals is that they can be used to compare two or more means to see if they are statistically significantly different.
 For example, we have a sample of the ages of people in Sheffield and we could create a similar sample of the ages of people in Eastbourne, calculate the confidence intervals, and compare them to see if they differ (i.e. if, on average, people are older in Eastbourne).</p>
 
@@ -17399,7 +17449,7 @@ Let's take a sample of 1,000 individuals and calculate the mean and standard err
 <p>$$
 2000 = \mu + x.\sigma
 $$</p>
-<p>where $\mu$ is the mean and $x.\sigma$ is the number of standard deviations we want to calculate. If we rearrange the equation we get:</p>
+<p>where $\mu$ is the mean, $\sigma$ is the standard deviation, and $x$ is the number of standard deviations we want to calculate. If we rearrange the equation we get:</p>
 <p>$$
 \frac{2000}{\sigma} = \frac{\mu}{\sigma} + x
 $$</p>
@@ -17667,7 +17717,7 @@ Similarly, children who do not yet work can be ascribed economic and social char
 <p>From this crosstab we can see that similar numbers of people rent their homes from local authorities ('public rented') and private landlords (880 and 798 respectively), but that more than four times as many people own their own home (3466) than rent privately or rent publicly.</p>
 <p>We can also see that most people in NS-SEC group 1 (higher managerial, administrative, and professional occupations) own their home (1282) compared to rent (total 307).
 If we compare this to NS-SEC group 3 (routine and manual occupations) only 523 own their home, while 289 rent from a local authority (much more than the group 1) and 233 rent privately (similar to group 1).</p>
-<p>These descriptions are pretty straightforward, but any analysis is complicated by the fact that the two groups are different sizes (n = 1,589 group 1; n = 1,045 group 2) so we cannot directly compare the counts in this table to see if there are differences between the groups.
+<p>These descriptions are pretty straightforward, but any analysis is complicated by the fact that the two groups are different sizes (n = 1,589 group 1; n = 1,045 group 3) so we cannot directly compare the counts in this table to see if there are differences between the groups.
 The next step is to look at the percentages:</p>
 
 </div>
@@ -18158,7 +18208,7 @@ For our example of employment grade and housing tenure we have more than a 2x2 t
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>The odds ratio is the odds of one group for the event of interest divided by the odds of the other group for the event of interest.
-So we need to sets of odds.</p>
+So we need two sets of odds.</p>
 <p>First we specify the odds of the professional and managerial group owning their own home.
 This is the number of professional respondents who own their home (1282), divided by the number of professional respondents who <em>do not</em> own their home (70 + 237):</p>
 
@@ -18300,7 +18350,7 @@ This is the number of professional respondents who own their home (1282), divide
 <h2 id="Pearson's-correlation-coefficient,-$r$">Pearson's correlation coefficient, $r$<a class="anchor-link" href="#Pearson's-correlation-coefficient,-$r$">&#182;</a></h2><p>$r$ is standardised, which is useful because:</p>
 <ul>
 <li>tests of all sorts of units can be compared which each other,</li>
-<li>the result is between -1 (perfect negative association), through 0 (no association), and 1 (perfect effect)</li>
+<li>the result is between -1 (perfect negative association), through 0 (no association), and 1 (perfect positive association)</li>
 </ul>
 <p>$r$ is a measure of effect size (or correlation) between two numerical variables.
 It works on the principle that as the difference from the mean for one variable increases we expect the difference from the mean for the related variable to increase (positive correlation) or decrease (negative correlation).</p>
