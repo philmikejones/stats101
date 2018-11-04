@@ -1,0 +1,2467 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Measures of spread &#8212; stats101 0.1.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Central tendency" href="04-central-tendency.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #303F9F;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #D84315;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 8ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+</style>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">scipy.stats</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="Measures-of-spread">
+<h1>Measures of spread<a class="headerlink" href="#Measures-of-spread" title="Permalink to this headline">¶</a></h1>
+<p>We saw in the measures of <a class="reference external" href="#Central-tendency">central tendency
+section</a> that the mean can be a poor
+representation of data if the data is skewed, and that we should
+therefore be careful when someone presents us with a mean (or average)
+without any further information.</p>
+<p>One of the types of ‘further information’ that can help us is a measure
+of spread of the data around the mean value. We usually use the
+<em>variance</em> and the <em>standard deviation</em> to quantify measure of spread.
+Both are easy to calculate, and even easier to convert between each
+other. We also sometimes see the range and inter–quartile range. These
+are simpler to calculate, but less useful.</p>
+<div class="section" id="Range">
+<h2>Range<a class="headerlink" href="#Range" title="Permalink to this headline">¶</a></h2>
+<p>Simply the largest value, minus the smallest value.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">food_trimmed</span><span class="o">.</span><span class="n">P344pr</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">-</span> <span class="n">food_trimmed</span><span class="o">.</span><span class="n">P344pr</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[14]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>1181.54
+</pre></div>
+</div>
+</div>
+<p>This is the full spread of the data set so doesn’t tell us anything very
+useful in this case, and the range is very susceptible to outliers.
+Therefore the inter–quartile range is more common.</p>
+</div>
+<div class="section" id="Inter–quartile-range">
+<h2>Inter–quartile range<a class="headerlink" href="#Inter–quartile-range" title="Permalink to this headline">¶</a></h2>
+<p>As we saw above the range is very susceptible to outliers, so the
+inter–quartile range is effectively a ‘trimmed’ range by taking off the
+very lowest and the very highest values. In fact, we take off the top
+25% and the bottom 25% and specify this range. This has the disadvantage
+of only describing the middle 50% of our data, but this is usually
+outweighed by the fact that this is less susceptible to outliers.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">food_trimmed</span><span class="o">.</span><span class="n">P344pr</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.75</span><span class="p">)</span> <span class="o">-</span> <span class="n">food_trimmed</span><span class="o">.</span><span class="n">P344pr</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.25</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[15]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>445.75049999999993
+</pre></div>
+</div>
+</div>
+<p>It’s common to plot a <strong>boxplot</strong> to depict the range and interquartile
+range.</p>
+<p>The figure below is a boxplot of the trimmed income (remember I removed
+the top–coded income category to create a more normal distribution).</p>
+<ul class="simple">
+<li>the mean is the green horizontal bar</li>
+<li>the interquartile range (representing 50% of the incomes) is the box</li>
+<li>the full range are the stalks (whiskers) at the very top and bottom
+of the figure</li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">food_trimmed</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">column</span> <span class="o">=</span> <span class="s2">&quot;P344pr&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Income (£)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[16]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Text(0, 0.5, &#39;Income (£)&#39;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/stats101_6_1.png" src="_images/stats101_6_1.png" />
+</div>
+</div>
+<p>The range and inter–quartile range are useful when beginning to
+understand and explore your data, but are not usually reported. Instead
+the variance and standard deviation are more commonly reported, because
+they are more useful.</p>
+</div>
+<div class="section" id="Variance">
+<h2>Variance<a class="headerlink" href="#Variance" title="Permalink to this headline">¶</a></h2>
+<p>To calculate the variance:</p>
+<ol class="arabic simple">
+<li>subtract the mean from each score</li>
+<li>square the result</li>
+<li>sum the results to produce one value</li>
+<li>divide by <span class="math notranslate nohighlight">\(n - 1\)</span> (number of observations minus one)</li>
+</ol>
+<div class="math notranslate nohighlight">
+\[\frac{\Sigma (x - \bar{x}) ^ 2}{n-1}\]</div>
+<p>Using <span class="math notranslate nohighlight">\(n - 1\)</span> rather than simply the number of observations is
+known as <a class="reference external" href="https://en.wikipedia.org/wiki/Bessel%27s_correction">Bessel’s
+correction</a>. To
+calculate the variance of the population we must assume that the
+population mean is the same as the sample mean that we have observed. In
+fixing the population mean we reduce the degrees of freedom of our
+observations, because if we change these the final observation is
+determined in order for the mean to remain constant.</p>
+<p>For example if our sample mean is 100 we assume our population mean is
+also 100. If we have two observations these might be 110 and 90 (mean
+100). If we change the 110 value to 120, the 90 value <em>must</em> change to
+80 to ensure the sample mean (and therefore the population mean) remains
+100, so there is only one degree of freedom. We would therefore use
+<span class="math notranslate nohighlight">\(2 - 1\)</span> as the denominator in our variance calculation.</p>
+<p>The variance of our trimmed income data is:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">food_trimmed</span><span class="p">[</span><span class="s2">&quot;P344pr&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">var</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[17]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>84230.34403890932
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="Standard-deviation">
+<h2>Standard deviation<a class="headerlink" href="#Standard-deviation" title="Permalink to this headline">¶</a></h2>
+<p>As you’ve probably noticed the variance is not in the units of the
+original data. This is where the standard deviation comes in. In fact
+the unit of the variance is the <em>square</em> of the unit of the original
+data. The standard deviation is therefore a measure of spread in the
+units of the original data, and is calculated simply by square rooting
+the variance:</p>
+<div class="math notranslate nohighlight">
+\[\sqrt{\frac{\Sigma (x - \bar{x}) ^ 2}{n-1}}\]</div>
+<p>The standard deviation of the trimmed income is therefore:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">food_trimmed</span><span class="o">.</span><span class="n">P344pr</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[18]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>290.22464409300136
+</pre></div>
+</div>
+</div>
+<p>The standard deviation is a measure of how far the data points are on
+average from the mean. A small standard deviation means the mean fairly
+accurately represents the data; a large standard deviation means the
+mean does not represent the data well.</p>
+<p>In the case of our example the standard deviation of the income data is
+quite large compared to the mean, suggesting a lot of variability even
+in the trimmed income data. The histograms support this, and suggest the
+mean might not be as good as the median in summarising this data.</p>
+<p>In fact, using properties of the normal distribution and the standard
+deviation we can estimate that about 95% of cases fall between:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">food_trimmed</span><span class="o">.</span><span class="n">P344pr</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">-</span> <span class="mf">1.96</span> <span class="o">*</span> <span class="n">food_trimmed</span><span class="o">.</span><span class="n">P344pr</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[19]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>-50.53468469783536
+</pre></div>
+</div>
+</div>
+<p>and:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">food_trimmed</span><span class="o">.</span><span class="n">P344pr</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">+</span> <span class="mf">1.96</span> <span class="o">*</span> <span class="n">food_trimmed</span><span class="o">.</span><span class="n">P344pr</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[20]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>1087.14592014673
+</pre></div>
+</div>
+</div>
+<p>This is most of the data set, so the variability of the data suggest the
+mean may not be a useful summary of the data.</p>
+</div>
+</div>
+<div class="section" id="Standard-error-and-confidence-intervals">
+<h1>Standard error and confidence intervals<a class="headerlink" href="#Standard-error-and-confidence-intervals" title="Permalink to this headline">¶</a></h1>
+<p>You can calculate a standard error of many parameters, but typically it
+refers to the standard error of the mean (<span class="math notranslate nohighlight">\(SE_{\bar{x}}\)</span>). The
+standard error of the mean differs from the standard deviation: the
+standard deviation quantifies how well the sample mean fits the observed
+(i.e.&nbsp;sample) data, and the standard error of the mean quantifies how
+well the sample mean matches the population mean.</p>
+<p>Because any sample we take from the population is going to be slightly
+different from all other samples (because everything varies) each sample
+mean is going to be slightly different from every other. The standard
+error of the mean is a measure of how confident our sample mean matches
+the population mean.</p>
+<p>One approach to calculate the standard error of the mean would be to
+take multiple samples. The mean of each of these samples would form a
+sampling distribution due to variation: some sample means would be lower
+than the population mean; some sample means would be higher than the
+population mean; and many would be the same. These sample mean values
+would form a normal distribution around the population mean. The
+standard deviation of these sample means would tell us how well our
+sample means fit the population mean.</p>
+<p>In practice we can usually only take one sample so we can estimate it
+with:</p>
+<div class="math notranslate nohighlight">
+\[\sigma_{\bar{x}} \approx \frac{s}{\sqrt{n}}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\sigma_{\bar{x}}\)</span> is the standard error of the population
+mean (the parameter we’re trying to estimate), <span class="math notranslate nohighlight">\(s\)</span> is the sample
+standard deviation, and <span class="math notranslate nohighlight">\(n\)</span> is the number of observations in the
+sample (<span class="math notranslate nohighlight">\(\approx\)</span> just means ‘approximately equal to’).</p>
+<p>We can demonstrate this with the census (in fact, we could demonstrate
+this with any data set and pretend it’s the population and take multiple
+samples from it, but why not just use an actual population?). I’m using
+ages of all people in Sheffield in 2011 to illustrate this, which I
+download from Nomisweb:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [21]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="s2">&quot;../data/external/age.csv&quot;</span><span class="p">):</span>
+    <span class="n">age</span> <span class="o">=</span> <span class="s2">&quot;https://www.nomisweb.co.uk/api/v01/dataset/NM_503_1.data.csv?date=latest&amp;geography=1946157123&amp;rural_urban=0&amp;c_age=1...101&amp;measures=20100&amp;signature=NPK-0c73734c0f725c979cee3a:0xa9b892a105be9e9449cdb6c88bdac678e12b229e&quot;</span>
+    <span class="n">age</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">age</span><span class="p">)</span>
+    <span class="n">age</span> <span class="o">=</span> <span class="n">age</span><span class="o">.</span><span class="n">text</span>
+    <span class="n">outfile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;../data/external/age.csv&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span>
+    <span class="n">outfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">age</span><span class="p">)</span>
+
+<span class="n">age</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../data/external/age.csv&quot;</span><span class="p">)</span>
+<span class="n">age</span> <span class="o">=</span> <span class="n">age</span><span class="p">[[</span><span class="s2">&quot;C_AGE_NAME&quot;</span><span class="p">,</span> <span class="s2">&quot;OBS_VALUE&quot;</span><span class="p">]]</span>
+<span class="n">age</span><span class="o">.</span><span class="n">C_AGE_NAME</span> <span class="o">=</span> <span class="n">age</span><span class="o">.</span><span class="n">C_AGE_NAME</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;Age under 1&quot;</span><span class="p">,</span> <span class="s2">&quot;0&quot;</span><span class="p">)</span>
+<span class="n">age</span><span class="o">.</span><span class="n">C_AGE_NAME</span> <span class="o">=</span> <span class="n">age</span><span class="o">.</span><span class="n">C_AGE_NAME</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; and over&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+<span class="n">age</span><span class="o">.</span><span class="n">C_AGE_NAME</span> <span class="o">=</span> <span class="n">age</span><span class="o">.</span><span class="n">C_AGE_NAME</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;Age &quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+<span class="n">age</span><span class="o">.</span><span class="n">C_AGE_NAME</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">age</span><span class="o">.</span><span class="n">C_AGE_NAME</span><span class="p">)</span>
+<span class="n">sum_obsvalue</span> <span class="o">=</span> <span class="n">age</span><span class="o">.</span><span class="n">OBS_VALUE</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>  <span class="c1"># for checks</span>
+
+<span class="n">age</span> <span class="o">=</span> <span class="n">age</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">age</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">age</span><span class="p">[</span><span class="s2">&quot;OBS_VALUE&quot;</span><span class="p">])]</span>
+
+<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">age</span><span class="o">.</span><span class="n">index</span><span class="p">)</span> <span class="o">!=</span> <span class="n">sum_obsvalue</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;age data frame not spread correctly&quot;</span><span class="p">)</span>
+
+<span class="n">age</span> <span class="o">=</span> <span class="n">age</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;OBS_VALUE&quot;</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># default &#39;axis&#39; is &#39;index&#39;</span>
+
+<span class="n">age</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[21]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>C_AGE_NAME</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>552698.000000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>37.872098</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>23.053824</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>20.000000</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>36.000000</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>55.000000</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>100.000000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p>The following is a histogram of ages of people living in Sheffield from
+the 2011 Census.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [22]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">age</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="s2">&quot;C_AGE_NAME&quot;</span><span class="p">,</span> <span class="n">bins</span> <span class="o">=</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Age&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Frequency&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[22]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Text(0, 0.5, &#39;Frequency&#39;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/stats101_19_1.png" src="_images/stats101_19_1.png" />
+</div>
+</div>
+<p>The median age is:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [23]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">age</span><span class="o">.</span><span class="n">C_AGE_NAME</span><span class="o">.</span><span class="n">median</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[23]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>36.0
+</pre></div>
+</div>
+</div>
+<p>The mean age is (remember this is the mean of the population, which we
+wouldn’t normally know):</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [24]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">age</span><span class="o">.</span><span class="n">C_AGE_NAME</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[24]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>37.87209832494418
+</pre></div>
+</div>
+</div>
+<p>Let’s take 1000 samples of 100 people from the population, and make a
+sampling distribution of these means:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [25]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">samples</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">):</span>
+    <span class="n">sample</span> <span class="o">=</span> <span class="n">age</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">n</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="n">replace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">random_state</span> <span class="o">=</span> <span class="n">i</span><span class="p">)</span>
+    <span class="n">sample</span> <span class="o">=</span> <span class="n">sample</span><span class="o">.</span><span class="n">C_AGE_NAME</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    <span class="n">samples</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span>
+
+<span class="n">samples</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">samples</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>The following is a distribution of the sample means (a sampling
+distribution):</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [26]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">samples</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">bins</span> <span class="o">=</span> <span class="mi">20</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Mean age&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Frequency&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[26]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Text(0, 0.5, &#39;Frequency&#39;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/stats101_27_1.png" src="_images/stats101_27_1.png" />
+</div>
+</div>
+<p>Most sample means are around 38, although a few are lower than 32 and
+higher than 45. Remember in this case we know the population mean, but
+we wouldn’t normally know this. If we just had access to one sample, how
+would we know if the resultant sample mean was close to the population
+mean?</p>
+<p>From the histogram of sample means we can see that it’s more likely to
+end up with a sample mean that’s close to the population mean than one
+that’s further away, and we can quantify this with a confidence
+interval.</p>
+<p>Let’s take one sample of 1000 random cases from the original data set
+and pretend it’s all we have access to:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [27]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">sample</span> <span class="o">=</span> <span class="n">age</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">n</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span> <span class="n">replace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">random_state</span> <span class="o">=</span> <span class="mi">42</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>The mean of this sample is:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [28]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">sample</span><span class="o">.</span><span class="n">C_AGE_NAME</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[28]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>37.037
+</pre></div>
+</div>
+</div>
+<p>This is very close to the population mean but not quite the same. The
+standard error of this sample mean is:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [29]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">sample</span><span class="o">.</span><span class="n">C_AGE_NAME</span><span class="o">.</span><span class="n">sem</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[29]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>0.73612329708311
+</pre></div>
+</div>
+</div>
+<p>We know that an ideal normal distribution will have <a class="reference external" href="https://en.wikipedia.org/wiki/Normal_distribution#Standard_deviation_and_coverage">95% of cases within
+1.96 standard deviations of the
+mean</a>.
+If we multiply our standard error by <span class="math notranslate nohighlight">\(\pm\)</span> 1.96 that therefore
+defines a 95% confidence interval. In this case we would have an
+interval of:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [30]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">sample</span><span class="o">.</span><span class="n">C_AGE_NAME</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">-</span> <span class="mf">1.96</span> <span class="o">*</span> <span class="n">sample</span><span class="o">.</span><span class="n">C_AGE_NAME</span><span class="o">.</span><span class="n">sem</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[30]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>35.5941983377171
+</pre></div>
+</div>
+</div>
+<p>to:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [31]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">sample</span><span class="o">.</span><span class="n">C_AGE_NAME</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">+</span> <span class="mf">1.96</span> <span class="o">*</span> <span class="n">sample</span><span class="o">.</span><span class="n">C_AGE_NAME</span><span class="o">.</span><span class="n">sem</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[31]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>38.479801662282895
+</pre></div>
+</div>
+</div>
+<p>This effectively estimates that if we were to take 100 samples the
+population mean would fall within these bounds 95 times. In our example
+the population mean is indeed within the 95% confidence interval of the
+sample mean (remember the population mean was:)</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [32]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">age</span><span class="o">.</span><span class="n">C_AGE_NAME</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[32]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>37.87209832494418
+</pre></div>
+</div>
+</div>
+<p>To calculate 99% confidence intervals use 2.58 standard deviations
+rather than 1.96, in this example resulting in a confidence interval
+between:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [33]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">sample</span><span class="o">.</span><span class="n">C_AGE_NAME</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">-</span> <span class="mf">2.58</span> <span class="o">*</span> <span class="n">sample</span><span class="o">.</span><span class="n">C_AGE_NAME</span><span class="o">.</span><span class="n">sem</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[33]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>35.13780189352558
+</pre></div>
+</div>
+</div>
+<p>and:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [34]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">sample</span><span class="o">.</span><span class="n">C_AGE_NAME</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">+</span> <span class="mf">2.58</span> <span class="o">*</span> <span class="n">sample</span><span class="o">.</span><span class="n">C_AGE_NAME</span><span class="o">.</span><span class="n">sem</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[34]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>38.93619810647442
+</pre></div>
+</div>
+</div>
+<p>Perhaps counterintuitively this results in a wider interval (because the
+interval ensures the population mean falls within these bounds 99 times
+instead of 95); it is not ‘more precise’.</p>
+<p>From the standard error of the mean and confidence interval we can
+therefore quantify how confident we are that the sample mean is close to
+the true population mean.</p>
+<div class="section" id="Comparing-means-and-confidence-intervals">
+<h2>Comparing means and confidence intervals<a class="headerlink" href="#Comparing-means-and-confidence-intervals" title="Permalink to this headline">¶</a></h2>
+<p>A useful property of confidence intervals is that they can be used to
+compare two or more means to see if they are statistically significantly
+different. For example, we have a sample of the ages of people in
+Sheffield and we could create a similar sample of the ages of people in
+Eastbourne, calculate the confidence intervals, and compare them to see
+if they differ (i.e.&nbsp;if, on average, people are older in Eastbourne).</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [35]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="s2">&quot;../data/external/age_eb.csv&quot;</span><span class="p">):</span>
+    <span class="n">age_eb</span> <span class="o">=</span> <span class="s2">&quot;https://www.nomisweb.co.uk/api/v01/dataset/NM_1531_1.data.csv?date=latest&amp;geography=1946157295&amp;c_age=1...101&amp;measures=20100&amp;signature=NPK-0c73734c0f725c979cee3a:0x65c03934cecfca562500f65e9cb1bd2083fbea01&quot;</span>
+    <span class="n">age_eb</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">age_eb</span><span class="p">)</span>
+    <span class="n">age_eb</span> <span class="o">=</span> <span class="n">age_eb</span><span class="o">.</span><span class="n">text</span>
+    <span class="n">outfile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;../data/external/age_eb.csv&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span>
+    <span class="n">outfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">age_eb</span><span class="p">)</span>
+
+<span class="n">age_eb</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../data/external/age_eb.csv&quot;</span><span class="p">)</span>
+<span class="n">age_eb</span> <span class="o">=</span> <span class="n">age_eb</span><span class="p">[[</span><span class="s2">&quot;C_AGE_NAME&quot;</span><span class="p">,</span> <span class="s2">&quot;OBS_VALUE&quot;</span><span class="p">]]</span>
+<span class="n">age_eb</span><span class="o">.</span><span class="n">C_AGE_NAME</span> <span class="o">=</span> <span class="n">age_eb</span><span class="o">.</span><span class="n">C_AGE_NAME</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;Age under 1&quot;</span><span class="p">,</span> <span class="s2">&quot;0&quot;</span><span class="p">)</span>
+<span class="n">age_eb</span><span class="o">.</span><span class="n">C_AGE_NAME</span> <span class="o">=</span> <span class="n">age_eb</span><span class="o">.</span><span class="n">C_AGE_NAME</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; and over&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+<span class="n">age_eb</span><span class="o">.</span><span class="n">C_AGE_NAME</span> <span class="o">=</span> <span class="n">age_eb</span><span class="o">.</span><span class="n">C_AGE_NAME</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;Age &quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+<span class="n">age_eb</span><span class="o">.</span><span class="n">C_AGE_NAME</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">age_eb</span><span class="o">.</span><span class="n">C_AGE_NAME</span><span class="p">)</span>
+<span class="n">sum_obsvalue</span> <span class="o">=</span> <span class="n">age_eb</span><span class="o">.</span><span class="n">OBS_VALUE</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>  <span class="c1"># for checks</span>
+
+<span class="n">age_eb</span> <span class="o">=</span> <span class="n">age_eb</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">age_eb</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">age_eb</span><span class="p">[</span><span class="s2">&quot;OBS_VALUE&quot;</span><span class="p">])]</span>
+
+<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">age_eb</span><span class="o">.</span><span class="n">index</span><span class="p">)</span> <span class="o">!=</span> <span class="n">sum_obsvalue</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;age_eb data frame not spread correctly&quot;</span><span class="p">)</span>
+
+<span class="n">age_eb</span> <span class="o">=</span> <span class="n">age_eb</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;OBS_VALUE&quot;</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="n">age_eb</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[35]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>C_AGE_NAME</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>99412.000000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>42.833169</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>24.719087</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>22.000000</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>43.000000</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>63.000000</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>100.000000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p>From the table above we can see that the mean <em>is</em> higher than the mean
+for Sheffield, but remember we are comparing populations and we would
+not typically have access to this information. Let’s take a sample of
+1,000 individuals and calculate the mean and standard error of the mean:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [36]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">sample_eb</span> <span class="o">=</span> <span class="n">age_eb</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">n</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span> <span class="n">replace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">random_state</span> <span class="o">=</span> <span class="mi">42</span><span class="p">)</span>
+<span class="n">sample_eb</span><span class="o">.</span><span class="n">C_AGE_NAME</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[36]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>42.294
+</pre></div>
+</div>
+</div>
+<p>So our sample mean is also different, but can we be sure it’s different
+and not just the result of our sampling?’. Using the standard error of
+the mean our confidence interval is:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [37]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">sample_eb</span><span class="o">.</span><span class="n">C_AGE_NAME</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">-</span> <span class="mf">1.96</span> <span class="o">*</span> <span class="n">sample_eb</span><span class="o">.</span><span class="n">C_AGE_NAME</span><span class="o">.</span><span class="n">sem</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[37]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>40.757572452123995
+</pre></div>
+</div>
+</div>
+<p>and</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [38]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">sample_eb</span><span class="o">.</span><span class="n">C_AGE_NAME</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">+</span> <span class="mf">1.96</span> <span class="o">*</span> <span class="n">sample_eb</span><span class="o">.</span><span class="n">C_AGE_NAME</span><span class="o">.</span><span class="n">sem</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[38]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>43.830427547876
+</pre></div>
+</div>
+</div>
+<p>Note that, reassuringly, this interval contains our population mean.
+Note also that the full interval is higher than the Sheffield interval
+(i.e.&nbsp;the top of the Sheffield interval is below the bottom of the
+Eastbourne interval). This means that the mean age of Sheffield and
+Eastbourne are statistically significantly different at the 95%
+confidence level.</p>
+<p>We can visualise the confidence intervals as:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [39]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">age_cis</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;town&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Sheffield&quot;</span><span class="p">,</span> <span class="s2">&quot;Eastbourne&quot;</span><span class="p">],</span>
+           <span class="s2">&quot;mean&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">sample</span><span class="o">.</span><span class="n">C_AGE_NAME</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">sample_eb</span><span class="o">.</span><span class="n">C_AGE_NAME</span><span class="o">.</span><span class="n">mean</span><span class="p">()],</span>
+           <span class="s2">&quot;sem&quot;</span><span class="p">:</span>  <span class="p">[</span><span class="n">sample</span><span class="o">.</span><span class="n">C_AGE_NAME</span><span class="o">.</span><span class="n">sem</span><span class="p">(),</span> <span class="n">sample_eb</span><span class="o">.</span><span class="n">C_AGE_NAME</span><span class="o">.</span><span class="n">sem</span><span class="p">()]}</span>
+
+<span class="n">age_cis</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">age_cis</span><span class="p">)</span>
+<span class="n">age_cis</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[39]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>town</th>
+      <th>mean</th>
+      <th>sem</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Sheffield</td>
+      <td>37.037</td>
+      <td>0.736123</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Eastbourne</td>
+      <td>42.294</td>
+      <td>0.783892</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [40]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">y</span> <span class="o">=</span> <span class="n">age_cis</span><span class="p">[</span><span class="s2">&quot;mean&quot;</span><span class="p">],</span>
+    <span class="n">xerr</span> <span class="o">=</span> <span class="mf">0.02</span><span class="p">,</span> <span class="n">yerr</span> <span class="o">=</span> <span class="mf">1.96</span> <span class="o">*</span> <span class="n">age_cis</span><span class="p">[</span><span class="s2">&quot;sem&quot;</span><span class="p">],</span>
+    <span class="n">linestyle</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">age_cis</span><span class="p">[</span><span class="s2">&quot;town&quot;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Mean age&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Town&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[40]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Text(0.5, 0, &#39;Town&#39;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/stats101_55_1.png" src="_images/stats101_55_1.png" />
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="Normal-distribution">
+<h1>Normal distribution<a class="headerlink" href="#Normal-distribution" title="Permalink to this headline">¶</a></h1>
+<p>The normal distribution is central to our ability to infer about a
+population from a sample. The normal distribution looks like this (by
+Dan Kernler from Wikimedia Commons, CC BY-SA 4.0):</p>
+<p>The normal distribution was discovered by Gauss (which is why it’s also
+sometimes called the Gaussian distribution) and described an ‘ideal’
+situation. Lots of data follow this pattern: the height or weight of a
+population; The mean of the normal distribution (<span class="math notranslate nohighlight">\(\mu\)</span> on the
+diagram above) is the centre. Because the normal distribution is
+<strong>symmetrical</strong> we know that 50% of cases fall below and 50% of cases
+fall above the mean.</p>
+<p>Another useful property of the normal distribution is we know, or can
+calculate, how many cases fall with 1, 2, 3, or more standard deviations
+of the mean (these are shown as
+<span class="math notranslate nohighlight">\(\mu \pm \sigma; \mu \pm 2\sigma; \mu \pm 3\sigma\)</span> on the figure).
+These are about 68%, 95%, and 97.5% respectively.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="67%" />
+<col width="33%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Number of <span class="math notranslate nohighlight">\(\sigma\)</span> from mean</th>
+<th class="head">Percent of cases</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>1</td>
+<td>68.27%</td>
+</tr>
+<tr class="row-odd"><td>1.96</td>
+<td>95%</td>
+</tr>
+<tr class="row-even"><td>2</td>
+<td>95.45%</td>
+</tr>
+<tr class="row-odd"><td>2.58</td>
+<td>99%</td>
+</tr>
+<tr class="row-even"><td>3</td>
+<td>99.73%</td>
+</tr>
+</tbody>
+</table>
+<p>Therefore if we know the mean (<span class="math notranslate nohighlight">\(\mu\)</span>) and standard deviation
+(<span class="math notranslate nohighlight">\(\sigma\)</span>) of our sample we can calculate the confidence interval
+of our sample mean (as we did above). Typically we calculate a 95%
+confidence interval (although 99% is also common), and this tells us the
+likely range the population mean falls within. This is why we used the
+figure 1.96 when calculating our confidence interval earlier, and this
+is the property that allows us to infer information about the population
+from our smaller sample.</p>
+<p>The other, related, way we can use this information is if we have a mean
+and standard deviation and observe a data point, we can calculate how
+many standard deviations from the mean this data point is. We can then
+see if the observed data point falls within the normal variation we
+expect (i.e.&nbsp;within 1.96 standard deviations for 95% confidence) or
+outside it, and is therefore the result of something not within the
+normal range.</p>
+<p>Remember our household weekly income example, after we removed the
+top–coded responses? It looked something like this:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [41]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">food_trimmed</span><span class="o">.</span><span class="n">P344pr</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">bins</span> <span class="o">=</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Weekly income (£)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Frequency&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[41]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Text(0, 0.5, &#39;Frequency&#39;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/stats101_57_1.png" src="_images/stats101_57_1.png" />
+</div>
+</div>
+<p>The mean income is:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [42]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">food_trimmed</span><span class="o">.</span><span class="n">P344pr</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[42]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>518.3056177244473
+</pre></div>
+</div>
+</div>
+<p>and the standard deviation is:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [43]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">food_trimmed</span><span class="o">.</span><span class="n">P344pr</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[43]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>290.22464409300136
+</pre></div>
+</div>
+</div>
+<p>Now let’s imagine we find a respondent who lives in Chelsea and we ask
+them to complete our survey. They respond that their income is £2,000
+per week. Does this fall within the variability we expect, or is it
+statistically significantly likely that this respondent has a higher
+income than most? Well, we can calculate how many standard deviations
+our observed data point is away from the mean. We know:</p>
+<div class="math notranslate nohighlight">
+\[2000 = \mu + x.\sigma\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mu\)</span> is the mean, <span class="math notranslate nohighlight">\(\sigma\)</span> is the standard deviation,
+and <span class="math notranslate nohighlight">\(x\)</span> is the number of standard deviations we want to calculate.
+If we rearrange the equation we get:</p>
+<div class="math notranslate nohighlight">
+\[\frac{2000}{\sigma} = \frac{\mu}{\sigma} + x\]</div>
+<div class="math notranslate nohighlight">
+\[\frac{(2000 - \mu)}{\sigma} = x\]</div>
+<p>Plugging in the mean and standard deviation we get:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [44]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="p">(</span><span class="mi">2000</span> <span class="o">-</span> <span class="n">food_trimmed</span><span class="o">.</span><span class="n">P344pr</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span> <span class="o">/</span> <span class="n">food_trimmed</span><span class="o">.</span><span class="n">P344pr</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[44]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>5.1053362022583775
+</pre></div>
+</div>
+</div>
+<p>So our observed data point is more than five standard deviations higher
+than the mean, which means that if we were to interview 3.5 million
+people, only one would have an income that high. It’s therefore highly
+likely that this respondent has a higher income than the average. In
+physics this would be known as a ‘five-sigma’ result: i.e.&nbsp;the result is
+more than five standard deviations (<span class="math notranslate nohighlight">\(\sigma\)</span>) from the mean and is
+therefore highly unlikely to be through chance alone (in the social
+sciences we usually opt for the ‘1.96 sigma’ rule).</p>
+<p>Not all observed data form a perfect normal distribution (in fact most
+differ at least slightly). There are two ways we need to describe a
+distribution if it is different from the normal: skewness and kurtosis.</p>
+<div class="section" id="Skewness">
+<h2>Skewness<a class="headerlink" href="#Skewness" title="Permalink to this headline">¶</a></h2>
+<p>A normal distribution has its mean, median, and mode at the same point
+(the centre). Skewness means the data points are skewed one way or the
+other:</p>
+<p>Negative skew means the tail is to the left; positive skew means the
+tail is to the right. In a positively skewed distribution the mode and
+median are lower than the mean. In a negatively skewed distribution the
+median and mode are higher than the mean.</p>
+</div>
+<div class="section" id="Kurtosis">
+<h2>Kurtosis<a class="headerlink" href="#Kurtosis" title="Permalink to this headline">¶</a></h2>
+<p>Kurtosis refers to how bunched (clustered) around the mean the data
+points are. Positive kurtosis (leptokurtic) means the points are
+clustered around the mean, making the distribution narrower and taller
+than a normal distribution. Negative kurtosis (platykurtic) means the
+data points are spread out more widely, resulting in a distribution that
+is flatter and broader than a normal distribution.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [45]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">mu</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">variance</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">sigma</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">variance</span><span class="p">)</span>
+<span class="n">normal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">mu</span> <span class="o">-</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">mu</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">sigma</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>  <span class="c1"># probability density func</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">normal</span><span class="p">,</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">normal</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">sigma</span><span class="p">))</span>
+
+<span class="n">variance</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">sigma</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">variance</span><span class="p">)</span>
+<span class="n">platykurtic</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">mu</span> <span class="o">-</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">mu</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">sigma</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">platykurtic</span><span class="p">,</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">platykurtic</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">sigma</span><span class="p">))</span>
+
+<span class="n">variance</span> <span class="o">=</span> <span class="mf">0.5</span>
+<span class="n">sigma</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">variance</span><span class="p">)</span>
+<span class="n">leptokurtic</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">mu</span> <span class="o">-</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">mu</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">sigma</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">leptokurtic</span><span class="p">,</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">leptokurtic</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">sigma</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/stats101_65_0.png" src="_images/stats101_65_0.png" />
+</div>
+</div>
+<p>In the figure above:</p>
+<ul class="simple">
+<li>the <strong>blue</strong> line is a normal distribution,</li>
+<li>the <strong>green</strong> line is a distribution with positive kurtosis
+(leptokurtic)</li>
+<li>the <strong>orange</strong> line is a distribution with negative kurtosis
+(platykurtic)</li>
+</ul>
+</div>
+</div>
+<div class="section" id="Hypothesis-testing">
+<h1>Hypothesis testing<a class="headerlink" href="#Hypothesis-testing" title="Permalink to this headline">¶</a></h1>
+<p>So far we’ve loaded our data set, described it with measures of central
+tendency and variability, and tested to see if our sample mean
+adequately describes our population mean. Now we move on to testing
+hypotheses.</p>
+<p>A hypothesis is a statement that we make to explain a phenomenon that we
+do not yet know the answer to. A hypothesis must be testable.</p>
+<p>For example, in our data set we have two nominal variables that we might
+propose there is a relationship between:</p>
+<ul class="simple">
+<li>NS-SEC class of the household reference person (<code class="docutils literal notranslate"><span class="pre">A094r</span></code>)</li>
+<li>Tenure (<code class="docutils literal notranslate"><span class="pre">A121r</span></code>)</li>
+</ul>
+<p>NS-SEC stands for ‘<a class="reference external" href="https://www.ons.gov.uk/methodology/classificationsandstandards/otherclassifications/thenationalstatisticssocioeconomicclassificationnssecrebasedonsoc2010">National Statistics Socio–economic
+classification</a>’,
+and is a measure of employment grade, for example if the household
+reference person is a higher manager or professional, or a manual
+worker.</p>
+<p>The <a class="reference external" href="https://www.scotlandscensus.gov.uk/variables-classification/household-reference-person">household reference
+person</a>
+is the person in the household (usually a family) who is full–time
+employed or, if both partners are full–time employed, the one who is
+oldest. This concept is used because families share social, cultural,
+and economic characteristics so, for example, if one partner is
+currently unemployed they share some of their characteristics with the
+HRP (for example they are likely to still live in the family home and
+participate in similar activities). Similarly, children who do not yet
+work can be ascribed economic and social characteristics based on their
+parent or carer’s economic activity.</p>
+<p>Tenure simply means if the respondent owns their home (outright, or with
+a mortgage) or rents their home from a private landlord or council.</p>
+<p>With all this in mind, our hypothesis might be:</p>
+<blockquote>
+<div>There is an association or link between household reference person
+NS-SEC and home ownership (tenure).</div></blockquote>
+<p>For example, people in NS-SEC category 1 (higher managerial,
+administrative, and professional occupations) may be more likely to own
+their home compared to people in routine and manual occupations.</p>
+<p>First of all, let’s look at a crosstabulation (crosstab) of frequencies
+comparing these two variables:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [46]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">index</span> <span class="o">=</span> <span class="n">food</span><span class="o">.</span><span class="n">A094r</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="n">food</span><span class="o">.</span><span class="n">A121r</span><span class="p">,</span> <span class="n">margins</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">margins_name</span> <span class="o">=</span> <span class="s2">&quot;Total&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[46]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>A121r</th>
+      <th>public rented</th>
+      <th>private rented</th>
+      <th>owned</th>
+      <th>Total</th>
+    </tr>
+    <tr>
+      <th>A094r</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>70</td>
+      <td>237</td>
+      <td>1282</td>
+      <td>1589</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>81</td>
+      <td>141</td>
+      <td>469</td>
+      <td>691</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>289</td>
+      <td>233</td>
+      <td>523</td>
+      <td>1045</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>76</td>
+      <td>85</td>
+      <td>39</td>
+      <td>200</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>364</td>
+      <td>102</td>
+      <td>1153</td>
+      <td>1619</td>
+    </tr>
+    <tr>
+      <th>Total</th>
+      <td>880</td>
+      <td>798</td>
+      <td>3466</td>
+      <td>5144</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p>From this crosstab we can see that similar numbers of people rent their
+homes from local authorities (‘public rented’) and private landlords
+(880 and 798 respectively), but that more than four times as many people
+own their own home (3466) than rent privately or rent publicly.</p>
+<p>We can also see that most people in NS-SEC group 1 (higher managerial,
+administrative, and professional occupations) own their home (1282)
+compared to rent (total 307). If we compare this to NS-SEC group 3
+(routine and manual occupations) only 523 own their home, while 289 rent
+from a local authority (much more than the group 1) and 233 rent
+privately (similar to group 1).</p>
+<p>These descriptions are pretty straightforward, but any analysis is
+complicated by the fact that the two groups are different sizes (n =
+1,589 group 1; n = 1,045 group 3) so we cannot directly compare the
+counts in this table to see if there are differences between the groups.
+The next step is to look at the percentages:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [47]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="n">food</span><span class="o">.</span><span class="n">A094r</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="n">food</span><span class="o">.</span><span class="n">A121r</span><span class="p">,</span>
+    <span class="n">normalize</span> <span class="o">=</span> <span class="s2">&quot;index&quot;</span>
+<span class="p">)</span> <span class="o">*</span> <span class="mi">100</span>  <span class="c1"># converts proportions to percentages</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[47]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>A121r</th>
+      <th>public rented</th>
+      <th>private rented</th>
+      <th>owned</th>
+    </tr>
+    <tr>
+      <th>A094r</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>4.405286</td>
+      <td>14.915041</td>
+      <td>80.679673</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>11.722142</td>
+      <td>20.405210</td>
+      <td>67.872648</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>27.655502</td>
+      <td>22.296651</td>
+      <td>50.047847</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>38.000000</td>
+      <td>42.500000</td>
+      <td>19.500000</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>22.483014</td>
+      <td>6.300185</td>
+      <td>71.216800</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p>Using the row percentages (i.e.&nbsp;each row adds up to 100%) we can see
+that approximately 80% of higher managerial and professional families
+own their own home, but only 50% of routine and manual families own
+their own homes. Similarly we can see that only about 4.5% of managerial
+and professional families rent from a local authority, but 27% of
+routine and manual families do (remember rows 4 and 5 are unemployed and
+unclassified respectively).</p>
+<p>So we think there’s an association between NS-SEC of the household
+reference person and tenure, and the crosstabs certainly seem to support
+this. Unfortunately humans are very, very good at spotting patterns,
+even when there isn’t one there, so instead of just relying on our
+say–so we can statistically test to see if there really is a difference.
+To do this we use a hypothesis test, of which the most common type is
+the chi–squared (<span class="math notranslate nohighlight">\(\chi ^ 2\)</span>) test (the Greek letter is pronounced
+‘key’, but ‘kai’ is probably more common).</p>
+<p>To perform a chi–squared test we specify a <em>null hypothesis</em>, which we
+denote <span class="math notranslate nohighlight">\(H_0\)</span>. A null hypothesis is a way of framing our hypothesis
+that (usually) states there is <em>no</em> association between our variables,
+so in our case we specify our null hypothesis as:</p>
+<blockquote>
+<div>There is <em>no</em> association between NS-SEC of the household reference
+person and housing tenure</div></blockquote>
+<p>The opposite of the null hypothesis is the <em>alternative hypothesis</em>,
+<span class="math notranslate nohighlight">\(H_1\)</span>, which is usually our original hypothesis.</p>
+<p>It is important to frame a hypothesis test in this way because we assume
+the absence of an association, and it is up to us as researchers to
+provide evidence that there is an association. For example, we cannot
+assume that people who drink coffee are more intelligent than people who
+drink tea. It is up to us to demonstrate that this is the case. This is
+what makes our hypothesis <em>testable</em> and <em>falsifiable</em>.</p>
+<p>It’s a bit like the presumption of innocence: we cannot be locked up
+unless we are proven to be guilty of a crime. If it were the other way
+around (i.e.&nbsp;presumption of guilt) we would all be incarcerated and we
+would have to prove that we were innocent, not just of one crime, but of
+every conveivable crime in order to be released! This would be an
+impossible task (not least because no doubt someone would add another
+charge arbitrarily).</p>
+<p>Hermione Granger sums this up better than most statistics textbooks ever
+did:</p>
+<blockquote>
+<div><div class="line-block">
+<div class="line">“Well, how can that <code class="docutils literal notranslate"><span class="pre">[the</span> <span class="pre">resurrection</span> <span class="pre">stone]</span></code> be real?”</div>
+<div class="line">“Prove that it is not”, said Xenophilius.</div>
+<div class="line">Hermione looked outraged.</div>
+<div class="line">“But that’s — I’m sorry, but that’s completely ridiculous! How can
+I possibly prove it doesn’t exist? Do you expect me to get hold of
+— of all the pebbles in the world, and test them? I mean, you could
+claim that anything’s real if the only basis for believing in it is
+that nobody’s <em>proved</em> it doesn’t exist!</div>
+<div class="line">- Harry Potter and the Deathly Hallows</div>
+</div>
+</div></blockquote>
+<p>To carry out the <span class="math notranslate nohighlight">\(\chi ^ 2\)</span> test, the
+<code class="docutils literal notranslate"><span class="pre">`scipy.stats.chi2_contingency()</span></code> &lt;<a class="reference external" href="https://docs.scipy.org/doc/scipy-0.15.1/reference/generated/scipy.stats.chi2_contingency.html">https://docs.scipy.org/doc/scipy-0.15.1/reference/generated/scipy.stats.chi2_contingency.html</a>&gt;`__
+function returns the following pieces of information:</p>
+<ul class="simple">
+<li>The test statistic</li>
+<li>The <span class="math notranslate nohighlight">\(p\)</span> value</li>
+<li>The number of <a class="reference external" href="https://en.wikipedia.org/wiki/Degrees_of_freedom_(statistics)">degrees of
+freedom</a></li>
+<li>The expected counts</li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [48]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">chi2_contingency</span><span class="p">(</span>
+    <span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">index</span> <span class="o">=</span> <span class="n">food</span><span class="o">.</span><span class="n">A094r</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="n">food</span><span class="o">.</span><span class="n">A121r</span><span class="p">,</span> <span class="n">margins</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[48]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>(692.331575868431,
+ 3.203161366324675e-144,
+ 8,
+ array([[ 271.83514774,  246.50505443, 1070.65979782],
+        [ 118.21150855,  107.19634526,  465.59214619],
+        [ 178.77138414,  162.11314152,  704.11547434],
+        [  34.21461897,   31.02643857,  134.75894246],
+        [ 276.96734059,  251.15902022, 1090.87363919]]))
+</pre></div>
+</div>
+</div>
+<p>The test statistic is, roughly, the amount of variance explained by our
+test compared to the amount of variance not explained. In all my years
+of statistics I have never worked one of these out by hand, so don’t
+worry too much about this.</p>
+<p>The degrees of freedom are the the number of independent pieces of
+information to perform the test on (a bit like we saw earlier with the
+standard deviation, the DOF used is <span class="math notranslate nohighlight">\(n - 1\)</span> because we set the
+population mean to be the sample mean). In a cross tab this is the
+number of rows minus 1, multiplied by the number of columns minus 1, in
+this case:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [49]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="p">(</span><span class="mi">5</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">3</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[49]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>8
+</pre></div>
+</div>
+</div>
+<p>This is because, in this example, once we know rows 1–4 we can calculate
+row 5 because we know the total. Similarly once we know columns 1–2 we
+can calculate column 3 because we know the total.</p>
+<p>We’re not interested in the test statistic or degrees of freedom
+directly, but these are used to calculate the <span class="math notranslate nohighlight">\(p\)</span> value. We want
+the <span class="math notranslate nohighlight">\(p\)</span> value to be low, by convention at least below 0.05.</p>
+<p>In this case the <span class="math notranslate nohighlight">\(p\)</span> value is so low it is returned in scientific
+notation. The <code class="docutils literal notranslate"><span class="pre">3.2e-144</span></code> means the decimal place is moved 144 places
+to the left, i.e.:</p>
+<p><code class="docutils literal notranslate"><span class="pre">0.0000000000000000000000000000000000000000000000000000000000000000000000000000</span> <span class="pre">000000000000000000000000000000000000000000000000000000000000000000003</span></code></p>
+<p>So, essentially, zero (in fact it’s <em>highly</em> dubious that the p value is
+known to this level of accuracy, so we treat it as essentially zero). A
+<span class="math notranslate nohighlight">\(p\)</span> value this small means it is very, very unlikely that we would
+have observed the relationship we did just by chance, so we can say with
+some confidence that there is an association or link between NS-SEC and
+housing tenure.</p>
+<p>There are a few important assumptions we must satisfy to use a
+chi–squared test. One of these is to do with <em>expected frequencies</em>,
+which are used in calculating the actual chi–squared statistic. In
+calculating the chi–squared statistic we calculate the expected
+frequency for each cell. In our example we have 15 cells in our
+crosstab, so we calculate 15 expected frequencies.</p>
+<p>Specifically we should not have any expected frequencies of 0 (should be
+at least 1), and no more than 20% of expected frequencies should be less
+than 5. To calculate the expected frequency for each cell we use the
+formula:</p>
+<div class="math notranslate nohighlight">
+\[E_{ij} = \frac{T_{i} x T_{j}}{N}\]</div>
+<p>where <span class="math notranslate nohighlight">\(E_{ij}\)</span> is the expected frequency of cell in row <span class="math notranslate nohighlight">\(_i\)</span>
+and column <span class="math notranslate nohighlight">\(_j\)</span>; <span class="math notranslate nohighlight">\(T_i\)</span> is the total of row <span class="math notranslate nohighlight">\(_i\)</span>;
+<span class="math notranslate nohighlight">\(T_j\)</span> is the total of column <span class="math notranslate nohighlight">\(_j\)</span>; and <span class="math notranslate nohighlight">\(N\)</span> is the
+table grand total. So the expected frequency for row 1, column 1 is:</p>
+<div class="math notranslate nohighlight">
+\[E_{1, 1} = \frac{1589 x 880}{5144}\]</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [50]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="p">(</span><span class="mi">1589</span> <span class="o">*</span> <span class="mi">880</span><span class="p">)</span> <span class="o">/</span> <span class="mi">5144</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[50]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>271.8351477449456
+</pre></div>
+</div>
+</div>
+<p>Which is what is returned by the <code class="docutils literal notranslate"><span class="pre">scipy.stats.chi_contingency()</span></code>
+function.</p>
+<p>When running a chi–square test on a 2x2 contingency table it is likely
+to produce p values that are too small (i.e.&nbsp;it’s more likely to make a
+false positive or a <a class="reference external" href="#interpreting-the-results">type I error</a>. To
+correct this <code class="docutils literal notranslate"><span class="pre">scipy.stats.chi_contingency()</span></code> automatically applies the
+<a class="reference external" href="https://en.wikipedia.org/wiki/Yates%27s_correction_for_continuity">Yates’s continuity
+correction</a>
+if you’re performing a test on a 2x2 table. I’ve never worried about
+what this is or how it works (although Andy Field’s textbook, as usual,
+covers it in an accessible way); just know that it has been applied when
+reporting on a 2x2 table.</p>
+<div class="section" id="Interpreting-the-results">
+<h2>Interpreting the results<a class="headerlink" href="#Interpreting-the-results" title="Permalink to this headline">¶</a></h2>
+<p>There are two problems to be aware of when interpreting the results of a
+hypothesis test. The hypothesis test does not <em>prove</em> an association
+between our variables; it gives us a statistical level of confidence
+that there is an association.</p>
+<p>There is always a risk that we might reject the null hypothesis
+(i.e.&nbsp;state that there is an association) when there isn’t one. In our
+example we have good statistical evidence that there is an association
+(the <span class="math notranslate nohighlight">\(p\)</span> value is very low), but there is still a possibility that
+this could have simply happened randomly (admittedly a very small
+chance).</p>
+<p>If this were a random occurrence but we stated there was an association
+this would be called a <strong>Type I (one) error</strong>, sometimes known as a
+false positive.</p>
+<p>The other type of error we could make is failing to reject the null
+hypothesis when we should (i.e.&nbsp;we state there is no association when
+there <em>is</em> one), also known as a false negative. This is known as a
+<strong>Type II (two) error</strong>.</p>
+<p>When we perform a hypothesis test we therefore need to balance the risk
+of stating that there is an association when there isn’t, and the risk
+of stating that there is no association when there is one.</p>
+<p>Depending on our research question, one or the other errors might be
+more problematic. For example, if we are testing a new drug we want to
+make sure it is effective, so we do not want to make a type I error
+(i.e.&nbsp;state that there is an association when there isn’t one). But if
+we’re testing the drug for side effects we want to make sure we don’t
+make a type II error (i.e.&nbsp;assert that there are no side effects when,
+in fact, there are).</p>
+</div>
+<div class="section" id="Directional-tests">
+<h2>Directional tests<a class="headerlink" href="#Directional-tests" title="Permalink to this headline">¶</a></h2>
+<p>Two–tailed tests are the default, and what you should use unless you
+have a very good (and documented!) reason for using a one–tailed test.</p>
+<p>One–tailed tests are used when we are carrying out a <em>directional</em> test.
+For example, we previously tested if there is an association between
+employment grade (NS–SEC) and housing tenure. We did not specify a
+direction, so we would usually use a two–tailed test. However, if we
+specified our alternative hypothesis with a direction, we would run a
+one–tailed test. For example, if our alternative hypothesis were:</p>
+<blockquote>
+<div>People of higher employment grade are <strong>more likely</strong> to own their
+own home</div></blockquote>
+<p>we now have a directional test (i.e.&nbsp;we don’t think they’re less likely
+to own their own home).</p>
+<p>In this case we can use a one–tailed test. Note that we have stated our
+hypothesis <strong>before</strong> we ran the test; you cannot run a one–tailed test
+after the fact and claim you’ve found a directional association. Also
+note that if you do not find a directional association and later want to
+switch direction you cannot. Therefore one–tailed tests tend to be used
+when previous literature identifies a directional association and you
+want to use new data to test it.</p>
+<p>The reason for this skepticism of one–tailed tests is that they require
+a smaller difference between the two variables to be statistically
+significant. If you are performing a non–directional (two–tailed test)
+at a confidence level of 0.05, your have half of this at each end of
+your distribution (0.025) to work with to detect a difference. If you
+specify a directional (i.e.&nbsp;one–tailed test) you have more of the
+distribution to work with to detect a significant difference.</p>
+</div>
+</div>
+<div class="section" id="Effect-sizes">
+<h1>Effect sizes<a class="headerlink" href="#Effect-sizes" title="Permalink to this headline">¶</a></h1>
+<p>Determining that there <em>is</em> an association is all very well and good,
+but it tells us nothing of what the size of the effect is. For example,
+our hypothesis test has determined it is probable that there is an
+association between the employment grade of the household reference
+person and tenure, but it does not tell us <em>how much</em> more likely they
+are to own their home.</p>
+<p>The most common measures of effect size are:</p>
+<ul class="simple">
+<li>odds ratio</li>
+<li>Pearson’s correlation coefficient, <span class="math notranslate nohighlight">\(r\)</span></li>
+</ul>
+<p>There are others, for example Cohen’s <span class="math notranslate nohighlight">\(d\)</span> which is useful if the
+group sizes are very different, but these are the two most common in the
+social sciences.</p>
+<div class="section" id="Odds-ratio">
+<h2>Odds ratio<a class="headerlink" href="#Odds-ratio" title="Permalink to this headline">¶</a></h2>
+<p>The odds ratio is a way of specifying the effect size for 2x2
+contingency tables. For our example of employment grade and housing
+tenure we have more than a 2x2 table, but we can restate it so instead
+of just measuring an association between all employment grades and
+tenure types we can calculate the odds ratio of professional and
+managerial respondents owning their home and routine and manual
+respondents owning their home.</p>
+<p>Here’s a reminder of the frequencies of all employment grades and tenure
+types:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [51]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">index</span> <span class="o">=</span> <span class="n">food</span><span class="o">.</span><span class="n">A094r</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="n">food</span><span class="o">.</span><span class="n">A121r</span><span class="p">,</span> <span class="n">margins</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">margins_name</span> <span class="o">=</span> <span class="s2">&quot;Total&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[51]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>A121r</th>
+      <th>public rented</th>
+      <th>private rented</th>
+      <th>owned</th>
+      <th>Total</th>
+    </tr>
+    <tr>
+      <th>A094r</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>70</td>
+      <td>237</td>
+      <td>1282</td>
+      <td>1589</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>81</td>
+      <td>141</td>
+      <td>469</td>
+      <td>691</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>289</td>
+      <td>233</td>
+      <td>523</td>
+      <td>1045</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>76</td>
+      <td>85</td>
+      <td>39</td>
+      <td>200</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>364</td>
+      <td>102</td>
+      <td>1153</td>
+      <td>1619</td>
+    </tr>
+    <tr>
+      <th>Total</th>
+      <td>880</td>
+      <td>798</td>
+      <td>3466</td>
+      <td>5144</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p>The odds ratio is the odds of one group for the event of interest
+divided by the odds of the other group for the event of interest. So we
+need two sets of odds.</p>
+<p>First we specify the odds of the professional and managerial group
+owning their own home. This is the number of professional respondents
+who own their home (1282), divided by the number of professional
+respondents who <em>do not</em> own their home (70 + 237):</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [52]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="mi">1282</span> <span class="o">/</span> <span class="p">(</span><span class="mi">70</span> <span class="o">+</span> <span class="mi">237</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[52]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>4.175895765472313
+</pre></div>
+</div>
+</div>
+<p>This means that, roughly, for every professional and managerial
+respondent who <em>does not</em> own their home there are four who do.</p>
+<p>Similarly the odds of a routine and manual respondent owning their home
+is the number of routine and manual respondents who own their home (523)
+divided by the number of routine and manual respondents who <em>do not</em> own
+their own home (289 + 233):</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [53]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="mi">523</span> <span class="o">/</span> <span class="p">(</span><span class="mi">289</span> <span class="o">+</span> <span class="mi">233</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[53]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>1.0019157088122606
+</pre></div>
+</div>
+</div>
+<p>This means that, roughly, for every routine and manual respondent who
+<em>does not</em> own their home there is one who does, so the odds are about
+equal or 1:1.</p>
+<p>The odds ratio is simply one divided by the other:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [54]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="p">(</span><span class="mi">1282</span> <span class="o">/</span> <span class="p">(</span><span class="mi">70</span> <span class="o">+</span> <span class="mi">237</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mi">523</span> <span class="o">/</span> <span class="p">(</span><span class="mi">289</span> <span class="o">+</span> <span class="mi">233</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[54]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>4.167911261140626
+</pre></div>
+</div>
+</div>
+<p>What this means is that professional and managerial respondents are
+4.168 times more likely to own their home than routine and manual
+respondents.</p>
+</div>
+<div class="section" id="Pearson’s-correlation-coefficient,-r">
+<h2>Pearson’s correlation coefficient, <span class="math notranslate nohighlight">\(r\)</span><a class="headerlink" href="#Pearson’s-correlation-coefficient,-r" title="Permalink to this headline">¶</a></h2>
+<p><span class="math notranslate nohighlight">\(r\)</span> is standardised, which is useful because:</p>
+<ul class="simple">
+<li>tests of all sorts of units can be compared which each other,</li>
+<li>the result is between -1 (perfect negative association), through 0
+(no association), and 1 (perfect positive association)</li>
+</ul>
+<p><span class="math notranslate nohighlight">\(r\)</span> is a measure of effect size (or correlation) between two
+numerical variables. It works on the principle that as the difference
+from the mean for one variable increases we expect the difference from
+the mean for the related variable to increase (positive correlation) or
+decrease (negative correlation).</p>
+<p>For example the mean income is:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [55]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">food_trimmed</span><span class="o">.</span><span class="n">P344pr</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[55]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>518.3056177244473
+</pre></div>
+</div>
+</div>
+<p>Let’s say we hypothesise that people with higher incomes spend more
+money on food (they have more money to shop at Waitrose). Expenditure is
+top–coded, so let’s trim the data like we did for income and take a look
+at the resulting distribution:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [56]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">food_trimmed</span> <span class="o">=</span> <span class="n">food_trimmed</span><span class="p">[</span><span class="n">food_trimmed</span><span class="o">.</span><span class="n">P550tpr</span> <span class="o">&lt;</span> <span class="n">food_trimmed</span><span class="o">.</span><span class="n">P550tpr</span><span class="o">.</span><span class="n">max</span><span class="p">()]</span>
+<span class="n">food_trimmed</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">column</span> <span class="o">=</span> <span class="s2">&quot;P550tpr&quot;</span><span class="p">,</span> <span class="n">bins</span> <span class="o">=</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Food expenditure (£)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Frequency&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[56]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Text(0, 0.5, &#39;Frequency&#39;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/stats101_93_1.png" src="_images/stats101_93_1.png" />
+</div>
+</div>
+<p>The mean expenditure is:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [57]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">food_trimmed</span><span class="o">.</span><span class="n">P550tpr</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[57]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>400.63890310982424
+</pre></div>
+</div>
+</div>
+<p>If we take an individual with a high income (their income deviates from
+the mean) we would expect their expenditure to also deviate from the
+expenditure mean. These deviations from the mean are their variances, so
+we are stating that we expect income and expenditure on food to
+<strong>covary</strong>. This principle is used to calculate the <strong>Pearson
+correlation coefficient</strong> (usually just called the correlation), which
+is a standardised measure of how much the two variables vary together.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [58]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">pearsonr</span><span class="p">(</span>
+    <span class="n">food_trimmed</span><span class="p">[</span><span class="s2">&quot;P344pr&quot;</span><span class="p">],</span> <span class="n">food_trimmed</span><span class="p">[</span><span class="s2">&quot;P550tpr&quot;</span><span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[58]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>(0.6317428068963729, 0.0)
+</pre></div>
+</div>
+</div>
+<p>In this example the first number is the correlation coefficient and the
+second number is its associated <span class="math notranslate nohighlight">\(p\)</span> value.</p>
+<p>The correlation is positive so as income goes up, expenditure on food
+goes up (if it were negative it would be a negative correlation, which
+would state that as income went up expenditure on food went down for
+some reason). The value of 0.63 suggests quite a lot of the variance in
+expenditure is accounted for by income (so the correlation is strong).</p>
+<p>The <span class="math notranslate nohighlight">\(p\)</span> value is <span class="math notranslate nohighlight">\(&lt;&lt; 0.01\)</span> (<span class="math notranslate nohighlight">\(&lt;&lt;\)</span> means ‘much less
+than’) so it is highly improbable we would see a correlation this large
+by chance alone, so we have strong evidence to reject the null
+hypothesis and conclude that there is an association between income and
+expenditure on food.</p>
+<div class="section" id="Assumptions">
+<h3>Assumptions<a class="headerlink" href="#Assumptions" title="Permalink to this headline">¶</a></h3>
+<p>Pearson’s correlation coefficient assumes that both variables are
+numeric and normally distributed for the <span class="math notranslate nohighlight">\(p\)</span> value to be accurate.
+In this case our variables are numeric (income and expenditure) so this
+assumption is met.</p>
+<p>Neither variable should have any outliers (defined as any value greater
+than the mean + 3.29 standard deviations). For income this is ok:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [59]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="nb">len</span><span class="p">(</span>
+    <span class="n">food_trimmed</span><span class="p">[</span><span class="n">food_trimmed</span><span class="o">.</span><span class="n">P344pr</span> <span class="o">&gt;</span>
+                 <span class="n">food_trimmed</span><span class="o">.</span><span class="n">P344pr</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">+</span> <span class="p">(</span><span class="mf">3.29</span> <span class="o">*</span> <span class="n">food_trimmed</span><span class="o">.</span><span class="n">P344pr</span><span class="o">.</span><span class="n">std</span><span class="p">())]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[59]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>0
+</pre></div>
+</div>
+</div>
+<p>But there are a few outliers for the expenditure variable:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [60]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="nb">len</span><span class="p">(</span>
+    <span class="n">food_trimmed</span><span class="p">[</span><span class="n">food_trimmed</span><span class="o">.</span><span class="n">P550tpr</span> <span class="o">&gt;</span>
+                 <span class="n">food_trimmed</span><span class="o">.</span><span class="n">P550tpr</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">+</span> <span class="p">(</span><span class="mf">3.29</span> <span class="o">*</span> <span class="n">food_trimmed</span><span class="o">.</span><span class="n">P550tpr</span><span class="o">.</span><span class="n">std</span><span class="p">())]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[60]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>4
+</pre></div>
+</div>
+</div>
+<p>To be safe, let’s remove these:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [61]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">food_trimmed</span> <span class="o">=</span> <span class="n">food_trimmed</span><span class="p">[</span><span class="n">food_trimmed</span><span class="o">.</span><span class="n">P550tpr</span> <span class="o">&lt;</span> <span class="n">food_trimmed</span><span class="o">.</span><span class="n">P550tpr</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">+</span> <span class="p">(</span><span class="mf">3.29</span> <span class="o">*</span> <span class="n">food_trimmed</span><span class="o">.</span><span class="n">P550tpr</span><span class="o">.</span><span class="n">std</span><span class="p">())]</span>
+</pre></div>
+</div>
+</div>
+<p>A scatterplot of these two variables:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [62]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">food_trimmed</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="s2">&quot;P344pr&quot;</span><span class="p">,</span> <span class="s2">&quot;P550tpr&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Income&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Expenditure&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[62]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Text(0, 0.5, &#39;Expenditure&#39;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/stats101_105_1.png" src="_images/stats101_105_1.png" />
+</div>
+</div>
+<p>The points should be linear (i.e.&nbsp;a straight line) and roughly
+cylindrical to meet the assumptions. If it’s too conincal it means the
+deviances aren’t consistent (heteroskedasticity).</p>
+<p>If these assumptions aren’t true of our data we can use <strong>Spearman’s
+:math:`rho`</strong> (pronounced ‘row’). Spearman’s <span class="math notranslate nohighlight">\(\rho\)</span> is also
+useful when we have a numeric variable and an ordinal variable
+(something we couldn’t test with Pearson’s <span class="math notranslate nohighlight">\(r\)</span>).</p>
+<p>This is a <strong>non–parametric</strong> test. Non–parametric tests tend to be more
+robust (which is why we can use them when we violate some of the
+assumptions of the parametric equivalents, in this case Pearon’s
+<span class="math notranslate nohighlight">\(r\)</span>) but sometimes have lower statistical power. Therefore, try to
+use the parametric version by default and switch to the non–parametric
+version when necessary.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [63]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">spearmanr</span><span class="p">(</span>
+    <span class="n">food_trimmed</span><span class="p">[</span><span class="s2">&quot;P344pr&quot;</span><span class="p">],</span> <span class="n">food_trimmed</span><span class="p">[</span><span class="s2">&quot;P550tpr&quot;</span><span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[63]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>SpearmanrResult(correlation=0.6908560599405571, pvalue=0.0)
+</pre></div>
+</div>
+</div>
+<p>As you can see in this example the correlation statistic is very similar
+and the <span class="math notranslate nohighlight">\(p\)</span> value is still significant (<span class="math notranslate nohighlight">\(&lt;&lt; 0.01\)</span>).</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">stats101</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="01-introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02-data-sources.html">Data sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03-levels-of-measurement.html">Levels of measurement</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04-central-tendency.html">Central tendency</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Measures of spread</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Range">Range</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Inter–quartile-range">Inter–quartile range</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Variance">Variance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Standard-deviation">Standard deviation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#Standard-error-and-confidence-intervals">Standard error and confidence intervals</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Comparing-means-and-confidence-intervals">Comparing means and confidence intervals</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#Normal-distribution">Normal distribution</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Skewness">Skewness</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Kurtosis">Kurtosis</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#Hypothesis-testing">Hypothesis testing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Interpreting-the-results">Interpreting the results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Directional-tests">Directional tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#Effect-sizes">Effect sizes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Odds-ratio">Odds ratio</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Pearson’s-correlation-coefficient,-r">Pearson’s correlation coefficient, <span class="math notranslate nohighlight">\(r\)</span></a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="04-central-tendency.html" title="previous chapter">Central tendency</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Phil Mike Jones.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/stats101.ipynb.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
