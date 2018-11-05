@@ -1,5 +1,5 @@
 # Checkpoints
-notebooks/.ipynb_checkpoints/
+source/.ipynb_checkpoints/
 
 # Output files from R CMD build
 /*.tar.gz
@@ -22,4 +22,3 @@ docs/*.md
 # raw data
 data/external/
 data/raw/
-
