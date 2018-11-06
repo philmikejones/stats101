@@ -3,8 +3,8 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to stats101's documentation!
-====================================
+stats101
+========
 
 .. toctree::
    :maxdepth: 2
