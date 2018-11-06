@@ -21,6 +21,9 @@ if not os.path.isfile("data/external.food.zip"):
     outfile = open("data/external/food.zip", "wb")
     outfile.write(food)
 
+if os.stat("data/external/food.zip").st_size < 970000:
+    raise Exception("Size of food.zip too small. Likely a json error")
+
 # unzip
 if not os.path.isdir("data/external/UKDA-7932-tab/"):
     shutil.unpack_archive(
