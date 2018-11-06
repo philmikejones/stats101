@@ -22,3 +22,4 @@ docs/*.md
 # raw data
 data/external/
 data/raw/
+data/processed/
