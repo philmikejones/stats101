@@ -1,0 +1,517 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Hypothesis testing"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import pandas as pd\n",
+    "import matplotlib.pyplot as plt\n",
+    "import numpy as np\n",
+    "import math\n",
+    "import scipy.stats\n",
+    "\n",
+    "food = pd.read_pickle(\"../data/processed/food\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "So far we've loaded our data set, described it with measures of central tendency and variability, and tested to see if our sample mean adequately describes our population mean.\n",
+    "Now we move on to testing hypotheses.\n",
+    "\n",
+    "A hypothesis is a statement that we make to explain a phenomenon that we do not yet know the answer to.\n",
+    "A hypothesis must be testable.\n",
+    "\n",
+    "For example, in our data set we have two nominal variables that we might propose there is a relationship between:\n",
+    "\n",
+    "- NS-SEC class of the household reference person (`A094r`)\n",
+    "- Tenure (`A121r`)\n",
+    "\n",
+    "NS-SEC stands for '[National Statistics Socio--economic classification](https://www.ons.gov.uk/methodology/classificationsandstandards/otherclassifications/thenationalstatisticssocioeconomicclassificationnssecrebasedonsoc2010)', and is a measure of employment grade, for example if the household reference person is a higher manager or professional, or a manual worker.\n",
+    "\n",
+    "The [household reference person](https://www.scotlandscensus.gov.uk/variables-classification/household-reference-person) is the person in the household (usually a family) who is full--time employed or, if both partners are full--time employed, the one who is oldest.\n",
+    "This concept is used because families share social, cultural, and economic characteristics so, for example, if one partner is currently unemployed they share some of their characteristics with the HRP (for example they are likely to still live in the family home and participate in similar activities).\n",
+    "Similarly, children who do not yet work can be ascribed economic and social characteristics based on their parent or carer's economic activity.\n",
+    "\n",
+    "Tenure simply means if the respondent owns their home (outright, or with a mortgage) or rents their home from a private landlord or council.\n",
+    "\n",
+    "With all this in mind, our hypothesis might be:\n",
+    "\n",
+    "> There is an association or link between household reference person NS-SEC and home ownership (tenure).\n",
+    "\n",
+    "For example, people in NS-SEC category 1 (higher managerial, administrative, and professional occupations) may be more likely to own their home compared to people in routine and manual occupations.\n",
+    "\n",
+    "First of all, let's look at a crosstabulation (crosstab) of frequencies comparing these two variables:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th>A121r</th>\n",
+       "      <th>1</th>\n",
+       "      <th>2</th>\n",
+       "      <th>3</th>\n",
+       "      <th>Total</th>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>A094r</th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>65</td>\n",
+       "      <td>181</td>\n",
+       "      <td>763</td>\n",
+       "      <td>1009</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>81</td>\n",
+       "      <td>129</td>\n",
+       "      <td>404</td>\n",
+       "      <td>614</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>282</td>\n",
+       "      <td>222</td>\n",
+       "      <td>476</td>\n",
+       "      <td>980</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>75</td>\n",
+       "      <td>82</td>\n",
+       "      <td>34</td>\n",
+       "      <td>191</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>5</th>\n",
+       "      <td>361</td>\n",
+       "      <td>101</td>\n",
+       "      <td>1100</td>\n",
+       "      <td>1562</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>Total</th>\n",
+       "      <td>864</td>\n",
+       "      <td>715</td>\n",
+       "      <td>2777</td>\n",
+       "      <td>4356</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "A121r    1    2     3  Total\n",
+       "A094r                       \n",
+       "1       65  181   763   1009\n",
+       "2       81  129   404    614\n",
+       "3      282  222   476    980\n",
+       "4       75   82    34    191\n",
+       "5      361  101  1100   1562\n",
+       "Total  864  715  2777   4356"
+      ]
+     },
+     "execution_count": 2,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "pd.crosstab(index = food.A094r, columns = food.A121r, margins = True, margins_name = \"Total\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "From this crosstab we can see that similar numbers of people rent their homes from local authorities ('public rented') and private landlords (880 and 798 respectively), but that more than four times as many people own their own home (3466) than rent privately or rent publicly.\n",
+    "\n",
+    "We can also see that most people in NS-SEC group 1 (higher managerial, administrative, and professional occupations) own their home (1282) compared to rent (total 307).\n",
+    "If we compare this to NS-SEC group 3 (routine and manual occupations) only 523 own their home, while 289 rent from a local authority (much more than the group 1) and 233 rent privately (similar to group 1).\n",
+    "\n",
+    "These descriptions are pretty straightforward, but any analysis is complicated by the fact that the two groups are different sizes (n = 1,589 group 1; n = 1,045 group 3) so we cannot directly compare the counts in this table to see if there are differences between the groups.\n",
+    "The next step is to look at the percentages:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th>A121r</th>\n",
+       "      <th>1</th>\n",
+       "      <th>2</th>\n",
+       "      <th>3</th>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>A094r</th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "      <th></th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>6.442022</td>\n",
+       "      <td>17.938553</td>\n",
+       "      <td>75.619425</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>13.192182</td>\n",
+       "      <td>21.009772</td>\n",
+       "      <td>65.798046</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>28.775510</td>\n",
+       "      <td>22.653061</td>\n",
+       "      <td>48.571429</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>39.267016</td>\n",
+       "      <td>42.931937</td>\n",
+       "      <td>17.801047</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>5</th>\n",
+       "      <td>23.111396</td>\n",
+       "      <td>6.466069</td>\n",
+       "      <td>70.422535</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "A121r          1          2          3\n",
+       "A094r                                 \n",
+       "1       6.442022  17.938553  75.619425\n",
+       "2      13.192182  21.009772  65.798046\n",
+       "3      28.775510  22.653061  48.571429\n",
+       "4      39.267016  42.931937  17.801047\n",
+       "5      23.111396   6.466069  70.422535"
+      ]
+     },
+     "execution_count": 3,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "pd.crosstab(\n",
+    "    index = food.A094r, columns = food.A121r,\n",
+    "    normalize = \"index\"\n",
+    ") * 100  # converts proportions to percentages"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Using the row percentages (i.e. each row adds up to 100%) we can see that approximately 80% of higher managerial and professional families own their own home, but only 50% of routine and manual families own their own homes.\n",
+    "Similarly we can see that only about 4.5% of managerial and professional families rent from a local authority, but 27% of routine and manual families do (remember rows 4 and 5 are unemployed and unclassified respectively).\n",
+    "\n",
+    "So we think there's an association between NS-SEC of the household reference person and tenure, and the crosstabs certainly seem to support this.\n",
+    "Unfortunately humans are very, very good at spotting patterns, even when there isn't one there, so instead of just relying on our say--so we can statistically test to see if there really is a difference.\n",
+    "To do this we use a hypothesis test, of which the most common type is the chi--squared ($\\chi ^ 2$) test (the Greek letter is pronounced 'key', but 'kai' is probably more common).\n",
+    "\n",
+    "To perform a chi--squared test we specify a *null hypothesis*, which we denote $H_0$.\n",
+    "A null hypothesis is a way of framing our hypothesis that (usually) states there is *no* association between our variables, so in our case we specify our null hypothesis as:\n",
+    "\n",
+    "> There is *no* association between NS-SEC of the household reference person and housing tenure\n",
+    "\n",
+    "The opposite of the null hypothesis is the *alternative hypothesis*, $H_1$, which is usually our original hypothesis.\n",
+    "\n",
+    "It is important to frame a hypothesis test in this way because we assume the absence of an association, and it is up to us as researchers to provide evidence that there is an association.\n",
+    "For example, we cannot assume that people who drink coffee are more intelligent than people who drink tea.\n",
+    "It is up to us to demonstrate that this is the case.\n",
+    "This is what makes our hypothesis *testable* and *falsifiable*.\n",
+    "\n",
+    "It's a bit like the presumption of innocence: we cannot be locked up unless we are proven to be guilty of a crime.\n",
+    "If it were the other way around (i.e. presumption of guilt) we would all be incarcerated and we would have to prove that we were innocent, not just of one crime, but of every conveivable crime in order to be released!\n",
+    "This would be an impossible task (not least because no doubt someone would add another charge arbitrarily).\n",
+    "\n",
+    "Hermione Granger sums this up better than most statistics textbooks ever did:\n",
+    "\n",
+    "> \"Well, how can that `[the resurrection stone]` be real?\"  \n",
+    "> \"Prove that it is not\", said Xenophilius.  \n",
+    "> Hermione looked outraged.  \n",
+    "> \"But that's --- I'm sorry, but that's completely ridiculous! How can I possibly prove it doesn't exist? Do you expect me to get hold of --- of all the pebbles in the world, and test them? I mean, you could claim that anything's real if the only basis for believing in it is that nobody's *proved* it doesn't exist!  \n",
+    "> - Harry Potter and the Deathly Hallows\n",
+    "\n",
+    "To carry out the $\\chi ^ 2$ test, the [`scipy.stats.chi2_contingency()`](https://docs.scipy.org/doc/scipy-0.15.1/reference/generated/scipy.stats.chi2_contingency.html) function returns the following pieces of information:\n",
+    "\n",
+    "- The test statistic\n",
+    "- The $p$ value\n",
+    "- The number of [degrees of freedom](https://en.wikipedia.org/wiki/Degrees_of_freedom_(statistics))\n",
+    "- The expected counts"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "(530.0677915239098,\n",
+       " 2.4769639188654904e-109,\n",
+       " 8,\n",
+       " array([[200.1322314 , 165.61868687, 643.24908173],\n",
+       "        [121.78512397, 100.78282828, 391.43204775],\n",
+       "        [194.38016529, 160.85858586, 624.76124885],\n",
+       "        [ 37.88429752,  31.3510101 , 121.76469238],\n",
+       "        [309.81818182, 256.38888889, 995.79292929]]))"
+      ]
+     },
+     "execution_count": 4,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "scipy.stats.chi2_contingency(\n",
+    "    pd.crosstab(index = food.A094r, columns = food.A121r, margins = False)\n",
+    ")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "The test statistic is, roughly, the amount of variance explained by our test compared to the amount of variance not explained.\n",
+    "In all my years of statistics I have never worked one of these out by hand, so don't worry too much about this.\n",
+    "\n",
+    "The degrees of freedom are the the number of independent pieces of information to perform the test on (a bit like we saw earlier with the standard deviation, the DOF used is $n - 1$ because we set the population mean to be the sample mean).\n",
+    "In a cross tab this is the number of rows minus 1, multiplied by the number of columns minus 1, in this case:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "8"
+      ]
+     },
+     "execution_count": 5,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "(5 - 1) * (3 - 1)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "This is because, in this example, once we know rows 1--4 we can calculate row 5 because we know the total.\n",
+    "Similarly once we know columns 1--2 we can calculate column 3 because we know the total.\n",
+    "\n",
+    "We're not interested in the test statistic or degrees of freedom directly, but these are used to calculate the $p$ value.\n",
+    "We want the $p$ value to be low, by convention at least below 0.05.\n",
+    "\n",
+    "In this case the $p$ value is so low it is returned in scientific notation.\n",
+    "The `3.2e-144` means the decimal place is moved 144 places to the left, i.e.:\n",
+    "\n",
+    "`0.0000000000000000000000000000000000000000000000000000000000000000000000000000\n",
+    "000000000000000000000000000000000000000000000000000000000000000000003`\n",
+    "\n",
+    "So, essentially, zero (in fact it's *highly* dubious that the p value is known to this level of accuracy, so we treat it as essentially zero).\n",
+    "A $p$ value this small means it is very, very unlikely that we would have observed the relationship we did just by chance, so we can say with some confidence that there is an association or link between NS-SEC and housing tenure.\n",
+    "\n",
+    "There are a few important assumptions we must satisfy to use a chi--squared test.\n",
+    "One of these is to do with *expected frequencies*, which are used in calculating the actual chi--squared statistic.\n",
+    "In calculating the chi--squared statistic we calculate the expected frequency for each cell.\n",
+    "In our example we have 15 cells in our crosstab, so we calculate 15 expected frequencies.\n",
+    "\n",
+    "Specifically we should not have any expected frequencies of 0 (should be at least 1), and no more than 20% of expected frequencies should be less than 5.\n",
+    "To calculate the expected frequency for each cell we use the formula:\n",
+    "\n",
+    "$$\n",
+    "E_{ij} = \\frac{T_{i} x T_{j}}{N}\n",
+    "$$\n",
+    "\n",
+    "where $E_{ij}$ is the expected frequency of cell in row $_i$ and column $_j$; $T_i$ is the total of row $_i$; $T_j$ is the total of column $_j$; and $N$ is the table grand total.\n",
+    "So the expected frequency for row 1, column 1 is:\n",
+    "\n",
+    "$$\n",
+    "E_{1, 1} = \\frac{1589 x 880}{5144}\n",
+    "$$"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "271.8351477449456"
+      ]
+     },
+     "execution_count": 6,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "(1589 * 880) / 5144"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Which is what is returned by the `scipy.stats.chi_contingency()` function.\n",
+    "\n",
+    "When running a chi--square test on a 2x2 contingency table it is likely to produce p values that are too small (i.e. it's more likely to make a false positive or a [type I error](#interpreting-the-results).\n",
+    "To correct this `scipy.stats.chi_contingency()` automatically applies the [**Yates's continuity correction**](https://en.wikipedia.org/wiki/Yates%27s_correction_for_continuity) if you're performing a test on a 2x2 table.\n",
+    "I've never worried about what this is or how it works (although Andy Field's textbook, as usual, covers it in an accessible way); just know that it has been applied when reporting on a 2x2 table."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Interpreting the results\n",
+    "\n",
+    "There are two problems to be aware of when interpreting the results of a hypothesis test.\n",
+    "The hypothesis test does not *prove* an association between our variables; it gives us a statistical level of confidence that there is an association.\n",
+    "\n",
+    "There is always a risk that we might reject the null hypothesis (i.e. state that there is an association) when there isn't one.\n",
+    "In our example we have good statistical evidence that there is an association (the $p$ value is very low), but there is still a possibility that this could have simply happened randomly (admittedly a very small chance).\n",
+    "\n",
+    "If this were a random occurrence but we stated there was an association this would be called a **Type I (one) error**, sometimes known as a false positive.\n",
+    "\n",
+    "The other type of error we could make is failing to reject the null hypothesis when we should (i.e. we state there is no association when there *is* one), also known as a false negative.\n",
+    "This is known as a **Type II (two) error**.\n",
+    "\n",
+    "When we perform a hypothesis test we therefore need to balance the risk of stating that there is an association when there isn't, and the risk of stating that there is no association when there is one.\n",
+    "\n",
+    "Depending on our research question, one or the other errors might be more problematic.\n",
+    "For example, if we are testing a new drug we want to make sure it is effective, so we do not want to make a type I error (i.e. state that there is an association when there isn't one).\n",
+    "But if we're testing the drug for side effects we want to make sure we don't make a type II error (i.e. assert that there are no side effects when, in fact, there are)."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Directional tests\n",
+    "\n",
+    "Two--tailed tests are the default, and what you should use unless you have a very good (and documented!) reason for using a one--tailed test.\n",
+    "\n",
+    "One--tailed tests are used when we are carrying out a *directional* test.\n",
+    "For example, we previously tested if there is an association between employment grade (NS--SEC) and housing tenure.\n",
+    "We did not specify a direction, so we would usually use a two--tailed test.\n",
+    "However, if we specified our alternative hypothesis with a direction, we would run a one--tailed test.\n",
+    "For example, if our alternative hypothesis were:\n",
+    "\n",
+    "> People of higher employment grade are **more likely** to own their own home\n",
+    "\n",
+    "we now have a directional test (i.e. we don't think they're less likely to own their own home).\n",
+    "\n",
+    "In this case we can use a one--tailed test.\n",
+    "Note that we have stated our hypothesis **before** we ran the test; you cannot run a one--tailed test after the fact and claim you've found a directional association.\n",
+    "Also note that if you do not find a directional association and later want to switch direction you cannot.\n",
+    "Therefore one--tailed tests tend to be used when previous literature identifies a directional association and you want to use new data to test it.\n",
+    "\n",
+    "The reason for this skepticism of one--tailed tests is that they require a smaller difference between the two variables to be statistically significant.\n",
+    "If you are performing a non--directional (two--tailed test) at a confidence level of 0.05, your have half of this at each end of your distribution (0.025) to work with to detect a difference.\n",
+    "If you specify a directional (i.e. one--tailed test) you have more of the distribution to work with to detect a significant difference."
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.6.6"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}

@@ -1,22 +1,16 @@
 {
  "cells": [
   {
-   "cell_type": "code",
-   "execution_count": 1,
+   "cell_type": "markdown",
    "metadata": {},
-   "outputs": [],
    "source": [
-    "import os\n",
-    "import requests\n",
-    "import shutil"
+    "# Data sources"
    ]
   },
   {
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "## Data sources\n",
-    "\n",
     "These tutorials use a number of teaching data sets available from the [UK Data Service](https://www.ukdataservice.ac.uk/) and Nomisweb (FYI [Nomisweb have a great API](https://www.nomisweb.co.uk/api/v01/help) for reproducible research) under terms of the [Open Government License](http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/):\n",
     "\n",
     "> Office for National Statistics, University of Manchester, Cathie Marsh Institute for Social Research (CMIST), UK Data Service, 2016, Living Costs and Food Survey, 2013: Unrestricted Access Teaching Dataset, [data collection], Office for National Statistics, 2nd Edition, Office for National Statistics, [original data producer(s)]. Accessed 1 October 2018. SN: 7932, http://doi.org/10.5255/UKDA-SN-7932-2. Contains public sector information licensed under the Open Government Licence v2.0\n",
@@ -25,22 +19,37 @@
    ]
   },
   {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "If you're following along at home I download and process the data sets with scripts in the `src/` directory."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "%run ../src/01-download.py"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "The `food` dataset (Living costs and food survey) includes income, but this is top--coded.\n",
+    "For the purpose of these exercises I simply remove the top--coded cases to make the distributions a bit more normal.\n",
+    "If you were analysing this data for real you would need to consider how to handle these top--coded cases."
+   ]
+  },
+  {
    "cell_type": "code",
    "execution_count": 2,
    "metadata": {},
    "outputs": [],
    "source": [
-    "os.makedirs(\"../data/external\", exist_ok = True)\n",
-    "\n",
-    "if not os.path.isfile(\"../data/external.food.zip\"):\n",
-    "    food = \"https://beta.ukdataservice.ac.uk/Umbraco/Surface/Discover/GetDownload?studyNumber=7932&fileName=7932tab_818dcb297393b2557b07f05acaae70b9.zip\"\n",
-    "    food = requests.get(food)\n",
-    "    food = food.content\n",
-    "    outfile = open(\"../data/external/food.zip\", \"wb\")\n",
-    "    outfile.write(food)\n",
-    "\n",
-    "if not os.path.isdir(\"../data/external/UKDA-7932-tab/\"):\n",
-    "    shutil.unpack_archive(\"../data/external/food.zip\", extract_dir = \"../data/external/\")"
+    "%run ../src/02-process.py"
    ]
   }
  ],

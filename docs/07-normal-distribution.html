@@ -1,0 +1,544 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Normal distribution &#8212; stats101 0.1.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Hypothesis testing" href="08-hypothesis-testing.html" />
+    <link rel="prev" title="Standard error and confidence intervals" href="06-standard-error-confidence-intervals.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #303F9F;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #D84315;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 8ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+</style>
+<div class="section" id="Normal-distribution">
+<h1>Normal distribution<a class="headerlink" href="#Normal-distribution" title="Permalink to this headline">¶</a></h1>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">scipy.stats</span>
+
+<span class="n">food</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_pickle</span><span class="p">(</span><span class="s2">&quot;../data/processed/food&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>The normal distribution is central to our ability to infer about a
+population from a sample. The normal distribution looks like this (by
+Dan Kernler from Wikimedia Commons, CC BY-SA 4.0):</p>
+<p>The normal distribution was discovered by Gauss (which is why it’s also
+sometimes called the Gaussian distribution) and described an ‘ideal’
+situation. Lots of data follow this pattern: the height or weight of a
+population; The mean of the normal distribution (<span class="math notranslate nohighlight">\(\mu\)</span> on the
+diagram above) is the centre. Because the normal distribution is
+<strong>symmetrical</strong> we know that 50% of cases fall below and 50% of cases
+fall above the mean.</p>
+<p>Another useful property of the normal distribution is we know, or can
+calculate, how many cases fall with 1, 2, 3, or more standard deviations
+of the mean (these are shown as
+<span class="math notranslate nohighlight">\(\mu \pm \sigma; \mu \pm 2\sigma; \mu \pm 3\sigma\)</span> on the figure).
+These are about 68%, 95%, and 97.5% respectively.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="67%" />
+<col width="33%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Number of <span class="math notranslate nohighlight">\(\sigma\)</span> from mean</th>
+<th class="head">Percent of cases</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>1</td>
+<td>68.27%</td>
+</tr>
+<tr class="row-odd"><td>1.96</td>
+<td>95%</td>
+</tr>
+<tr class="row-even"><td>2</td>
+<td>95.45%</td>
+</tr>
+<tr class="row-odd"><td>2.58</td>
+<td>99%</td>
+</tr>
+<tr class="row-even"><td>3</td>
+<td>99.73%</td>
+</tr>
+</tbody>
+</table>
+<p>Therefore if we know the mean (<span class="math notranslate nohighlight">\(\mu\)</span>) and standard deviation
+(<span class="math notranslate nohighlight">\(\sigma\)</span>) of our sample we can calculate the confidence interval
+of our sample mean (as we did above). Typically we calculate a 95%
+confidence interval (although 99% is also common), and this tells us the
+likely range the population mean falls within. This is why we used the
+figure 1.96 when calculating our confidence interval earlier, and this
+is the property that allows us to infer information about the population
+from our smaller sample.</p>
+<p>The other, related, way we can use this information is if we have a mean
+and standard deviation and observe a data point, we can calculate how
+many standard deviations from the mean this data point is. We can then
+see if the observed data point falls within the normal variation we
+expect (i.e.&nbsp;within 1.96 standard deviations for 95% confidence) or
+outside it, and is therefore the result of something not within the
+normal range.</p>
+<p>Remember our household weekly income example, after we removed the
+top–coded responses? It looked something like this:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">food</span><span class="o">.</span><span class="n">P344pr</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">bins</span> <span class="o">=</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Weekly income (£)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Frequency&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[2]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Text(0, 0.5, &#39;Frequency&#39;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/07-normal-distribution_3_1.png" src="_images/07-normal-distribution_3_1.png" />
+</div>
+</div>
+<p>The mean income is:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">food</span><span class="o">.</span><span class="n">P344pr</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[3]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>518.3056177244473
+</pre></div>
+</div>
+</div>
+<p>and the standard deviation is:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">food</span><span class="o">.</span><span class="n">P344pr</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[4]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>290.22464409300136
+</pre></div>
+</div>
+</div>
+<p>Now let’s imagine we find a respondent who lives in Chelsea and we ask
+them to complete our survey. They respond that their income is £2,000
+per week. Does this fall within the variability we expect, or is it
+statistically significantly likely that this respondent has a higher
+income than most? Well, we can calculate how many standard deviations
+our observed data point is away from the mean. We know:</p>
+<div class="math notranslate nohighlight">
+\[2000 = \mu + x.\sigma\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mu\)</span> is the mean, <span class="math notranslate nohighlight">\(\sigma\)</span> is the standard deviation,
+and <span class="math notranslate nohighlight">\(x\)</span> is the number of standard deviations we want to calculate.
+If we rearrange the equation we get:</p>
+<div class="math notranslate nohighlight">
+\[\frac{2000}{\sigma} = \frac{\mu}{\sigma} + x\]</div>
+<div class="math notranslate nohighlight">
+\[\frac{(2000 - \mu)}{\sigma} = x\]</div>
+<p>Plugging in the mean and standard deviation we get:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="p">(</span><span class="mi">2000</span> <span class="o">-</span> <span class="n">food</span><span class="o">.</span><span class="n">P344pr</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span> <span class="o">/</span> <span class="n">food</span><span class="o">.</span><span class="n">P344pr</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[5]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>5.1053362022583775
+</pre></div>
+</div>
+</div>
+<p>So our observed data point is more than five standard deviations higher
+than the mean, which means that if we were to interview 3.5 million
+people, only one would have an income that high. It’s therefore highly
+likely that this respondent has a higher income than the average. In
+physics this would be known as a ‘five-sigma’ result: i.e.&nbsp;the result is
+more than five standard deviations (<span class="math notranslate nohighlight">\(\sigma\)</span>) from the mean and is
+therefore highly unlikely to be through chance alone (in the social
+sciences we usually opt for the ‘1.96 sigma’ rule).</p>
+<p>Not all observed data form a perfect normal distribution (in fact most
+differ at least slightly). There are two ways we need to describe a
+distribution if it is different from the normal: skewness and kurtosis.</p>
+<div class="section" id="Skewness">
+<h2>Skewness<a class="headerlink" href="#Skewness" title="Permalink to this headline">¶</a></h2>
+<p>A normal distribution has its mean, median, and mode at the same point
+(the centre). Skewness means the data points are skewed one way or the
+other:</p>
+<p>Negative skew means the tail is to the left; positive skew means the
+tail is to the right. In a positively skewed distribution the mode and
+median are lower than the mean. In a negatively skewed distribution the
+median and mode are higher than the mean.</p>
+</div>
+<div class="section" id="Kurtosis">
+<h2>Kurtosis<a class="headerlink" href="#Kurtosis" title="Permalink to this headline">¶</a></h2>
+<p>Kurtosis refers to how bunched (clustered) around the mean the data
+points are. Positive kurtosis (leptokurtic) means the points are
+clustered around the mean, making the distribution narrower and taller
+than a normal distribution. Negative kurtosis (platykurtic) means the
+data points are spread out more widely, resulting in a distribution that
+is flatter and broader than a normal distribution.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">mu</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">variance</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">sigma</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">variance</span><span class="p">)</span>
+<span class="n">normal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">mu</span> <span class="o">-</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">mu</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">sigma</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>  <span class="c1"># probability density func</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">normal</span><span class="p">,</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">normal</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">sigma</span><span class="p">))</span>
+
+<span class="n">variance</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">sigma</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">variance</span><span class="p">)</span>
+<span class="n">platykurtic</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">mu</span> <span class="o">-</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">mu</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">sigma</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">platykurtic</span><span class="p">,</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">platykurtic</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">sigma</span><span class="p">))</span>
+
+<span class="n">variance</span> <span class="o">=</span> <span class="mf">0.5</span>
+<span class="n">sigma</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">variance</span><span class="p">)</span>
+<span class="n">leptokurtic</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">mu</span> <span class="o">-</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">mu</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">sigma</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">leptokurtic</span><span class="p">,</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">leptokurtic</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">sigma</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/07-normal-distribution_11_0.png" src="_images/07-normal-distribution_11_0.png" />
+</div>
+</div>
+<p>In the figure above:</p>
+<ul class="simple">
+<li>the <strong>blue</strong> line is a normal distribution,</li>
+<li>the <strong>green</strong> line is a distribution with positive kurtosis
+(leptokurtic)</li>
+<li>the <strong>orange</strong> line is a distribution with negative kurtosis
+(platykurtic)</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">stats101</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="01-introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02-data-sources.html">Data sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03-levels-of-measurement.html">Levels of measurement</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04-central-tendency.html">Central tendency</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05-measures-of-spread.html">Measures of spread</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06-standard-error-confidence-intervals.html">Standard error and confidence intervals</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Normal distribution</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Skewness">Skewness</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Kurtosis">Kurtosis</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="08-hypothesis-testing.html">Hypothesis testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09-effect-sizes.html">Effect sizes</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="06-standard-error-confidence-intervals.html" title="previous chapter">Standard error and confidence intervals</a></li>
+      <li>Next: <a href="08-hypothesis-testing.html" title="next chapter">Hypothesis testing</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Phil Mike Jones.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/07-normal-distribution.ipynb.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

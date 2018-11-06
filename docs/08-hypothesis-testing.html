@@ -1,0 +1,784 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Hypothesis testing &#8212; stats101 0.1.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Effect sizes" href="09-effect-sizes.html" />
+    <link rel="prev" title="Normal distribution" href="07-normal-distribution.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #303F9F;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #D84315;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 8ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+</style>
+<div class="section" id="Hypothesis-testing">
+<h1>Hypothesis testing<a class="headerlink" href="#Hypothesis-testing" title="Permalink to this headline">¶</a></h1>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">scipy.stats</span>
+
+<span class="n">food</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_pickle</span><span class="p">(</span><span class="s2">&quot;../data/processed/food&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>So far we’ve loaded our data set, described it with measures of central
+tendency and variability, and tested to see if our sample mean
+adequately describes our population mean. Now we move on to testing
+hypotheses.</p>
+<p>A hypothesis is a statement that we make to explain a phenomenon that we
+do not yet know the answer to. A hypothesis must be testable.</p>
+<p>For example, in our data set we have two nominal variables that we might
+propose there is a relationship between:</p>
+<ul class="simple">
+<li>NS-SEC class of the household reference person (<code class="docutils literal notranslate"><span class="pre">A094r</span></code>)</li>
+<li>Tenure (<code class="docutils literal notranslate"><span class="pre">A121r</span></code>)</li>
+</ul>
+<p>NS-SEC stands for ‘<a class="reference external" href="https://www.ons.gov.uk/methodology/classificationsandstandards/otherclassifications/thenationalstatisticssocioeconomicclassificationnssecrebasedonsoc2010">National Statistics Socio–economic
+classification</a>’,
+and is a measure of employment grade, for example if the household
+reference person is a higher manager or professional, or a manual
+worker.</p>
+<p>The <a class="reference external" href="https://www.scotlandscensus.gov.uk/variables-classification/household-reference-person">household reference
+person</a>
+is the person in the household (usually a family) who is full–time
+employed or, if both partners are full–time employed, the one who is
+oldest. This concept is used because families share social, cultural,
+and economic characteristics so, for example, if one partner is
+currently unemployed they share some of their characteristics with the
+HRP (for example they are likely to still live in the family home and
+participate in similar activities). Similarly, children who do not yet
+work can be ascribed economic and social characteristics based on their
+parent or carer’s economic activity.</p>
+<p>Tenure simply means if the respondent owns their home (outright, or with
+a mortgage) or rents their home from a private landlord or council.</p>
+<p>With all this in mind, our hypothesis might be:</p>
+<blockquote>
+<div>There is an association or link between household reference person
+NS-SEC and home ownership (tenure).</div></blockquote>
+<p>For example, people in NS-SEC category 1 (higher managerial,
+administrative, and professional occupations) may be more likely to own
+their home compared to people in routine and manual occupations.</p>
+<p>First of all, let’s look at a crosstabulation (crosstab) of frequencies
+comparing these two variables:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">index</span> <span class="o">=</span> <span class="n">food</span><span class="o">.</span><span class="n">A094r</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="n">food</span><span class="o">.</span><span class="n">A121r</span><span class="p">,</span> <span class="n">margins</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">margins_name</span> <span class="o">=</span> <span class="s2">&quot;Total&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[2]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>A121r</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+      <th>Total</th>
+    </tr>
+    <tr>
+      <th>A094r</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>65</td>
+      <td>181</td>
+      <td>763</td>
+      <td>1009</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>81</td>
+      <td>129</td>
+      <td>404</td>
+      <td>614</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>282</td>
+      <td>222</td>
+      <td>476</td>
+      <td>980</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>75</td>
+      <td>82</td>
+      <td>34</td>
+      <td>191</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>361</td>
+      <td>101</td>
+      <td>1100</td>
+      <td>1562</td>
+    </tr>
+    <tr>
+      <th>Total</th>
+      <td>864</td>
+      <td>715</td>
+      <td>2777</td>
+      <td>4356</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p>From this crosstab we can see that similar numbers of people rent their
+homes from local authorities (‘public rented’) and private landlords
+(880 and 798 respectively), but that more than four times as many people
+own their own home (3466) than rent privately or rent publicly.</p>
+<p>We can also see that most people in NS-SEC group 1 (higher managerial,
+administrative, and professional occupations) own their home (1282)
+compared to rent (total 307). If we compare this to NS-SEC group 3
+(routine and manual occupations) only 523 own their home, while 289 rent
+from a local authority (much more than the group 1) and 233 rent
+privately (similar to group 1).</p>
+<p>These descriptions are pretty straightforward, but any analysis is
+complicated by the fact that the two groups are different sizes (n =
+1,589 group 1; n = 1,045 group 3) so we cannot directly compare the
+counts in this table to see if there are differences between the groups.
+The next step is to look at the percentages:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="n">food</span><span class="o">.</span><span class="n">A094r</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="n">food</span><span class="o">.</span><span class="n">A121r</span><span class="p">,</span>
+    <span class="n">normalize</span> <span class="o">=</span> <span class="s2">&quot;index&quot;</span>
+<span class="p">)</span> <span class="o">*</span> <span class="mi">100</span>  <span class="c1"># converts proportions to percentages</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[3]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>A121r</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+    </tr>
+    <tr>
+      <th>A094r</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>6.442022</td>
+      <td>17.938553</td>
+      <td>75.619425</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>13.192182</td>
+      <td>21.009772</td>
+      <td>65.798046</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>28.775510</td>
+      <td>22.653061</td>
+      <td>48.571429</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>39.267016</td>
+      <td>42.931937</td>
+      <td>17.801047</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>23.111396</td>
+      <td>6.466069</td>
+      <td>70.422535</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p>Using the row percentages (i.e.&nbsp;each row adds up to 100%) we can see
+that approximately 80% of higher managerial and professional families
+own their own home, but only 50% of routine and manual families own
+their own homes. Similarly we can see that only about 4.5% of managerial
+and professional families rent from a local authority, but 27% of
+routine and manual families do (remember rows 4 and 5 are unemployed and
+unclassified respectively).</p>
+<p>So we think there’s an association between NS-SEC of the household
+reference person and tenure, and the crosstabs certainly seem to support
+this. Unfortunately humans are very, very good at spotting patterns,
+even when there isn’t one there, so instead of just relying on our
+say–so we can statistically test to see if there really is a difference.
+To do this we use a hypothesis test, of which the most common type is
+the chi–squared (<span class="math notranslate nohighlight">\(\chi ^ 2\)</span>) test (the Greek letter is pronounced
+‘key’, but ‘kai’ is probably more common).</p>
+<p>To perform a chi–squared test we specify a <em>null hypothesis</em>, which we
+denote <span class="math notranslate nohighlight">\(H_0\)</span>. A null hypothesis is a way of framing our hypothesis
+that (usually) states there is <em>no</em> association between our variables,
+so in our case we specify our null hypothesis as:</p>
+<blockquote>
+<div>There is <em>no</em> association between NS-SEC of the household reference
+person and housing tenure</div></blockquote>
+<p>The opposite of the null hypothesis is the <em>alternative hypothesis</em>,
+<span class="math notranslate nohighlight">\(H_1\)</span>, which is usually our original hypothesis.</p>
+<p>It is important to frame a hypothesis test in this way because we assume
+the absence of an association, and it is up to us as researchers to
+provide evidence that there is an association. For example, we cannot
+assume that people who drink coffee are more intelligent than people who
+drink tea. It is up to us to demonstrate that this is the case. This is
+what makes our hypothesis <em>testable</em> and <em>falsifiable</em>.</p>
+<p>It’s a bit like the presumption of innocence: we cannot be locked up
+unless we are proven to be guilty of a crime. If it were the other way
+around (i.e.&nbsp;presumption of guilt) we would all be incarcerated and we
+would have to prove that we were innocent, not just of one crime, but of
+every conveivable crime in order to be released! This would be an
+impossible task (not least because no doubt someone would add another
+charge arbitrarily).</p>
+<p>Hermione Granger sums this up better than most statistics textbooks ever
+did:</p>
+<blockquote>
+<div><div class="line-block">
+<div class="line">“Well, how can that <code class="docutils literal notranslate"><span class="pre">[the</span> <span class="pre">resurrection</span> <span class="pre">stone]</span></code> be real?”</div>
+<div class="line">“Prove that it is not”, said Xenophilius.</div>
+<div class="line">Hermione looked outraged.</div>
+<div class="line">“But that’s — I’m sorry, but that’s completely ridiculous! How can
+I possibly prove it doesn’t exist? Do you expect me to get hold of
+— of all the pebbles in the world, and test them? I mean, you could
+claim that anything’s real if the only basis for believing in it is
+that nobody’s <em>proved</em> it doesn’t exist!</div>
+<div class="line">- Harry Potter and the Deathly Hallows</div>
+</div>
+</div></blockquote>
+<p>To carry out the <span class="math notranslate nohighlight">\(\chi ^ 2\)</span> test, the
+<code class="docutils literal notranslate"><span class="pre">`scipy.stats.chi2_contingency()</span></code> &lt;<a class="reference external" href="https://docs.scipy.org/doc/scipy-0.15.1/reference/generated/scipy.stats.chi2_contingency.html">https://docs.scipy.org/doc/scipy-0.15.1/reference/generated/scipy.stats.chi2_contingency.html</a>&gt;`__
+function returns the following pieces of information:</p>
+<ul class="simple">
+<li>The test statistic</li>
+<li>The <span class="math notranslate nohighlight">\(p\)</span> value</li>
+<li>The number of <a class="reference external" href="https://en.wikipedia.org/wiki/Degrees_of_freedom_(statistics)">degrees of
+freedom</a></li>
+<li>The expected counts</li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">chi2_contingency</span><span class="p">(</span>
+    <span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">index</span> <span class="o">=</span> <span class="n">food</span><span class="o">.</span><span class="n">A094r</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="n">food</span><span class="o">.</span><span class="n">A121r</span><span class="p">,</span> <span class="n">margins</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[4]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>(530.0677915239098,
+ 2.4769639188654904e-109,
+ 8,
+ array([[200.1322314 , 165.61868687, 643.24908173],
+        [121.78512397, 100.78282828, 391.43204775],
+        [194.38016529, 160.85858586, 624.76124885],
+        [ 37.88429752,  31.3510101 , 121.76469238],
+        [309.81818182, 256.38888889, 995.79292929]]))
+</pre></div>
+</div>
+</div>
+<p>The test statistic is, roughly, the amount of variance explained by our
+test compared to the amount of variance not explained. In all my years
+of statistics I have never worked one of these out by hand, so don’t
+worry too much about this.</p>
+<p>The degrees of freedom are the the number of independent pieces of
+information to perform the test on (a bit like we saw earlier with the
+standard deviation, the DOF used is <span class="math notranslate nohighlight">\(n - 1\)</span> because we set the
+population mean to be the sample mean). In a cross tab this is the
+number of rows minus 1, multiplied by the number of columns minus 1, in
+this case:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="p">(</span><span class="mi">5</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">3</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[5]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>8
+</pre></div>
+</div>
+</div>
+<p>This is because, in this example, once we know rows 1–4 we can calculate
+row 5 because we know the total. Similarly once we know columns 1–2 we
+can calculate column 3 because we know the total.</p>
+<p>We’re not interested in the test statistic or degrees of freedom
+directly, but these are used to calculate the <span class="math notranslate nohighlight">\(p\)</span> value. We want
+the <span class="math notranslate nohighlight">\(p\)</span> value to be low, by convention at least below 0.05.</p>
+<p>In this case the <span class="math notranslate nohighlight">\(p\)</span> value is so low it is returned in scientific
+notation. The <code class="docutils literal notranslate"><span class="pre">3.2e-144</span></code> means the decimal place is moved 144 places
+to the left, i.e.:</p>
+<p><code class="docutils literal notranslate"><span class="pre">0.0000000000000000000000000000000000000000000000000000000000000000000000000000</span> <span class="pre">000000000000000000000000000000000000000000000000000000000000000000003</span></code></p>
+<p>So, essentially, zero (in fact it’s <em>highly</em> dubious that the p value is
+known to this level of accuracy, so we treat it as essentially zero). A
+<span class="math notranslate nohighlight">\(p\)</span> value this small means it is very, very unlikely that we would
+have observed the relationship we did just by chance, so we can say with
+some confidence that there is an association or link between NS-SEC and
+housing tenure.</p>
+<p>There are a few important assumptions we must satisfy to use a
+chi–squared test. One of these is to do with <em>expected frequencies</em>,
+which are used in calculating the actual chi–squared statistic. In
+calculating the chi–squared statistic we calculate the expected
+frequency for each cell. In our example we have 15 cells in our
+crosstab, so we calculate 15 expected frequencies.</p>
+<p>Specifically we should not have any expected frequencies of 0 (should be
+at least 1), and no more than 20% of expected frequencies should be less
+than 5. To calculate the expected frequency for each cell we use the
+formula:</p>
+<div class="math notranslate nohighlight">
+\[E_{ij} = \frac{T_{i} x T_{j}}{N}\]</div>
+<p>where <span class="math notranslate nohighlight">\(E_{ij}\)</span> is the expected frequency of cell in row <span class="math notranslate nohighlight">\(_i\)</span>
+and column <span class="math notranslate nohighlight">\(_j\)</span>; <span class="math notranslate nohighlight">\(T_i\)</span> is the total of row <span class="math notranslate nohighlight">\(_i\)</span>;
+<span class="math notranslate nohighlight">\(T_j\)</span> is the total of column <span class="math notranslate nohighlight">\(_j\)</span>; and <span class="math notranslate nohighlight">\(N\)</span> is the
+table grand total. So the expected frequency for row 1, column 1 is:</p>
+<div class="math notranslate nohighlight">
+\[E_{1, 1} = \frac{1589 x 880}{5144}\]</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="p">(</span><span class="mi">1589</span> <span class="o">*</span> <span class="mi">880</span><span class="p">)</span> <span class="o">/</span> <span class="mi">5144</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[6]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>271.8351477449456
+</pre></div>
+</div>
+</div>
+<p>Which is what is returned by the <code class="docutils literal notranslate"><span class="pre">scipy.stats.chi_contingency()</span></code>
+function.</p>
+<p>When running a chi–square test on a 2x2 contingency table it is likely
+to produce p values that are too small (i.e.&nbsp;it’s more likely to make a
+false positive or a <a class="reference external" href="#interpreting-the-results">type I error</a>. To
+correct this <code class="docutils literal notranslate"><span class="pre">scipy.stats.chi_contingency()</span></code> automatically applies the
+<a class="reference external" href="https://en.wikipedia.org/wiki/Yates%27s_correction_for_continuity">Yates’s continuity
+correction</a>
+if you’re performing a test on a 2x2 table. I’ve never worried about
+what this is or how it works (although Andy Field’s textbook, as usual,
+covers it in an accessible way); just know that it has been applied when
+reporting on a 2x2 table.</p>
+<div class="section" id="Interpreting-the-results">
+<h2>Interpreting the results<a class="headerlink" href="#Interpreting-the-results" title="Permalink to this headline">¶</a></h2>
+<p>There are two problems to be aware of when interpreting the results of a
+hypothesis test. The hypothesis test does not <em>prove</em> an association
+between our variables; it gives us a statistical level of confidence
+that there is an association.</p>
+<p>There is always a risk that we might reject the null hypothesis
+(i.e.&nbsp;state that there is an association) when there isn’t one. In our
+example we have good statistical evidence that there is an association
+(the <span class="math notranslate nohighlight">\(p\)</span> value is very low), but there is still a possibility that
+this could have simply happened randomly (admittedly a very small
+chance).</p>
+<p>If this were a random occurrence but we stated there was an association
+this would be called a <strong>Type I (one) error</strong>, sometimes known as a
+false positive.</p>
+<p>The other type of error we could make is failing to reject the null
+hypothesis when we should (i.e.&nbsp;we state there is no association when
+there <em>is</em> one), also known as a false negative. This is known as a
+<strong>Type II (two) error</strong>.</p>
+<p>When we perform a hypothesis test we therefore need to balance the risk
+of stating that there is an association when there isn’t, and the risk
+of stating that there is no association when there is one.</p>
+<p>Depending on our research question, one or the other errors might be
+more problematic. For example, if we are testing a new drug we want to
+make sure it is effective, so we do not want to make a type I error
+(i.e.&nbsp;state that there is an association when there isn’t one). But if
+we’re testing the drug for side effects we want to make sure we don’t
+make a type II error (i.e.&nbsp;assert that there are no side effects when,
+in fact, there are).</p>
+</div>
+<div class="section" id="Directional-tests">
+<h2>Directional tests<a class="headerlink" href="#Directional-tests" title="Permalink to this headline">¶</a></h2>
+<p>Two–tailed tests are the default, and what you should use unless you
+have a very good (and documented!) reason for using a one–tailed test.</p>
+<p>One–tailed tests are used when we are carrying out a <em>directional</em> test.
+For example, we previously tested if there is an association between
+employment grade (NS–SEC) and housing tenure. We did not specify a
+direction, so we would usually use a two–tailed test. However, if we
+specified our alternative hypothesis with a direction, we would run a
+one–tailed test. For example, if our alternative hypothesis were:</p>
+<blockquote>
+<div>People of higher employment grade are <strong>more likely</strong> to own their
+own home</div></blockquote>
+<p>we now have a directional test (i.e.&nbsp;we don’t think they’re less likely
+to own their own home).</p>
+<p>In this case we can use a one–tailed test. Note that we have stated our
+hypothesis <strong>before</strong> we ran the test; you cannot run a one–tailed test
+after the fact and claim you’ve found a directional association. Also
+note that if you do not find a directional association and later want to
+switch direction you cannot. Therefore one–tailed tests tend to be used
+when previous literature identifies a directional association and you
+want to use new data to test it.</p>
+<p>The reason for this skepticism of one–tailed tests is that they require
+a smaller difference between the two variables to be statistically
+significant. If you are performing a non–directional (two–tailed test)
+at a confidence level of 0.05, your have half of this at each end of
+your distribution (0.025) to work with to detect a difference. If you
+specify a directional (i.e.&nbsp;one–tailed test) you have more of the
+distribution to work with to detect a significant difference.</p>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">stats101</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="01-introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02-data-sources.html">Data sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03-levels-of-measurement.html">Levels of measurement</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04-central-tendency.html">Central tendency</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05-measures-of-spread.html">Measures of spread</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06-standard-error-confidence-intervals.html">Standard error and confidence intervals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07-normal-distribution.html">Normal distribution</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Hypothesis testing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Interpreting-the-results">Interpreting the results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Directional-tests">Directional tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="09-effect-sizes.html">Effect sizes</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="07-normal-distribution.html" title="previous chapter">Normal distribution</a></li>
+      <li>Next: <a href="09-effect-sizes.html" title="next chapter">Effect sizes</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Phil Mike Jones.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/08-hypothesis-testing.ipynb.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

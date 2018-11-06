@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Central tendency &#8212; stats101 0.1.0 documentation</title>
+    <title>Measures of spread &#8212; stats101 0.1.0 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -16,8 +16,8 @@
     <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Measures of spread" href="05-measures-of-spread.html" />
-    <link rel="prev" title="Levels of measurement" href="03-levels-of-measurement.html" />
+    <link rel="next" title="Standard error and confidence intervals" href="06-standard-error-confidence-intervals.html" />
+    <link rel="prev" title="Central tendency" href="04-central-tendency.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -200,8 +200,8 @@ div.nboutput div.output_area.stderr {
 .ansi-bold { font-weight: bold; }
 .ansi-underline { text-decoration: underline; }
 </style>
-<div class="section" id="Central-tendency">
-<h1>Central tendency<a class="headerlink" href="#Central-tendency" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="Measures-of-spread">
+<h1>Measures of spread<a class="headerlink" href="#Measures-of-spread" title="Permalink to this headline">¶</a></h1>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [1]:
@@ -218,35 +218,26 @@ div.nboutput div.output_area.stderr {
 </pre></div>
 </div>
 </div>
-<p>One of the first things we usually want to do is to explore and describe
-our data, before we begin any detailed analysis. Measures of central
-tendency are one of the first things we use to describe our data.</p>
-<p>Measures of central tendency is a fancy phrase for ‘average’. They are a
-single data point used to represent a ‘typical’ value from your data.
-Depending on your level of measurement you can use one or more measures
-of central tendency.</p>
-<div class="section" id="Mode">
-<h2>Mode<a class="headerlink" href="#Mode" title="Permalink to this headline">¶</a></h2>
-<p>The most common value. Mode is the only measure of central tendency you
-can provide for nominal data.</p>
-<p>For example, the variable <code class="docutils literal notranslate"><span class="pre">A121r</span></code> in our food data set is of household
-tenure type. The available options are:</p>
-<ol class="arabic simple">
-<li>public rented (i.e.&nbsp;rented from a council)</li>
-<li>private rented (i.e.&nbsp;rented from a landlord)</li>
-<li>owned</li>
-</ol>
-<p>A frequency (count) table of this variable shows that <code class="docutils literal notranslate"><span class="pre">owned</span></code> is the
-most common type of tenure:</p>
+<p>We saw in the measures of central tendency section that the mean can be
+a poor representation of data if the data is skewed, and that we should
+therefore be careful when someone presents us with a mean (or average)
+without any further information.</p>
+<p>One of the types of ‘further information’ that can help us is a measure
+of spread of the data around the mean value. We usually use the
+<em>variance</em> and the <em>standard deviation</em> to quantify measure of spread.
+Both are easy to calculate, and even easier to convert between each
+other. We also sometimes see the range and inter–quartile range. These
+are simpler to calculate, but less useful.</p>
+<div class="section" id="Range">
+<h2>Range<a class="headerlink" href="#Range" title="Permalink to this headline">¶</a></h2>
+<p>Simply the largest value, minus the smallest value.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">food</span><span class="p">[</span><span class="s2">&quot;A121r&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">food</span><span class="p">[</span><span class="s2">&quot;A121r&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;category&quot;</span><span class="p">)</span>
-<span class="n">food</span><span class="p">[</span><span class="s2">&quot;A121r&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">cat</span><span class="o">.</span><span class="n">categories</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;public rented&quot;</span><span class="p">,</span> <span class="s2">&quot;private rented&quot;</span><span class="p">,</span> <span class="s2">&quot;owned&quot;</span><span class="p">]</span>
-<span class="n">food</span><span class="p">[</span><span class="s2">&quot;A121r&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+<span></span><span class="n">food</span><span class="o">.</span><span class="n">P344pr</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">-</span> <span class="n">food</span><span class="o">.</span><span class="n">P344pr</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -256,28 +247,29 @@ most common type of tenure:</p>
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
-<span></span>owned             2777
-public rented      864
-private rented     715
-Name: A121r, dtype: int64
+<span></span>1181.54
 </pre></div>
 </div>
 </div>
+<p>This is the full spread of the data set so doesn’t tell us anything very
+useful in this case, and the range is very susceptible to outliers.
+Therefore the inter–quartile range is more common.</p>
 </div>
-<div class="section" id="Median">
-<h2>Median<a class="headerlink" href="#Median" title="Permalink to this headline">¶</a></h2>
-<p>The median is the ‘middle’ point. It’s only appropriate for ordered data
-(i.e.&nbsp;ordinal or numeric) and is calculated by arranging your data in
-order and selecting the mid–point. <code class="docutils literal notranslate"><span class="pre">P344pr</span></code> is the gross normal weekly
-household income for each respondent. The following are incomes for the
-first five respondents as an example:</p>
+<div class="section" id="Inter–quartile-range">
+<h2>Inter–quartile range<a class="headerlink" href="#Inter–quartile-range" title="Permalink to this headline">¶</a></h2>
+<p>As we saw above the range is very susceptible to outliers, so the
+inter–quartile range is effectively a ‘trimmed’ range by taking off the
+very lowest and the very highest values. In fact, we take off the top
+25% and the bottom 25% and specify this range. This has the disadvantage
+of only describing the middle 50% of our data, but this is usually
+outweighed by the fact that this is less susceptible to outliers.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">food</span><span class="p">[</span><span class="s2">&quot;P344pr&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span></span><span class="n">food</span><span class="o">.</span><span class="n">P344pr</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.75</span><span class="p">)</span> <span class="o">-</span> <span class="n">food</span><span class="o">.</span><span class="n">P344pr</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.25</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -287,25 +279,29 @@ first five respondents as an example:</p>
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
-<span></span>0    465.36
-1    855.26
-2    160.96
-3    656.22
-4    398.80
-Name: P344pr, dtype: float64
+<span></span>445.75049999999993
 </pre></div>
 </div>
 </div>
-<p>The variable looks like this when we plot it as a distribution:</p>
+<p>It’s common to plot a <strong>boxplot</strong> to depict the range and interquartile
+range.</p>
+<p>The figure below is a boxplot of the trimmed income (remember I removed
+the top–coded income category to create a more normal distribution).</p>
+<ul class="simple">
+<li>the mean is the green horizontal bar</li>
+<li>the interquartile range (representing 50% of the incomes) is the box</li>
+<li>the full range are the stalks (whiskers) at the very top and bottom
+of the figure</li>
+</ul>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">food</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="s2">&quot;P344pr&quot;</span><span class="p">,</span> <span class="n">bins</span> <span class="o">=</span> <span class="mi">100</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Weekly income (£)&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Frequency&quot;</span><span class="p">)</span>
+<span></span><span class="n">food</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">column</span> <span class="o">=</span> <span class="s2">&quot;P344pr&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Income (£)&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -315,7 +311,7 @@ Name: P344pr, dtype: float64
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Text(0, 0.5, &#39;Frequency&#39;)
+<span></span>Text(0, 0.5, &#39;Income (£)&#39;)
 </pre></div>
 </div>
 </div>
@@ -323,18 +319,47 @@ Name: P344pr, dtype: float64
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/04-central-tendency_7_1.png" src="_images/04-central-tendency_7_1.png" />
+<img alt="_images/05-measures-of-spread_7_1.png" src="_images/05-measures-of-spread_7_1.png" />
 </div>
 </div>
-<p>If we arrange these in order and take the middle point we obtain the
-median income:</p>
+<p>The range and inter–quartile range are useful when beginning to
+understand and explore your data, but are not usually reported. Instead
+the variance and standard deviation are more commonly reported, because
+they are more useful.</p>
+</div>
+<div class="section" id="Variance">
+<h2>Variance<a class="headerlink" href="#Variance" title="Permalink to this headline">¶</a></h2>
+<p>To calculate the variance:</p>
+<ol class="arabic simple">
+<li>subtract the mean from each score</li>
+<li>square the result</li>
+<li>sum the results to produce one value</li>
+<li>divide by <span class="math notranslate nohighlight">\(n - 1\)</span> (number of observations minus one)</li>
+</ol>
+<div class="math notranslate nohighlight">
+\[\frac{\Sigma (x - \bar{x}) ^ 2}{n-1}\]</div>
+<p>Using <span class="math notranslate nohighlight">\(n - 1\)</span> rather than simply the number of observations is
+known as <a class="reference external" href="https://en.wikipedia.org/wiki/Bessel%27s_correction">Bessel’s
+correction</a>. To
+calculate the variance of the population we must assume that the
+population mean is the same as the sample mean that we have observed. In
+fixing the population mean we reduce the degrees of freedom of our
+observations, because if we change these the final observation is
+determined in order for the mean to remain constant.</p>
+<p>For example if our sample mean is 100 we assume our population mean is
+also 100. If we have two observations these might be 110 and 90 (mean
+100). If we change the 110 value to 120, the 90 value <em>must</em> change to
+80 to ensure the sample mean (and therefore the population mean) remains
+100, so there is only one degree of freedom. We would therefore use
+<span class="math notranslate nohighlight">\(2 - 1\)</span> as the denominator in our variance calculation.</p>
+<p>The variance of our trimmed income data is:</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">food</span><span class="p">[</span><span class="s2">&quot;P344pr&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">()</span>
+<span></span><span class="n">food</span><span class="p">[</span><span class="s2">&quot;P344pr&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">var</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -344,31 +369,29 @@ median income:</p>
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
-<span></span>476.799
+<span></span>84230.34403890932
 </pre></div>
 </div>
 </div>
-<p>If your data have an even number of items, the median is the mean
-(average) of the two middle points. For example, using the following
-example data with four data points - 2, 4, 6, 8 - there is no one middle
-point. Instead 4 and 6 are the middle points. The median is the mean of
-these, which is <span class="math notranslate nohighlight">\(\frac{(4 + 6)}{2} = 5\)</span>.</p>
-<p>The median is often considered more <em>robust</em> than the mean, which means
-it is less susceptible to outliers, for reasons we’ll get to in a
-moment.</p>
 </div>
-<div class="section" id="Mean">
-<h2>Mean<a class="headerlink" href="#Mean" title="Permalink to this headline">¶</a></h2>
-<p>The mean is what most people think of when they think of an average. You
-simply “add them all up and divide by how many you have”. For example,
-the mean of the incomes is:</p>
+<div class="section" id="Standard-deviation">
+<h2>Standard deviation<a class="headerlink" href="#Standard-deviation" title="Permalink to this headline">¶</a></h2>
+<p>As you’ve probably noticed the variance is not in the units of the
+original data. This is where the standard deviation comes in. In fact
+the unit of the variance is the <em>square</em> of the unit of the original
+data. The standard deviation is therefore a measure of spread in the
+units of the original data, and is calculated simply by square rooting
+the variance:</p>
+<div class="math notranslate nohighlight">
+\[\sqrt{\frac{\Sigma (x - \bar{x}) ^ 2}{n-1}}\]</div>
+<p>The standard deviation of the trimmed income is therefore:</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">food</span><span class="o">.</span><span class="n">P344pr</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span></span><span class="n">food</span><span class="o">.</span><span class="n">P344pr</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -378,22 +401,63 @@ the mean of the incomes is:</p>
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
-<span></span>518.3056177244473
+<span></span>290.22464409300136
 </pre></div>
 </div>
 </div>
-<p>If the incomes were an ideal normal distribution, the mean and the
-median (and mode) would be identical (more on the <a class="reference external" href="#Normal-distribution">normal
-distribution</a> later). In the wild, most
-distributions are not exactly normal (or ideal) so the mean and the
-median differ, as we have seen with our example data.</p>
-<p>If there are outliers in our data set these can affect the mean up or
-down. For example, if there are a few individuals in our data that are
-substantially wealthier than most this can affect the mean. They also
-affect the median, but not as much as the mean. For this reason we often
-consider the median a more <em>robust</em> measure of central tendency than the
-mean, and why you should be careful when someone presents a mean value
-without any additional information.</p>
+<p>The standard deviation is a measure of how far the data points are on
+average from the mean. A small standard deviation means the mean fairly
+accurately represents the data; a large standard deviation means the
+mean does not represent the data well.</p>
+<p>In the case of our example the standard deviation of the income data is
+quite large compared to the mean, suggesting a lot of variability even
+in the trimmed income data. The histograms support this, and suggest the
+mean might not be as good as the median in summarising this data.</p>
+<p>In fact, using properties of the normal distribution and the standard
+deviation we can estimate that about 95% of cases fall between:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">food</span><span class="o">.</span><span class="n">P344pr</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">-</span> <span class="mf">1.96</span> <span class="o">*</span> <span class="n">food</span><span class="o">.</span><span class="n">P344pr</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[7]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>-50.53468469783536
+</pre></div>
+</div>
+</div>
+<p>and:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">food</span><span class="o">.</span><span class="n">P344pr</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">+</span> <span class="mf">1.96</span> <span class="o">*</span> <span class="n">food</span><span class="o">.</span><span class="n">P344pr</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[8]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>1087.14592014673
+</pre></div>
+</div>
+</div>
+<p>This is most of the data set, so the variability of the data suggest the
+mean may not be a useful summary of the data.</p>
 </div>
 </div>
 
@@ -419,13 +483,14 @@ without any additional information.</p>
 <li class="toctree-l1"><a class="reference internal" href="01-introduction.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="02-data-sources.html">Data sources</a></li>
 <li class="toctree-l1"><a class="reference internal" href="03-levels-of-measurement.html">Levels of measurement</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Central tendency</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#Mode">Mode</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#Median">Median</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#Mean">Mean</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04-central-tendency.html">Central tendency</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Measures of spread</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Range">Range</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Inter–quartile-range">Inter–quartile range</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Variance">Variance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Standard-deviation">Standard deviation</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="05-measures-of-spread.html">Measures of spread</a></li>
 <li class="toctree-l1"><a class="reference internal" href="06-standard-error-confidence-intervals.html">Standard error and confidence intervals</a></li>
 <li class="toctree-l1"><a class="reference internal" href="07-normal-distribution.html">Normal distribution</a></li>
 <li class="toctree-l1"><a class="reference internal" href="08-hypothesis-testing.html">Hypothesis testing</a></li>
@@ -436,8 +501,8 @@ without any additional information.</p>
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="03-levels-of-measurement.html" title="previous chapter">Levels of measurement</a></li>
-      <li>Next: <a href="05-measures-of-spread.html" title="next chapter">Measures of spread</a></li>
+      <li>Previous: <a href="04-central-tendency.html" title="previous chapter">Central tendency</a></li>
+      <li>Next: <a href="06-standard-error-confidence-intervals.html" title="next chapter">Standard error and confidence intervals</a></li>
   </ul></li>
 </ul>
 </div>
@@ -473,7 +538,7 @@ without any additional information.</p>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
-      <a href="_sources/04-central-tendency.ipynb.txt"
+      <a href="_sources/05-measures-of-spread.ipynb.txt"
           rel="nofollow">Page source</a>
     </div>
 
