@@ -24,7 +24,7 @@ if not os.path.isfile("data/external.food.zip"):
 # unzip
 if not os.path.isdir("data/external/UKDA-7932-tab/"):
     shutil.unpack_archive(
-        "../data/external/food.zip",
+        "data/external/food.zip",
         extract_dir = "data/external/"
     )
 
