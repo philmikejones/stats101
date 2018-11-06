@@ -14,7 +14,11 @@ Welcome to stats101's documentation!
    02-data-sources.ipynb
    03-levels-of-measurement.ipynb
    04-central-tendency.ipynb
-   stats101.ipynb
+   05-measures-of-spread.ipynb
+   06-standard-error-confidence-intervals.ipynb
+   07-normal-distribution.ipynb
+   08-hypothesis-testing.ipynb
+   09-effect-sizes.ipynb
 
 Indices and tables
 ==================
