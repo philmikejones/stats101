@@ -72,7 +72,7 @@ language = None
 exclude_patterns = ['_build', '**.ipynb_checkpoints']
 
 # The name of the Pygments (syntax highlighting) style to use.
-pygments_style = None
+pygments_style = "manni"
 
 
 # -- Options for HTML output -------------------------------------------------
