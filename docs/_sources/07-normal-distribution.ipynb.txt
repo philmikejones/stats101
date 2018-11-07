@@ -28,9 +28,7 @@
    "source": [
     "The normal distribution is central to our ability to infer about a population from a sample. The normal distribution looks like this (by Dan Kernler from Wikimedia Commons, CC BY-SA 4.0):\n",
     "\n",
-    "<a title=\"By Dan Kernler [CC BY-SA 4.0 \n",
-    " (https://creativecommons.org/licenses/by-sa/4.0\n",
-    ")], from Wikimedia Commons\" href=\"https://commons.wikimedia.org/wiki/File:Empirical_Rule.PNG\"><img width=\"512\" alt=\"Empirical Rule\" src=\"https://upload.wikimedia.org/wikipedia/commons/a/a9/Empirical_Rule.PNG\"></a>\n",
+    "![Normal distribution CC BY-SA 4.0 by Dan Kernler](https://upload.wikimedia.org/wikipedia/commons/a/a9/Empirical_Rule.PNG)\n",
     "\n",
     "The normal distribution was discovered by Gauss (which is why it's also sometimes called the Gaussian distribution) and described an 'ideal' situation. Lots of data follow this pattern: the height or weight of a population;  The mean of the normal distribution ($\\mu$ on the diagram above) is the centre. Because the normal distribution is **symmetrical** we know that 50% of cases fall below and 50% of cases fall above the mean.\n",
     "\n",
