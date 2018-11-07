@@ -25,7 +25,7 @@
     "Instead, they are our *sample* and, based on their responses, we can *infer* what the most popular hot drink is for the *population*.\n",
     "In the UK, the [most popular hot drink is tea](https://www.statista.com/statistics/697383/favorite-hot-drinks-united-kingdom-uk/), but everybody knows it should be coffee.\n",
     "\n",
-    "![Coffee is clearly superior to tea](images/coffee.jpg)\n",
+    "![Coffee is clearly superior to tea](_images/coffee.jpg)\n",
     "\n",
     "Obtaining knowledge about a *population* by *inferring* from a *sample* is the cornerstone of quantitative social science research, and uses many statistical techniques to be able to do this.\n",
     "The good news is the most difficult challenge is often deciding which technique to use; using the technique is often like following a recipe."
