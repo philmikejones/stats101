@@ -14,7 +14,7 @@ import shutil
 os.makedirs("../data/external", exist_ok = True)
 
 # Living costs and food survey
-if not os.path.isfile("../data/external.food.zip"):
+if not os.path.isfile("../data/external/food.zip"):
     food = "https://beta.ukdataservice.ac.uk/Umbraco/Surface/Discover/GetDownload?studyNumber=7932&fileName=7932tab_818dcb297393b2557b07f05acaae70b9.zip"
     food = requests.get(food)
     food = food.content
