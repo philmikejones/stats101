@@ -22,12 +22,12 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "If you're following along at home I download and process the data sets with scripts in the `src/` directory."
+    "If you're following along at home I download and process the data sets with scripts in the [`src/` directory](https://github.com/philmikejones/stats101/tree/master/src)."
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 1,
+   "execution_count": null,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -45,7 +45,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 2,
+   "execution_count": null,
    "metadata": {},
    "outputs": [],
    "source": [
