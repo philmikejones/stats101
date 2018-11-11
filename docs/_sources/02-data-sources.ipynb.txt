@@ -22,7 +22,7 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "If you're following along at home I download and process the data sets with scripts in the [`src/` directory](https://github.com/philmikejones/stats101/tree/master/src)."
+    "If you're following along at home I download and process the data sets with scripts in the [src/ directory](https://github.com/philmikejones/stats101/tree/master/src)."
    ]
   },
   {
