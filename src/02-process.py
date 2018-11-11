@@ -5,11 +5,14 @@
 # If the pickle breaks it doesn't matter because we have the original
 # data and this processing script
 
+import os
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 import math
 import scipy.stats
+
+os.makedirs("../data/processed", exist_ok = True)
 
 # Living costs and food survey
 food = pd.read_csv(
