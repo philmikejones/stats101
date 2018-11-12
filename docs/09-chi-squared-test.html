@@ -1,0 +1,600 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Chi–squared test &mdash; stats101 0.1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Effect sizes" href="10-effect-sizes.html" />
+    <link rel="prev" title="Hypothesis testing" href="08-hypothesis-testing.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> stats101
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="01-introduction.html">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="01-introduction.html#Inferring-from-a-sample">Inferring from a sample</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01-introduction.html#Description-and-inference">Description and inference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="02-data-sources.html">Data sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03-levels-of-measurement.html">Levels of measurement</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="03-levels-of-measurement.html#Nominal">Nominal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03-levels-of-measurement.html#Ordinal">Ordinal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03-levels-of-measurement.html#Interval">Interval</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03-levels-of-measurement.html#Ratio">Ratio</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03-levels-of-measurement.html#Discrete-and-continuous-data">Discrete and continuous data</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="04-central-tendency.html">Central tendency</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="04-central-tendency.html#Mode">Mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04-central-tendency.html#Median">Median</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04-central-tendency.html#Mean">Mean</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="05-measures-of-spread.html">Measures of spread</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="05-measures-of-spread.html#Range">Range</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05-measures-of-spread.html#Inter–quartile-range">Inter–quartile range</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05-measures-of-spread.html#Variance">Variance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05-measures-of-spread.html#Standard-deviation">Standard deviation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="06-standard-error-confidence-intervals.html">Standard error and confidence intervals</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="06-standard-error-confidence-intervals.html#Comparing-means-and-confidence-intervals">Comparing means and confidence intervals</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="07-normal-distribution.html">Normal distribution</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="07-normal-distribution.html#Skewness">Skewness</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07-normal-distribution.html#Kurtosis">Kurtosis</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="08-hypothesis-testing.html">Hypothesis testing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="08-hypothesis-testing.html#Null-hypothesis">Null hypothesis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="08-hypothesis-testing.html#Errors-interpreting-the-results">Errors interpreting the results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="08-hypothesis-testing.html#Directional-tests">Directional tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Chi–squared test</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10-effect-sizes.html">Effect sizes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="10-effect-sizes.html#Odds-ratio">Odds ratio</a></li>
+<li class="toctree-l2"><a class="reference internal" href="10-effect-sizes.html#Pearson’s-correlation-coefficient,-r">Pearson’s correlation coefficient, <span class="math notranslate nohighlight">\(r\)</span></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="10-effect-sizes.html#Assumptions">Assumptions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">stats101</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Chi–squared test</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/09-chi-squared-test.ipynb.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #303F9F;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #D84315;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 8ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="Chi–squared-test">
+<h1>Chi–squared test<a class="headerlink" href="#Chi–squared-test" title="Permalink to this headline">¶</a></h1>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">scipy.stats</span>
+
+<span class="n">food</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_pickle</span><span class="p">(</span><span class="s2">&quot;../data/processed/food&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>To carry out the <span class="math notranslate nohighlight">\(\chi ^ 2\)</span> test, the
+<code class="docutils literal notranslate"><span class="pre">`scipy.stats.chi2_contingency()</span></code> &lt;<a class="reference external" href="https://docs.scipy.org/doc/scipy-0.15.1/reference/generated/scipy.stats.chi2_contingency.html">https://docs.scipy.org/doc/scipy-0.15.1/reference/generated/scipy.stats.chi2_contingency.html</a>&gt;`__
+function returns the following pieces of information:</p>
+<ul class="simple">
+<li>The test statistic</li>
+<li>The <span class="math notranslate nohighlight">\(p\)</span> value</li>
+<li>The number of <a class="reference external" href="https://en.wikipedia.org/wiki/Degrees_of_freedom_(statistics)">degrees of
+freedom</a></li>
+<li>The expected counts</li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">chi2_contingency</span><span class="p">(</span>
+    <span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">index</span> <span class="o">=</span> <span class="n">food</span><span class="o">.</span><span class="n">A094r</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="n">food</span><span class="o">.</span><span class="n">A121r</span><span class="p">,</span> <span class="n">margins</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[2]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>(530.0677915239098,
+ 2.4769639188654904e-109,
+ 8,
+ array([[200.1322314 , 165.61868687, 643.24908173],
+        [121.78512397, 100.78282828, 391.43204775],
+        [194.38016529, 160.85858586, 624.76124885],
+        [ 37.88429752,  31.3510101 , 121.76469238],
+        [309.81818182, 256.38888889, 995.79292929]]))
+</pre></div>
+</div>
+</div>
+<p>The test statistic is, roughly, the amount of variance explained by our
+test compared to the amount of variance not explained. In all my years
+of statistics I have never worked one of these out by hand, so don’t
+worry too much about this.</p>
+<p>The degrees of freedom are the the number of independent pieces of
+information to perform the test on (a bit like we saw earlier with the
+standard deviation, the DOF used is <span class="math notranslate nohighlight">\(n - 1\)</span> because we set the
+population mean to be the sample mean). In a cross tab this is the
+number of rows minus 1, multiplied by the number of columns minus 1, in
+this case:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="p">(</span><span class="mi">5</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">3</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[3]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>8
+</pre></div>
+</div>
+</div>
+<p>This is because, in this example, once we know rows 1–4 we can calculate
+row 5 because we know the total. Similarly once we know columns 1–2 we
+can calculate column 3 because we know the total.</p>
+<p>We’re not interested in the test statistic or degrees of freedom
+directly, but these are used to calculate the <span class="math notranslate nohighlight">\(p\)</span> value. We want
+the <span class="math notranslate nohighlight">\(p\)</span> value to be low, by convention at least below 0.05.</p>
+<p>In this case the <span class="math notranslate nohighlight">\(p\)</span> value is so low it is returned in scientific
+notation. The <code class="docutils literal notranslate"><span class="pre">3.2e-144</span></code> means the decimal place is moved 144 places
+to the left, i.e.:</p>
+<p><code class="docutils literal notranslate"><span class="pre">0.0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000003</span></code></p>
+<p>So, essentially, zero (in fact it’s <em>highly</em> dubious that the p value is
+known to this level of accuracy, so we treat it as essentially zero). A
+<span class="math notranslate nohighlight">\(p\)</span> value this small means it is very, very unlikely that we would
+have observed the relationship we did just by chance, so we can say with
+some confidence that there is an association or link between NS-SEC and
+housing tenure.</p>
+<p>There are a few important assumptions we must satisfy to use a
+chi–squared test. One of these is to do with <em>expected frequencies</em>,
+which are used in calculating the actual chi–squared statistic. In
+calculating the chi–squared statistic we calculate the expected
+frequency for each cell. In our example we have 15 cells in our
+crosstab, so we calculate 15 expected frequencies.</p>
+<p>Specifically we should not have any expected frequencies of 0 (should be
+at least 1), and no more than 20% of expected frequencies should be less
+than 5. To calculate the expected frequency for each cell we use the
+formula:</p>
+<div class="math notranslate nohighlight">
+\[E_{ij} = \frac{T_{i} x T_{j}}{N}\]</div>
+<p>where <span class="math notranslate nohighlight">\(E_{ij}\)</span> is the expected frequency of cell in row <span class="math notranslate nohighlight">\(_i\)</span>
+and column <span class="math notranslate nohighlight">\(_j\)</span>; <span class="math notranslate nohighlight">\(T_i\)</span> is the total of row <span class="math notranslate nohighlight">\(_i\)</span>;
+<span class="math notranslate nohighlight">\(T_j\)</span> is the total of column <span class="math notranslate nohighlight">\(_j\)</span>; and <span class="math notranslate nohighlight">\(N\)</span> is the
+table grand total. So the expected frequency for row 1, column 1 is:</p>
+<div class="math notranslate nohighlight">
+\[E_{1, 1} = \frac{1589 x 880}{5144}\]</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="p">(</span><span class="mi">1589</span> <span class="o">*</span> <span class="mi">880</span><span class="p">)</span> <span class="o">/</span> <span class="mi">5144</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[4]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>271.8351477449456
+</pre></div>
+</div>
+</div>
+<p>Which is what is returned by the <code class="docutils literal notranslate"><span class="pre">scipy.stats.chi_contingency()</span></code>
+function.</p>
+<p>When running a chi–square test on a 2x2 contingency table it is likely
+to produce p values that are too small (i.e.&nbsp;it’s more likely to make a
+false positive or a <a class="reference external" href="#interpreting-the-results">type I error</a>. To
+correct this <code class="docutils literal notranslate"><span class="pre">scipy.stats.chi_contingency()</span></code> automatically applies the
+<a class="reference external" href="https://en.wikipedia.org/wiki/Yates%27s_correction_for_continuity">Yates’s continuity
+correction</a>
+if you’re performing a test on a 2x2 table. I’ve never worried about
+what this is or how it works (although Andy Field’s textbook, as usual,
+covers it in an accessible way); just know that it has been applied when
+reporting on a 2x2 table.</p>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="10-effect-sizes.html" class="btn btn-neutral float-right" title="Effect sizes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="08-hypothesis-testing.html" class="btn btn-neutral" title="Hypothesis testing" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Phil Mike Jones
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

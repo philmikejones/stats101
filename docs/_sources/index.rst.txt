@@ -18,7 +18,8 @@ stats101
    06-standard-error-confidence-intervals.ipynb
    07-normal-distribution.ipynb
    08-hypothesis-testing.ipynb
-   09-effect-sizes.ipynb
+   09-chi-squared-test.ipynb
+   10-effect-sizes.ipynb
 
 Indices and tables
 ==================

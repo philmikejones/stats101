@@ -1,0 +1,927 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Effect sizes &mdash; stats101 0.1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Chi–squared test" href="09-chi-squared-test.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> stats101
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="01-introduction.html">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="01-introduction.html#Inferring-from-a-sample">Inferring from a sample</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01-introduction.html#Description-and-inference">Description and inference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="02-data-sources.html">Data sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03-levels-of-measurement.html">Levels of measurement</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="03-levels-of-measurement.html#Nominal">Nominal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03-levels-of-measurement.html#Ordinal">Ordinal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03-levels-of-measurement.html#Interval">Interval</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03-levels-of-measurement.html#Ratio">Ratio</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03-levels-of-measurement.html#Discrete-and-continuous-data">Discrete and continuous data</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="04-central-tendency.html">Central tendency</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="04-central-tendency.html#Mode">Mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04-central-tendency.html#Median">Median</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04-central-tendency.html#Mean">Mean</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="05-measures-of-spread.html">Measures of spread</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="05-measures-of-spread.html#Range">Range</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05-measures-of-spread.html#Inter–quartile-range">Inter–quartile range</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05-measures-of-spread.html#Variance">Variance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05-measures-of-spread.html#Standard-deviation">Standard deviation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="06-standard-error-confidence-intervals.html">Standard error and confidence intervals</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="06-standard-error-confidence-intervals.html#Comparing-means-and-confidence-intervals">Comparing means and confidence intervals</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="07-normal-distribution.html">Normal distribution</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="07-normal-distribution.html#Skewness">Skewness</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07-normal-distribution.html#Kurtosis">Kurtosis</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="08-hypothesis-testing.html">Hypothesis testing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="08-hypothesis-testing.html#Null-hypothesis">Null hypothesis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="08-hypothesis-testing.html#Errors-interpreting-the-results">Errors interpreting the results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="08-hypothesis-testing.html#Directional-tests">Directional tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="09-chi-squared-test.html">Chi–squared test</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Effect sizes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Odds-ratio">Odds ratio</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Pearson’s-correlation-coefficient,-r">Pearson’s correlation coefficient, <span class="math notranslate nohighlight">\(r\)</span></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Assumptions">Assumptions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">stats101</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Effect sizes</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/10-effect-sizes.ipynb.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #303F9F;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #D84315;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 8ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="Effect-sizes">
+<h1>Effect sizes<a class="headerlink" href="#Effect-sizes" title="Permalink to this headline">¶</a></h1>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">scipy.stats</span>
+
+<span class="n">food</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_pickle</span><span class="p">(</span><span class="s2">&quot;../data/processed/food&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Determining that there <em>is</em> an association is all very well and good,
+but it tells us nothing of what the size of the effect is. For example,
+our hypothesis test has determined it is probable that there is an
+association between the employment grade of the household reference
+person and tenure, but it does not tell us <em>how much</em> more likely they
+are to own their home.</p>
+<p>The most common measures of effect size are:</p>
+<ul class="simple">
+<li>odds ratio</li>
+<li>Pearson’s correlation coefficient, <span class="math notranslate nohighlight">\(r\)</span></li>
+</ul>
+<p>There are others, for example Cohen’s <span class="math notranslate nohighlight">\(d\)</span> which is useful if the
+group sizes are very different, but these are the two most common in the
+social sciences.</p>
+<div class="section" id="Odds-ratio">
+<h2>Odds ratio<a class="headerlink" href="#Odds-ratio" title="Permalink to this headline">¶</a></h2>
+<p>The odds ratio is a way of specifying the effect size for 2x2
+contingency tables. For our example of employment grade and housing
+tenure we have more than a 2x2 table, but we can restate it so instead
+of just measuring an association between all employment grades and
+tenure types we can calculate the odds ratio of professional and
+managerial respondents owning their home and routine and manual
+respondents owning their home.</p>
+<p>Here’s a reminder of the frequencies of all employment grades and tenure
+types:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">index</span> <span class="o">=</span> <span class="n">food</span><span class="o">.</span><span class="n">A094r</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="n">food</span><span class="o">.</span><span class="n">A121r</span><span class="p">,</span> <span class="n">margins</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">margins_name</span> <span class="o">=</span> <span class="s2">&quot;Total&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[2]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>A121r</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+      <th>Total</th>
+    </tr>
+    <tr>
+      <th>A094r</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>65</td>
+      <td>181</td>
+      <td>763</td>
+      <td>1009</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>81</td>
+      <td>129</td>
+      <td>404</td>
+      <td>614</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>282</td>
+      <td>222</td>
+      <td>476</td>
+      <td>980</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>75</td>
+      <td>82</td>
+      <td>34</td>
+      <td>191</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>361</td>
+      <td>101</td>
+      <td>1100</td>
+      <td>1562</td>
+    </tr>
+    <tr>
+      <th>Total</th>
+      <td>864</td>
+      <td>715</td>
+      <td>2777</td>
+      <td>4356</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p>The odds ratio is the odds of one group for the event of interest
+divided by the odds of the other group for the event of interest. So we
+need two sets of odds.</p>
+<p>First we specify the odds of the professional and managerial group
+owning their own home. This is the number of professional respondents
+who own their home (1282), divided by the number of professional
+respondents who <em>do not</em> own their home (70 + 237):</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="mi">1282</span> <span class="o">/</span> <span class="p">(</span><span class="mi">70</span> <span class="o">+</span> <span class="mi">237</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[3]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>4.175895765472313
+</pre></div>
+</div>
+</div>
+<p>This means that, roughly, for every professional and managerial
+respondent who <em>does not</em> own their home there are four who do.</p>
+<p>Similarly the odds of a routine and manual respondent owning their home
+is the number of routine and manual respondents who own their home (523)
+divided by the number of routine and manual respondents who <em>do not</em> own
+their own home (289 + 233):</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="mi">523</span> <span class="o">/</span> <span class="p">(</span><span class="mi">289</span> <span class="o">+</span> <span class="mi">233</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[4]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>1.0019157088122606
+</pre></div>
+</div>
+</div>
+<p>This means that, roughly, for every routine and manual respondent who
+<em>does not</em> own their home there is one who does, so the odds are about
+equal or 1:1.</p>
+<p>The odds ratio is simply one divided by the other:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="p">(</span><span class="mi">1282</span> <span class="o">/</span> <span class="p">(</span><span class="mi">70</span> <span class="o">+</span> <span class="mi">237</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mi">523</span> <span class="o">/</span> <span class="p">(</span><span class="mi">289</span> <span class="o">+</span> <span class="mi">233</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[5]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>4.167911261140626
+</pre></div>
+</div>
+</div>
+<p>What this means is that professional and managerial respondents are
+4.168 times more likely to own their home than routine and manual
+respondents.</p>
+</div>
+<div class="section" id="Pearson’s-correlation-coefficient,-r">
+<h2>Pearson’s correlation coefficient, <span class="math notranslate nohighlight">\(r\)</span><a class="headerlink" href="#Pearson’s-correlation-coefficient,-r" title="Permalink to this headline">¶</a></h2>
+<p><span class="math notranslate nohighlight">\(r\)</span> is standardised, which is useful because:</p>
+<ul class="simple">
+<li>tests of all sorts of units can be compared which each other,</li>
+<li>the result is between -1 (perfect negative association), through 0
+(no association), and 1 (perfect positive association)</li>
+</ul>
+<p><span class="math notranslate nohighlight">\(r\)</span> is a measure of effect size (or correlation) between two
+numerical variables. It works on the principle that as the difference
+from the mean for one variable increases we expect the difference from
+the mean for the related variable to increase (positive correlation) or
+decrease (negative correlation).</p>
+<p>For example the mean income is:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">food</span><span class="o">.</span><span class="n">P344pr</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[6]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>518.3056177244473
+</pre></div>
+</div>
+</div>
+<p>Let’s say we hypothesise that people with higher incomes spend more
+money on food (they have more money to shop at Waitrose). Expenditure is
+top–coded, so let’s trim the data like we did for income and take a look
+at the resulting distribution:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">food</span> <span class="o">=</span> <span class="n">food</span><span class="p">[</span><span class="n">food</span><span class="o">.</span><span class="n">P550tpr</span> <span class="o">&lt;</span> <span class="n">food</span><span class="o">.</span><span class="n">P550tpr</span><span class="o">.</span><span class="n">max</span><span class="p">()]</span>
+<span class="n">food</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">column</span> <span class="o">=</span> <span class="s2">&quot;P550tpr&quot;</span><span class="p">,</span> <span class="n">bins</span> <span class="o">=</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Food expenditure (£)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Frequency&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[7]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Text(0, 0.5, &#39;Frequency&#39;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/10-effect-sizes_15_1.png" src="_images/10-effect-sizes_15_1.png" />
+</div>
+</div>
+<p>The mean expenditure is:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">food</span><span class="o">.</span><span class="n">P550tpr</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[8]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>400.63890310982424
+</pre></div>
+</div>
+</div>
+<p>If we take an individual with a high income (their income deviates from
+the mean) we would expect their expenditure to also deviate from the
+expenditure mean. These deviations from the mean are their variances, so
+we are stating that we expect income and expenditure on food to
+<strong>covary</strong>. This principle is used to calculate the <strong>Pearson
+correlation coefficient</strong> (usually just called the correlation), which
+is a standardised measure of how much the two variables vary together.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">pearsonr</span><span class="p">(</span>
+    <span class="n">food</span><span class="p">[</span><span class="s2">&quot;P344pr&quot;</span><span class="p">],</span> <span class="n">food</span><span class="p">[</span><span class="s2">&quot;P550tpr&quot;</span><span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[9]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>(0.6317428068963729, 0.0)
+</pre></div>
+</div>
+</div>
+<p>In this example the first number is the correlation coefficient and the
+second number is its associated <span class="math notranslate nohighlight">\(p\)</span> value.</p>
+<p>The correlation is positive so as income goes up, expenditure on food
+goes up (if it were negative it would be a negative correlation, which
+would state that as income went up expenditure on food went down for
+some reason). The value of 0.63 suggests quite a lot of the variance in
+expenditure is accounted for by income (so the correlation is strong).</p>
+<p>The <span class="math notranslate nohighlight">\(p\)</span> value is <span class="math notranslate nohighlight">\(&lt;&lt; 0.01\)</span> (<span class="math notranslate nohighlight">\(&lt;&lt;\)</span> means ‘much less
+than’) so it is highly improbable we would see a correlation this large
+by chance alone, so we have strong evidence to reject the null
+hypothesis and conclude that there is an association between income and
+expenditure on food.</p>
+<div class="section" id="Assumptions">
+<h3>Assumptions<a class="headerlink" href="#Assumptions" title="Permalink to this headline">¶</a></h3>
+<p>Pearson’s correlation coefficient assumes that both variables are
+numeric and normally distributed for the <span class="math notranslate nohighlight">\(p\)</span> value to be accurate.
+In this case our variables are numeric (income and expenditure) so this
+assumption is met.</p>
+<p>Neither variable should have any outliers (defined as any value greater
+than the mean + 3.29 standard deviations). For income this is ok:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="nb">len</span><span class="p">(</span>
+    <span class="n">food</span><span class="p">[</span><span class="n">food</span><span class="o">.</span><span class="n">P344pr</span> <span class="o">&gt;</span>
+                 <span class="n">food</span><span class="o">.</span><span class="n">P344pr</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">+</span> <span class="p">(</span><span class="mf">3.29</span> <span class="o">*</span> <span class="n">food</span><span class="o">.</span><span class="n">P344pr</span><span class="o">.</span><span class="n">std</span><span class="p">())]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[10]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>0
+</pre></div>
+</div>
+</div>
+<p>But there are a few outliers for the expenditure variable:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="nb">len</span><span class="p">(</span>
+    <span class="n">food</span><span class="p">[</span><span class="n">food</span><span class="o">.</span><span class="n">P550tpr</span> <span class="o">&gt;</span>
+                 <span class="n">food</span><span class="o">.</span><span class="n">P550tpr</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">+</span> <span class="p">(</span><span class="mf">3.29</span> <span class="o">*</span> <span class="n">food</span><span class="o">.</span><span class="n">P550tpr</span><span class="o">.</span><span class="n">std</span><span class="p">())]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[11]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>4
+</pre></div>
+</div>
+</div>
+<p>To be safe, let’s remove these:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">food</span> <span class="o">=</span> <span class="n">food</span><span class="p">[</span><span class="n">food</span><span class="o">.</span><span class="n">P550tpr</span> <span class="o">&lt;</span> <span class="n">food</span><span class="o">.</span><span class="n">P550tpr</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">+</span> <span class="p">(</span><span class="mf">3.29</span> <span class="o">*</span> <span class="n">food</span><span class="o">.</span><span class="n">P550tpr</span><span class="o">.</span><span class="n">std</span><span class="p">())]</span>
+</pre></div>
+</div>
+</div>
+<p>A scatterplot of these two variables:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">food</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="s2">&quot;P344pr&quot;</span><span class="p">,</span> <span class="s2">&quot;P550tpr&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Income&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Expenditure&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[13]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Text(0, 0.5, &#39;Expenditure&#39;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/10-effect-sizes_27_1.png" src="_images/10-effect-sizes_27_1.png" />
+</div>
+</div>
+<p>The points should be linear (i.e.&nbsp;a straight line) and roughly
+cylindrical to meet the assumptions. If it’s too conincal it means the
+deviances aren’t consistent (heteroskedasticity).</p>
+<p>If these assumptions aren’t true of our data we can use <strong>Spearman’s
+:math:`rho`</strong> (pronounced ‘row’). Spearman’s <span class="math notranslate nohighlight">\(\rho\)</span> is also
+useful when we have a numeric variable and an ordinal variable
+(something we couldn’t test with Pearson’s <span class="math notranslate nohighlight">\(r\)</span>).</p>
+<p>This is a <strong>non–parametric</strong> test. Non–parametric tests tend to be more
+robust (which is why we can use them when we violate some of the
+assumptions of the parametric equivalents, in this case Pearon’s
+<span class="math notranslate nohighlight">\(r\)</span>) but sometimes have lower statistical power. Therefore, try to
+use the parametric version by default and switch to the non–parametric
+version when necessary.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">spearmanr</span><span class="p">(</span>
+    <span class="n">food</span><span class="p">[</span><span class="s2">&quot;P344pr&quot;</span><span class="p">],</span> <span class="n">food</span><span class="p">[</span><span class="s2">&quot;P550tpr&quot;</span><span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[14]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>SpearmanrResult(correlation=0.6908560599405571, pvalue=0.0)
+</pre></div>
+</div>
+</div>
+<p>As you can see in this example the correlation statistic is very similar
+and the <span class="math notranslate nohighlight">\(p\)</span> value is still significant (<span class="math notranslate nohighlight">\(&lt;&lt; 0.01\)</span>).</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="09-chi-squared-test.html" class="btn btn-neutral" title="Chi–squared test" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Phil Mike Jones
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
