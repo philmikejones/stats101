@@ -5,6 +5,16 @@ They're available here in case they're of any use to anyone, but I offer no guar
 You're welcome to use or adapt them, for example to share with colleagues, but you cannot sell them.
 
 
+## Generating documentation
+
+This project uses `nbsphinx` to generate documentation webpages from the notebooks.
+To generate the docs, run:
+
+```
+python3 -m sphinx source/ docs/
+```
+
+
 ## License
 
 &copy; 2018 Phil Mike Jones.
