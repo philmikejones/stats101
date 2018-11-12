@@ -7,7 +7,7 @@ You're welcome to use or adapt them, for example to share with colleagues, but y
 
 ## Generating documentation
 
-This project uses `nbsphinx` to generate documentation webpages from the notebooks.
+This project uses [`nbsphinx`](https://nbsphinx.readthedocs.io/) to generate documentation webpages from the notebooks.
 To generate the docs, run:
 
 ```
