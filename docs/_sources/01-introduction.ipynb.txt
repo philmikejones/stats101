@@ -45,7 +45,7 @@
     "- Make predictions about the population from the sample\n",
     "\n",
     "We usually call these **descriptive statistics** and **inferential statistics** respectively.\n",
-    "This can be a bit confusing, because even descriptive statistics is *infers* about the population from the sample.\n",
+    "This can be a bit confusing, because even descriptive statistics *infers* about the population from the sample.\n",
     "\n",
     "We often *describe* things like the 'average' and how much the data varies from this average.\n",
     "Inferential statistics, despite the confusing term, usually allow us:\n",
