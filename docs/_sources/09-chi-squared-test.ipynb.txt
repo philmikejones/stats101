@@ -32,7 +32,7 @@
     "We specified a null hypothesis that there is no association between household reference person's NS--SEC and housing tenure.\n",
     "Both NS--SEC and housing tenure are nominal (NS--SEC *can* be treated as ordinal in some circumstances) so the most appropriate test of association for this null hypothesis is the $\\chi ^ 2$ test, sometimes written chi--squared test, and usually pronounced 'kai' (to rhyme with dye) or 'key'.\n",
     "\n",
-    "To carry out the $\\chi ^ 2$ test, the [`scipy.stats.chi2_contingency()`](https://docs.scipy.org/doc/scipy-0.15.1/reference/generated/scipy.stats.chi2_contingency.html) function returns the following pieces of information:\n",
+    "To carry out the $\\chi ^ 2$ test, the [scipy.stats.chi2_contingency()](https://docs.scipy.org/doc/scipy-0.15.1/reference/generated/scipy.stats.chi2_contingency.html) function returns the following pieces of information:\n",
     "\n",
     "- The test statistic\n",
     "- The $p$ value\n",
