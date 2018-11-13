@@ -23,33 +23,6 @@
    ]
   },
   {
-   "cell_type": "markdown",
-   "metadata": {},
-   "source": [
-    "Determining that there *is* an association is all very well and good, but it tells us nothing of what the size of the effect is.\n",
-    "For example, our hypothesis test has determined it is probable that there is an association between the employment grade of the household reference person and tenure, but it does not tell us *how much* more likely they are to own their home.\n",
-    "\n",
-    "The most common measures of effect size are:\n",
-    "\n",
-    "- odds ratio\n",
-    "- Pearson's correlation coefficient, $r$\n",
-    "\n",
-    "There are others, for example Cohen's $d$ which is useful if the group sizes are very different, but these are the two most common in the social sciences."
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {},
-   "source": [
-    "## Odds ratio\n",
-    "\n",
-    "The odds ratio is a way of specifying the effect size for 2x2 contingency tables.\n",
-    "For our example of employment grade and housing tenure we have more than a 2x2 table, but we can restate it so instead of just measuring an association between all employment grades and tenure types we can calculate the odds ratio of professional and managerial respondents owning their home and routine and manual respondents owning their home.\n",
-    "\n",
-    "Here's a reminder of the frequencies of all employment grades and tenure types:"
-   ]
-  },
-  {
    "cell_type": "code",
    "execution_count": null,
    "metadata": {},

@@ -127,9 +127,15 @@
 <li class="toctree-l2"><a class="reference internal" href="#Directional-tests">Directional tests</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="09-chi-squared-test.html">Chi–squared test</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09-chi-squared-test.html">Chi–squared test</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="09-chi-squared-test.html#Test-statistic">Test statistic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="09-chi-squared-test.html#Degrees-of-freedom">Degrees of freedom</a></li>
+<li class="toctree-l2"><a class="reference internal" href="09-chi-squared-test.html#p-value"><em>p</em> value</a></li>
+<li class="toctree-l2"><a class="reference internal" href="09-chi-squared-test.html#Assumptions">Assumptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="09-chi-squared-test.html#Odds-ratio">Odds ratio</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="10-effect-sizes.html">Effect sizes</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="10-effect-sizes.html#Odds-ratio">Odds ratio</a></li>
 <li class="toctree-l2"><a class="reference internal" href="10-effect-sizes.html#Pearson’s-correlation-coefficient,-r">Pearson’s correlation coefficient, <span class="math notranslate nohighlight">\(r\)</span></a><ul>
 <li class="toctree-l3"><a class="reference internal" href="10-effect-sizes.html#Assumptions">Assumptions</a></li>
 </ul>
@@ -536,29 +542,31 @@ comparing these two variables:</p>
 </div>
 <p>From this crosstab we can see that similar numbers of people rent their
 homes from local authorities (‘public rented’) and private landlords
-(880 and 798 respectively), but that more than four times as many people
-own their own home (3466) than rent privately or rent publicly.</p>
+(864 and 715 respectively), but that more than four times as many people
+own their own home (2777) than rent privately or rent publicly.</p>
 <p>We can also see that most people in NS-SEC group 1 (higher managerial,
-administrative, and professional occupations) own their home (1282)
-compared to rent (total 307). If we compare this to NS-SEC group 3
-(routine and manual occupations) only 523 own their home, while 289 rent
-from a local authority (much more than the group 1) and 233 rent
+administrative, and professional occupations) own their home (763)
+compared to rent (246 (65 + 181)). If we compare this to NS-SEC group 3
+(routine and manual occupations) only 476 own their home, while 282 rent
+from a local authority (much more than the group 1) and 222 rent
 privately (similar to group 1).</p>
 <p>These descriptions are pretty straightforward, but any analysis is
 complicated by the fact that the two groups are different sizes (n =
-1,589 group 1; n = 1,045 group 3) so we cannot directly compare the
-counts in this table to see if there are differences between the groups.
-The next step is to look at the percentages:</p>
+1,009 group 1; n = 614 group 2; n = 980 group 3) so we cannot directly
+compare the counts in this table to see if there are differences between
+the groups. The next step is to look at the percentages:</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span>
+<span></span><span class="n">table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span>
     <span class="n">index</span> <span class="o">=</span> <span class="n">food</span><span class="o">.</span><span class="n">A094r</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="n">food</span><span class="o">.</span><span class="n">A121r</span><span class="p">,</span>
     <span class="n">normalize</span> <span class="o">=</span> <span class="s2">&quot;index&quot;</span>
 <span class="p">)</span> <span class="o">*</span> <span class="mi">100</span>  <span class="c1"># converts proportions to percentages</span>
+
+<span class="n">table</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">decimals</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -600,43 +608,43 @@ The next step is to look at the percentages:</p>
   <tbody>
     <tr>
       <th>1</th>
-      <td>6.442022</td>
-      <td>17.938553</td>
-      <td>75.619425</td>
+      <td>6.44</td>
+      <td>17.94</td>
+      <td>75.62</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>13.192182</td>
-      <td>21.009772</td>
-      <td>65.798046</td>
+      <td>13.19</td>
+      <td>21.01</td>
+      <td>65.80</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>28.775510</td>
-      <td>22.653061</td>
-      <td>48.571429</td>
+      <td>28.78</td>
+      <td>22.65</td>
+      <td>48.57</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>39.267016</td>
-      <td>42.931937</td>
-      <td>17.801047</td>
+      <td>39.27</td>
+      <td>42.93</td>
+      <td>17.80</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>23.111396</td>
-      <td>6.466069</td>
-      <td>70.422535</td>
+      <td>23.11</td>
+      <td>6.47</td>
+      <td>70.42</td>
     </tr>
   </tbody>
 </table>
 </div></div>
 </div>
 <p>Using the row percentages (i.e.&nbsp;each row adds up to 100%) we can see
-that approximately 80% of higher managerial and professional families
-own their own home, but only 50% of routine and manual families own
-their own homes. Similarly we can see that only about 4.5% of managerial
-and professional families rent from a local authority, but 27% of
+that approximately 75% of higher managerial and professional families
+own their own home, but only 49% of routine and manual families own
+their own homes. Similarly we can see that only about 6% of managerial
+and professional families rent from a local authority, but 29% of
 routine and manual families do (remember rows 4 and 5 are unemployed and
 unclassified respectively).</p>
 <p>So we think there’s an association between NS-SEC of the household
@@ -644,7 +652,8 @@ reference person and tenure, and the crosstabs certainly seem to support
 this. Unfortunately humans are very, very good at spotting patterns,
 even when there isn’t one there, so instead of just relying on our
 say–so we can statistically test to see if there really is a difference.
-To do this we use a hypothesis test.</p>
+To do this we use a hypothesis test. Before we carry out a hypothesis
+test we should specify it explicitly, and state a <em>null hypothesis</em>.</p>
 <div class="section" id="Null-hypothesis">
 <h2>Null hypothesis<a class="headerlink" href="#Null-hypothesis" title="Permalink to this headline">¶</a></h2>
 <p>To perform most hypothesis tests we specify a <em>null hypothesis</em>, which
@@ -658,10 +667,10 @@ person and housing tenure</div></blockquote>
 <span class="math notranslate nohighlight">\(H_1\)</span>, which is usually our original hypothesis.</p>
 <p>It is important to frame a hypothesis test in this way because we assume
 the absence of an association, and it is up to us as researchers to
-provide evidence that there is an association. For example, we cannot
-assume that people who drink coffee are more intelligent than people who
-drink tea. It is up to us to demonstrate that this is the case. This is
-what makes our hypothesis <em>testable</em> and <em>falsifiable</em>.</p>
+provide evidence that there is one. For example, we cannot assume that
+people who drink coffee are more intelligent than people who drink tea.
+It is up to us to demonstrate that this is the case. This is what makes
+our hypothesis <em>testable</em> and <em>falsifiable</em>.</p>
 <p>It’s a bit like the presumption of innocence: we cannot be locked up
 unless we are proven to be guilty of a crime. If it were the other way
 around (i.e.&nbsp;presumption of guilt) we would all be incarcerated and we
@@ -685,9 +694,10 @@ that nobody’s <em>proved</em> it doesn’t exist!</div>
 </div>
 </div></blockquote>
 <p>Our example uses two nominal variables, so the most appropriate
-hypothesis test in this case is the <span class="math notranslate nohighlight">\(\chi ^ 2\)</span> test of
-association. For variables of other levels of measurement we would use
-different hypothesis tests which we’ll get to.</p>
+hypothesis test in this case is the <cite>:math:</cite>chi ^ 2` test of
+association &lt;09-chi-squared-test.html&gt;`__. For variables of other levels
+of measurement we would use different hypothesis tests which we’ll get
+to.</p>
 </div>
 <div class="section" id="Errors-interpreting-the-results">
 <h2>Errors interpreting the results<a class="headerlink" href="#Errors-interpreting-the-results" title="Permalink to this headline">¶</a></h2>
@@ -696,14 +706,9 @@ hypothesis test. The hypothesis test does not <em>prove</em> an association
 between our variables; it gives us a statistical level of confidence
 that there is an association.</p>
 <p>There is always a risk that we might reject the null hypothesis
-(i.e.&nbsp;state that there is an association) when there isn’t one. In our
-example we have good statistical evidence that there is an association
-(the <span class="math notranslate nohighlight">\(p\)</span> value is very low), but there is still a possibility that
-this could have simply happened randomly (admittedly a very small
-chance).</p>
-<p>If this were a random occurrence but we stated there was an association
-this would be called a <strong>Type I (one) error</strong>, sometimes known as a
-false positive.</p>
+(i.e.&nbsp;state that there is an association) when there isn’t one.</p>
+<p>If there was really no association but we stated there is one this would
+be called a <strong>Type I (one) error</strong>, sometimes known as a false positive.</p>
 <p>The other type of error we could make is failing to reject the null
 hypothesis when we should (i.e.&nbsp;we state there is no association when
 there <em>is</em> one), also known as a false negative. This is known as a

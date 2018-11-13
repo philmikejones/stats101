@@ -67,12 +67,12 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "From this crosstab we can see that similar numbers of people rent their homes from local authorities ('public rented') and private landlords (880 and 798 respectively), but that more than four times as many people own their own home (3466) than rent privately or rent publicly.\n",
+    "From this crosstab we can see that similar numbers of people rent their homes from local authorities ('public rented') and private landlords (864 and 715 respectively), but that more than four times as many people own their own home (2777) than rent privately or rent publicly.\n",
     "\n",
-    "We can also see that most people in NS-SEC group 1 (higher managerial, administrative, and professional occupations) own their home (1282) compared to rent (total 307).\n",
-    "If we compare this to NS-SEC group 3 (routine and manual occupations) only 523 own their home, while 289 rent from a local authority (much more than the group 1) and 233 rent privately (similar to group 1).\n",
+    "We can also see that most people in NS-SEC group 1 (higher managerial, administrative, and professional occupations) own their home (763) compared to rent (246 (65 + 181)).\n",
+    "If we compare this to NS-SEC group 3 (routine and manual occupations) only 476 own their home, while 282 rent from a local authority (much more than the group 1) and 222 rent privately (similar to group 1).\n",
     "\n",
-    "These descriptions are pretty straightforward, but any analysis is complicated by the fact that the two groups are different sizes (n = 1,589 group 1; n = 1,045 group 3) so we cannot directly compare the counts in this table to see if there are differences between the groups.\n",
+    "These descriptions are pretty straightforward, but any analysis is complicated by the fact that the two groups are different sizes (n = 1,009 group 1; n = 614 group 2; n = 980 group 3) so we cannot directly compare the counts in this table to see if there are differences between the groups.\n",
     "The next step is to look at the percentages:"
    ]
   },
@@ -82,22 +82,25 @@
    "metadata": {},
    "outputs": [],
    "source": [
-    "pd.crosstab(\n",
+    "table = pd.crosstab(\n",
     "    index = food.A094r, columns = food.A121r,\n",
     "    normalize = \"index\"\n",
-    ") * 100  # converts proportions to percentages"
+    ") * 100  # converts proportions to percentages\n",
+    "\n",
+    "table.round(decimals = 2)"
    ]
   },
   {
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "Using the row percentages (i.e. each row adds up to 100%) we can see that approximately 80% of higher managerial and professional families own their own home, but only 50% of routine and manual families own their own homes.\n",
-    "Similarly we can see that only about 4.5% of managerial and professional families rent from a local authority, but 27% of routine and manual families do (remember rows 4 and 5 are unemployed and unclassified respectively).\n",
+    "Using the row percentages (i.e. each row adds up to 100%) we can see that approximately 75% of higher managerial and professional families own their own home, but only 49% of routine and manual families own their own homes.\n",
+    "Similarly we can see that only about 6% of managerial and professional families rent from a local authority, but 29% of routine and manual families do (remember rows 4 and 5 are unemployed and unclassified respectively).\n",
     "\n",
     "So we think there's an association between NS-SEC of the household reference person and tenure, and the crosstabs certainly seem to support this.\n",
     "Unfortunately humans are very, very good at spotting patterns, even when there isn't one there, so instead of just relying on our say--so we can statistically test to see if there really is a difference.\n",
     "To do this we use a hypothesis test.\n",
+    "Before we carry out a hypothesis test we should specify it explicitly, and state a *null hypothesis*.\n",
     "\n",
     "## Null hypothesis\n",
     "\n",
@@ -108,7 +111,7 @@
     "\n",
     "The opposite of the null hypothesis is the *alternative hypothesis*, $H_1$, which is usually our original hypothesis.\n",
     "\n",
-    "It is important to frame a hypothesis test in this way because we assume the absence of an association, and it is up to us as researchers to provide evidence that there is an association.\n",
+    "It is important to frame a hypothesis test in this way because we assume the absence of an association, and it is up to us as researchers to provide evidence that there is one.\n",
     "For example, we cannot assume that people who drink coffee are more intelligent than people who drink tea.\n",
     "It is up to us to demonstrate that this is the case.\n",
     "This is what makes our hypothesis *testable* and *falsifiable*.\n",
@@ -125,7 +128,7 @@
     "> \"But that's --- I'm sorry, but that's completely ridiculous! How can I possibly prove it doesn't exist? Do you expect me to get hold of --- of all the pebbles in the world, and test them? I mean, you could claim that anything's real if the only basis for believing in it is that nobody's *proved* it doesn't exist!  \n",
     "> - Harry Potter and the Deathly Hallows\n",
     "\n",
-    "Our example uses two nominal variables, so the most appropriate hypothesis test in this case is the $\\chi ^ 2$ test of association.\n",
+    "Our example uses two nominal variables, so the most appropriate hypothesis test in this case is the [$\\chi ^ 2$ test of association](09-chi-squared-test.html).\n",
     "For variables of other levels of measurement we would use different hypothesis tests which we'll get to."
    ]
   },
@@ -139,9 +142,8 @@
     "The hypothesis test does not *prove* an association between our variables; it gives us a statistical level of confidence that there is an association.\n",
     "\n",
     "There is always a risk that we might reject the null hypothesis (i.e. state that there is an association) when there isn't one.\n",
-    "In our example we have good statistical evidence that there is an association (the $p$ value is very low), but there is still a possibility that this could have simply happened randomly (admittedly a very small chance).\n",
     "\n",
-    "If this were a random occurrence but we stated there was an association this would be called a **Type I (one) error**, sometimes known as a false positive.\n",
+    "If there was really no association but we stated there is one this would be called a **Type I (one) error**, sometimes known as a false positive.\n",
     "\n",
     "The other type of error we could make is failing to reject the null hypothesis when we should (i.e. we state there is no association when there *is* one), also known as a false negative.\n",
     "This is known as a **Type II (two) error**.\n",
