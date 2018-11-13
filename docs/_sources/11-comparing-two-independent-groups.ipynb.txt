@@ -1,0 +1,195 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Comparing two independent groups"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import os\n",
+    "import pandas as pd\n",
+    "import matplotlib.pyplot as plt\n",
+    "import numpy as np\n",
+    "import math\n",
+    "import scipy.stats\n",
+    "\n",
+    "age_shf = pd.read_pickle(\"../data/processed/age_shf\")\n",
+    "age_ebn = pd.read_pickle(\"../data/processed/age_ebn\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "We've looked at correlation, which quantifies how much one variable is related to another variable of the same individual, for example height and weight, or income and expenditure on food.\n",
+    "When it's necessary to compare different groups, for example the height of men and height of women, we use different tests:\n",
+    "\n",
+    "- the parametric $t$--test, and\n",
+    "- the non--parametric Mann--Whitney U test\n",
+    "\n",
+    "These tests work by comparing the means to see if they are statistically significantly different.\n",
+    "Obviously the [means of different samples will be different](06-standard-error-confidence-intervals.html), so how much they differ before we conclude they are statistically different depends on the variance of the groups.\n",
+    "\n",
+    "## $t$--test\n",
+    "\n",
+    "The independent samples $t$--test is used when comparing two independent groups, such as the heights of a group of males and the heights of a group of females.\n",
+    "We have a sample of males and measure their heights, and a sample of females and measure their heights.\n",
+    "Crucially the height of one respondent does not affect the height of another respondent, so the measurements are *independent*.\n",
+    "The level of measurement of both groups should be continuous (numerical interval or ratio) and we are comparing the *same variable* (height).\n",
+    "\n",
+    "For our example we have ages of two groups: people from Sheffield and people from Eastbourne.\n",
+    "We saw in an earlier section on [standard errors and confidence intervals](06-standard-error-confidence-intervals.html#Comparing-means-and-confidence-intervals) that their means were different, and the confidence intervals suggested the population means were different also:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "age_shf.C_AGE_NAME.mean()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "age_ebn.C_AGE_NAME.mean()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "The measurements are independent (i.e. the age of people in Sheffield does not affect the age of people in Eastbourne) and continuous (numerical) so we can use an independent samples $t$--test to statistically test if the means are different:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "scipy.stats.ttest_ind(\n",
+    "    age_shf.C_AGE_NAME, age_ebn.C_AGE_NAME, equal_var = False\n",
+    ")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "The $p$ value is $<< 0.01$ so we can reject the null hypothesis that there is no difference between the ages of people in Sheffield and the ages of people in Eastbourne (i.e. there *is* a difference in mean age).\n",
+    "In this case this is not surprising because we actually have two populations, but this is intended to be illustrative only.\n",
+    "\n",
+    "### Assumptions\n",
+    "\n",
+    "As always, there are assumptions.\n",
+    "We have met the assumption of independent observations and the variable (age) is continuous, so these assumptions were met.\n",
+    "The $t$--test also assumes that if the sample sizes are small they should be normally distributed, but this is not relevant in our case.\n",
+    "If you need to test for this, plot a QQ plot.\n",
+    "We also need to check that the variances of the two groups are approximately equal using a Levene's test:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "scipy.stats.levene(\n",
+    "    age_shf.C_AGE_NAME, age_ebn.C_AGE_NAME\n",
+    ")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Ah. The $p$ value is highly statistically significant, so we should reject the null that the variances are not different (i.e. there are).\n",
+    "In this case we should use values adjusted to correct for unequal variances (this is actually the default behaviour for `scipy.stats.ttest_ind()`):"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "scipy.stats.ttest_ind(\n",
+    "    age_shf.C_AGE_NAME, age_ebn.C_AGE_NAME, equal_var = True\n",
+    ")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "So in this case the result is still statistically significant and we can reject the null hypothesis (i.e. the ages are different)."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Mann--Whitney U\n",
+    "\n",
+    "The Mann--Whitney U test is a non--parametric version of the $t$--test useful when we do not have continuous data (but the variable should be at least ordinal) or we otherwise violate one or more of the assumptions of the $t$--test.\n",
+    "It stil assumes that the measurements are independent.\n",
+    "\n",
+    "Mann--Whitney U works by ranking the observations without considering the groups they're from.\n",
+    "If there was no difference between groups the sum of the ranks would be approximately equal.\n",
+    "If there *is* a difference between groups the sum of the ranks for each group will differ.\n",
+    "Using our example age data:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "scipy.stats.mannwhitneyu(\n",
+    "    age_shf.C_AGE_NAME, age_ebn.C_AGE_NAME\n",
+    ")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "And reassuringly we can see the statistic is statistically significant."
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.6.6"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}

@@ -1,0 +1,664 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Comparing two independent groups &mdash; stats101 0.1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="search" title="Search" href="search.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> stats101
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="01-introduction.html">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="01-introduction.html#Inferring-from-a-sample">Inferring from a sample</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01-introduction.html#Description-and-inference">Description and inference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="02-data-sources.html">Data sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03-levels-of-measurement.html">Levels of measurement</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="03-levels-of-measurement.html#Nominal">Nominal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03-levels-of-measurement.html#Ordinal">Ordinal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03-levels-of-measurement.html#Interval">Interval</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03-levels-of-measurement.html#Ratio">Ratio</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03-levels-of-measurement.html#Discrete-and-continuous-data">Discrete and continuous data</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="04-central-tendency.html">Central tendency</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="04-central-tendency.html#Mode">Mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04-central-tendency.html#Median">Median</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04-central-tendency.html#Mean">Mean</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="05-measures-of-spread.html">Measures of spread</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="05-measures-of-spread.html#Range">Range</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05-measures-of-spread.html#Inter–quartile-range">Inter–quartile range</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05-measures-of-spread.html#Variance">Variance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05-measures-of-spread.html#Standard-deviation">Standard deviation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="06-standard-error-confidence-intervals.html">Standard error and confidence intervals</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="06-standard-error-confidence-intervals.html#Comparing-means-and-confidence-intervals">Comparing means and confidence intervals</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="07-normal-distribution.html">Normal distribution</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="07-normal-distribution.html#Skewness">Skewness</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07-normal-distribution.html#Kurtosis">Kurtosis</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="08-hypothesis-testing.html">Hypothesis testing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="08-hypothesis-testing.html#Null-hypothesis">Null hypothesis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="08-hypothesis-testing.html#Errors-interpreting-the-results">Errors interpreting the results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="08-hypothesis-testing.html#Directional-tests">Directional tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="09-chi-squared-test.html">Chi–squared test</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="09-chi-squared-test.html#Test-statistic">Test statistic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="09-chi-squared-test.html#Degrees-of-freedom">Degrees of freedom</a></li>
+<li class="toctree-l2"><a class="reference internal" href="09-chi-squared-test.html#p-value"><em>p</em> value</a></li>
+<li class="toctree-l2"><a class="reference internal" href="09-chi-squared-test.html#Assumptions">Assumptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="09-chi-squared-test.html#Odds-ratio">Odds ratio</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="10-correlation.html">Correlation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="10-correlation.html#Pearson’s-correlation-coefficient,-r">Pearson’s correlation coefficient, <span class="math notranslate nohighlight">\(r\)</span></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="10-correlation.html#Assumptions">Assumptions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="10-correlation.html#Spearman’s-\rho">Spearman’s <span class="math notranslate nohighlight">\(\rho\)</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="10-correlation.html#Kendall’s-\tau">Kendall’s <span class="math notranslate nohighlight">\(\tau\)</span></a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">stats101</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Comparing two independent groups</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/11-comparing-two-groups.ipynb.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #303F9F;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #D84315;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 8ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="Comparing-two-independent-groups">
+<h1>Comparing two independent groups<a class="headerlink" href="#Comparing-two-independent-groups" title="Permalink to this headline">¶</a></h1>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">scipy.stats</span>
+
+<span class="n">age_shf</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_pickle</span><span class="p">(</span><span class="s2">&quot;../data/processed/age_shf&quot;</span><span class="p">)</span>
+<span class="n">age_ebn</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_pickle</span><span class="p">(</span><span class="s2">&quot;../data/processed/age_ebn&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>We’ve looked at correlation, which quantifies how much one variable is
+related to another variable of the same individual, for example height
+and weight, or income and expenditure on food. When it’s necessary to
+compare different groups, for example the height of men and height of
+women, we use different tests:</p>
+<ul class="simple">
+<li>the parametric <span class="math notranslate nohighlight">\(t\)</span>–test, and</li>
+<li>the non–parametric Mann–Whitney U test</li>
+</ul>
+<p>These tests work by comparing the means to see if they are statistically
+significantly different. Obviously the <a class="reference external" href="06-standard-error-confidence-intervals.html">means of different samples will
+be different</a>, so how
+much they differ before we conclude they are statistically different
+depends on the variance of the groups.</p>
+<div class="section" id="t–test">
+<h2><span class="math notranslate nohighlight">\(t\)</span>–test<a class="headerlink" href="#t–test" title="Permalink to this headline">¶</a></h2>
+<p>The independent samples <span class="math notranslate nohighlight">\(t\)</span>–test is used when comparing two
+independent groups, such as the heights of a group of males and the
+heights of a group of females. We have a sample of males and measure
+their heights, and a sample of females and measure their heights.
+Crucially the height of one respondent does not affect the height of
+another respondent, so the measurements are <em>independent</em>. The level of
+measurement of both groups should be continuous (numerical interval or
+ratio) and we are comparing the <em>same variable</em> (height).</p>
+<p>For our example we have ages of two groups: people from Sheffield and
+people from Eastbourne. We saw in an earlier section on <a class="reference external" href="06-standard-error-confidence-intervals.html#Comparing-means-and-confidence-intervals">standard errors
+and confidence
+intervals</a>
+that their means were different, and the confidence intervals suggested
+the population means were different also:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">age_shf</span><span class="o">.</span><span class="n">C_AGE_NAME</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[2]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>37.87209832494418
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">age_ebn</span><span class="o">.</span><span class="n">C_AGE_NAME</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[3]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>42.83316903391945
+</pre></div>
+</div>
+</div>
+<p>The measurements are independent (i.e.&nbsp;the age of people in Sheffield
+does not affect the age of people in Eastbourne) and continuous
+(numerical) so we can use an independent samples <span class="math notranslate nohighlight">\(t\)</span>–test to
+statistically test if the means are different:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">ttest_ind</span><span class="p">(</span>
+    <span class="n">age_shf</span><span class="o">.</span><span class="n">C_AGE_NAME</span><span class="p">,</span> <span class="n">age_ebn</span><span class="o">.</span><span class="n">C_AGE_NAME</span><span class="p">,</span> <span class="n">equal_var</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[4]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Ttest_indResult(statistic=-58.84359690127882, pvalue=0.0)
+</pre></div>
+</div>
+</div>
+<p>The <span class="math notranslate nohighlight">\(p\)</span> value is <span class="math notranslate nohighlight">\(&lt;&lt; 0.01\)</span> so we can reject the null
+hypothesis that there is no difference between the ages of people in
+Sheffield and the ages of people in Eastbourne (i.e.&nbsp;there <em>is</em> a
+difference in mean age). In this case this is not surprising because we
+actually have two populations, but this is intended to be illustrative
+only.</p>
+<div class="section" id="Assumptions">
+<h3>Assumptions<a class="headerlink" href="#Assumptions" title="Permalink to this headline">¶</a></h3>
+<p>As always, there are assumptions. We have met the assumption of
+independent observations and the variable (age) is continuous, so these
+assumptions were met. The <span class="math notranslate nohighlight">\(t\)</span>–test also assumes that if the sample
+sizes are small they should be normally distributed, but this is not
+relevant in our case. If you need to test for this, plot a QQ plot. We
+also need to check that the variances of the two groups are
+approximately equal using a Levene’s test:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">levene</span><span class="p">(</span>
+    <span class="n">age_shf</span><span class="o">.</span><span class="n">C_AGE_NAME</span><span class="p">,</span> <span class="n">age_ebn</span><span class="o">.</span><span class="n">C_AGE_NAME</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[5]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>LeveneResult(statistic=1358.0920464422002, pvalue=5.4491601311285835e-297)
+</pre></div>
+</div>
+</div>
+<p>Ah. The <span class="math notranslate nohighlight">\(p\)</span> value is highly statistically significant, so we
+should reject the null that the variances are not different (i.e.&nbsp;there
+are). In this case we should use values adjusted to correct for unequal
+variances (this is actually the default behaviour for
+<code class="docutils literal notranslate"><span class="pre">scipy.stats.ttest_ind()</span></code>):</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">ttest_ind</span><span class="p">(</span>
+    <span class="n">age_shf</span><span class="o">.</span><span class="n">C_AGE_NAME</span><span class="p">,</span> <span class="n">age_ebn</span><span class="o">.</span><span class="n">C_AGE_NAME</span><span class="p">,</span> <span class="n">equal_var</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[6]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Ttest_indResult(statistic=-61.76408470042736, pvalue=0.0)
+</pre></div>
+</div>
+</div>
+<p>So in this case the result is still statistically significant and we can
+reject the null hypothesis (i.e.&nbsp;the ages are different).</p>
+</div>
+</div>
+<div class="section" id="Mann–Whitney-U">
+<h2>Mann–Whitney U<a class="headerlink" href="#Mann–Whitney-U" title="Permalink to this headline">¶</a></h2>
+<p>The Mann–Whitney U test is a non–parametric version of the
+<span class="math notranslate nohighlight">\(t\)</span>–test useful when we do not have continuous data (but the
+variable should be at least ordinal) or we otherwise violate one or more
+of the assumptions of the <span class="math notranslate nohighlight">\(t\)</span>–test. It stil assumes that the
+measurements are independent.</p>
+<p>Mann–Whitney U works by ranking the observations without considering the
+groups they’re from. If there was no difference between groups the sum
+of the ranks would be approximately equal. If there <em>is</em> a difference
+between groups the sum of the ranks for each group will differ. Using
+our example age data:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">mannwhitneyu</span><span class="p">(</span>
+    <span class="n">age_shf</span><span class="o">.</span><span class="n">C_AGE_NAME</span><span class="p">,</span> <span class="n">age_ebn</span><span class="o">.</span><span class="n">C_AGE_NAME</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[7]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>MannwhitneyuResult(statistic=24316208190.5, pvalue=0.0)
+</pre></div>
+</div>
+</div>
+<p>And reassuringly we can see the statistic is statistically significant.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Phil Mike Jones
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -20,6 +20,7 @@ stats101
    08-hypothesis-testing.ipynb
    09-chi-squared-test.ipynb
    10-correlation.ipynb
+   11-comparing-two-independent-groups.ipynb
 
 Indices and tables
 ==================
