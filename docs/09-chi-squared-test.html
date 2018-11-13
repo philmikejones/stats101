@@ -27,7 +27,7 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Effect sizes" href="10-effect-sizes.html" />
+    <link rel="next" title="Correlation" href="10-effect-sizes.html" />
     <link rel="prev" title="Hypothesis testing" href="08-hypothesis-testing.html" /> 
 
   
@@ -135,7 +135,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#Odds-ratio">Odds ratio</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="10-effect-sizes.html">Effect sizes</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="10-effect-sizes.html">Correlation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="10-effect-sizes.html#Pearson’s-correlation-coefficient,-r">Pearson’s correlation coefficient, <span class="math notranslate nohighlight">\(r\)</span></a><ul>
 <li class="toctree-l3"><a class="reference internal" href="10-effect-sizes.html#Assumptions">Assumptions</a></li>
 </ul>
@@ -581,9 +581,11 @@ our hypothesis test has determined it is probable that there is an
 association between the employment grade of the household reference
 person and tenure, but it does not tell us <em>how much</em> more likely one
 group is than another to own their home.</p>
-<p>For a 2x2 contingency table we can use the <em>odds ratio</em>. For tables with
-more than 2x2 variables (as in our case) it is common to see researchers
-re–state the association to produce a 2x2 table.</p>
+<p>For a 2x2 contingency table we can use the <em>odds ratio</em>. The odds ratio
+is the odds of one group for the event of interest divided by the odds
+of the other group for the event of interest. For tables with more than
+2x2 variables (as in our case) it is common to see researchers re–state
+the association to produce a 2x2 table.</p>
 <p>For our example of employment grade and housing tenure we can restate it
 so instead of just measuring an association between all employment
 grades and tenure types we can calculate the odds ratio of, say,
@@ -657,12 +659,13 @@ other NS–SEC grades. This results in a 2x2 contingency table:</p>
 </table>
 </div></div>
 </div>
-<p>The odds of NS–SEC 1 respondents owning their home is the ratio of them
-owning to not owning, or 763:246. The odds of other NS–SEC respondents
-owning their home is the ratio of them owning to not owning, or 880:714.
-We can calculate a single number to represent the odds by dividing:</p>
+<p>First we specify the odds of the professional and managerial group
+owning their own home. This is the number of professional respondents
+who own their home (763), divided by the number of professional
+respondents who <em>do not</em> own their home (246), or 763:246. We can
+calculate a single number to represent the odds by dividing:</p>
 <div class="math notranslate nohighlight">
-\[Odds = \frac{763}{246}\]</div>
+\[Odds_{1} = \frac{763}{246}\]</div>
 <p>or:</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
@@ -684,9 +687,13 @@ We can calculate a single number to represent the odds by dividing:</p>
 </pre></div>
 </div>
 </div>
-<p>and</p>
+<p>This means that, roughly, for every professional and managerial
+respondent who <em>does not</em> own their home there are just over three who
+do.</p>
+<p>The odds of other NS–SEC respondents owning their home is again the
+ratio of them owning to not owning, or 880:714.</p>
 <div class="math notranslate nohighlight">
-\[Odds = \frac{880}{714}\]</div>
+\[Odds_{other} = \frac{880}{714}\]</div>
 <p>or:</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
@@ -708,10 +715,8 @@ We can calculate a single number to represent the odds by dividing:</p>
 </pre></div>
 </div>
 </div>
-<p>This means that NS–SEC grade 1 respondents are 3.1 times more likely to
-own their home than not own their home; while other NS–SEC grade
-respondents are only 1.2 times more likely to own their home than not
-own.</p>
+<p>This means that for every respondent who is not NS–SEC grade 1 who does
+not own their home there is only just over one who does.</p>
 <p>To calculate the ratio of these odds, we simply divide again:</p>
 <div class="math notranslate nohighlight">
 \[OR = \frac{763:246}{880:714} = \frac{3.1}{1.2}\]</div>
@@ -749,7 +754,7 @@ home than respondents of other NS–SEC grades.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="10-effect-sizes.html" class="btn btn-neutral float-right" title="Effect sizes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="10-effect-sizes.html" class="btn btn-neutral float-right" title="Correlation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="08-hypothesis-testing.html" class="btn btn-neutral" title="Hypothesis testing" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

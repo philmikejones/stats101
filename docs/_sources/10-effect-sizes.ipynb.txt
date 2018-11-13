@@ -4,7 +4,7 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "# Effect sizes"
+    "# Correlation"
    ]
   },
   {
@@ -20,78 +20,6 @@
     "import scipy.stats\n",
     "\n",
     "food = pd.read_pickle(\"../data/processed/food\")"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "pd.crosstab(index = food.A094r, columns = food.A121r, margins = True, margins_name = \"Total\")"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {},
-   "source": [
-    "The odds ratio is the odds of one group for the event of interest divided by the odds of the other group for the event of interest.\n",
-    "So we need two sets of odds.\n",
-    "\n",
-    "First we specify the odds of the professional and managerial group owning their own home.\n",
-    "This is the number of professional respondents who own their home (1282), divided by the number of professional respondents who *do not* own their home (70 + 237):"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "1282 / (70 + 237)"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {},
-   "source": [
-    "This means that, roughly, for every professional and managerial respondent who *does not* own their home there are four who do.\n",
-    "\n",
-    "Similarly the odds of a routine and manual respondent owning their home is the number of routine and manual respondents who own their home (523) divided by the number of routine and manual respondents who *do not* own their own home (289 + 233):"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "523 / (289 + 233)"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {},
-   "source": [
-    "This means that, roughly, for every routine and manual respondent who *does not* own their home there is one who does, so the odds are about equal or 1:1.\n",
-    "\n",
-    "The odds ratio is simply one divided by the other:"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "(1282 / (70 + 237)) / (523 / (289 + 233))"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {},
-   "source": [
-    "What this means is that professional and managerial respondents are 4.168 times more likely to own their home than routine and manual respondents."
    ]
   },
   {
