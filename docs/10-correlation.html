@@ -26,7 +26,8 @@
 
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Chi–squared test" href="09-chi-squared-test.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -80,7 +81,7 @@
             
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="01-introduction.html">Introduction</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="01-introduction.html#Inferring-from-a-sample">Inferring from a sample</a></li>
 <li class="toctree-l2"><a class="reference internal" href="01-introduction.html#Description-and-inference">Description and inference</a></li>
@@ -131,6 +132,15 @@
 <li class="toctree-l2"><a class="reference internal" href="09-chi-squared-test.html#p-value"><em>p</em> value</a></li>
 <li class="toctree-l2"><a class="reference internal" href="09-chi-squared-test.html#Assumptions">Assumptions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="09-chi-squared-test.html#Odds-ratio">Odds ratio</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Correlation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Pearson’s-correlation-coefficient,-r">Pearson’s correlation coefficient, <span class="math notranslate nohighlight">\(r\)</span></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Assumptions">Assumptions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#Spearman’s-\rho">Spearman’s <span class="math notranslate nohighlight">\(\rho\)</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Kendall’s-\tau">Kendall’s <span class="math notranslate nohighlight">\(\tau\)</span></a></li>
 </ul>
 </li>
 </ul>
@@ -398,52 +408,48 @@ div.nboutput div.output_area.stderr {
 </pre></div>
 </div>
 </div>
+<p>With nominal variables we have seen that we can perform a
+<cite>:math:</cite>chi ^ 2` test of association &lt;09-chi-squared-test.html&gt;`__ to
+see if there is a relationship between the two variables. If we have two
+variables that are both at least ordinal we can use more powerful
+statistical techniques and test more purposeful hypotheses.</p>
+<p>For example, with nominal data we can only test to see if there is an
+association. We cannot test the nature or size of this association
+(except with 2x2 contingency tables we can calculate odds ratios). With
+ordinal or scale data we can explore the strength of the association
+between them. One such technique is <em>correlation</em>.</p>
+<p>Correlation is used to determine the strength of association between two
+variables, usually from one individual. For example we could calculate
+the correlation between the height and weight of each individual.</p>
+<p>There are several correlation statistics we can compute, and these are
+dependent on the <a class="reference external" href="03-levels-of-measurement.html">level of
+measurement</a> of our data.</p>
 <div class="section" id="Pearson’s-correlation-coefficient,-r">
 <h2>Pearson’s correlation coefficient, <span class="math notranslate nohighlight">\(r\)</span><a class="headerlink" href="#Pearson’s-correlation-coefficient,-r" title="Permalink to this headline">¶</a></h2>
+<p>Pearson’s correlation coefficient, <span class="math notranslate nohighlight">\(r\)</span>, is a measure of effect
+size (or correlation) between two numerical (interval or scale)
+variables. It works on the principle that as the difference from the
+mean for one variable increases we expect the difference from the mean
+for the related variable to increase (positive correlation) or decrease
+(negative correlation).</p>
 <p><span class="math notranslate nohighlight">\(r\)</span> is standardised, which is useful because:</p>
 <ul class="simple">
 <li>tests of all sorts of units can be compared which each other,</li>
 <li>the result is between -1 (perfect negative association), through 0
 (no association), and 1 (perfect positive association)</li>
 </ul>
-<p><span class="math notranslate nohighlight">\(r\)</span> is a measure of effect size (or correlation) between two
-numerical variables. It works on the principle that as the difference
-from the mean for one variable increases we expect the difference from
-the mean for the related variable to increase (positive correlation) or
-decrease (negative correlation).</p>
-<p>For example the mean income is:</p>
+<p>Let’s say we hypothesise that people with higher incomes spend more
+money on food (they have more money to shop at Waitrose). Expenditure on
+food is <a class="reference external" href="https://en.wikipedia.org/wiki/Top-coded">top–coded</a> (see the
+histogram below) so for the purpose of this example let’s remove the top
+code:</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">food</span><span class="o">.</span><span class="n">P344pr</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[2]:
-</pre></div>
-</div>
-<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
-<span></span>518.3056177244473
-</pre></div>
-</div>
-</div>
-<p>Let’s say we hypothesise that people with higher incomes spend more
-money on food (they have more money to shop at Waitrose). Expenditure is
-top–coded, so let’s trim the data like we did for income and take a look
-at the resulting distribution:</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [3]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">food</span> <span class="o">=</span> <span class="n">food</span><span class="p">[</span><span class="n">food</span><span class="o">.</span><span class="n">P550tpr</span> <span class="o">&lt;</span> <span class="n">food</span><span class="o">.</span><span class="n">P550tpr</span><span class="o">.</span><span class="n">max</span><span class="p">()]</span>
-<span class="n">food</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">column</span> <span class="o">=</span> <span class="s2">&quot;P550tpr&quot;</span><span class="p">,</span> <span class="n">bins</span> <span class="o">=</span> <span class="mi">100</span><span class="p">)</span>
+<span></span><span class="n">food</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">column</span> <span class="o">=</span> <span class="s2">&quot;P550tpr&quot;</span><span class="p">,</span> <span class="n">bins</span> <span class="o">=</span> <span class="mi">100</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Food expenditure (£)&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Frequency&quot;</span><span class="p">)</span>
 </pre></div>
@@ -451,7 +457,7 @@ at the resulting distribution:</p>
 </div>
 <div class="nboutput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[3]:
+<span></span>Out[2]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
@@ -463,27 +469,16 @@ at the resulting distribution:</p>
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/10-correlation_5_1.png" src="_images/10-correlation_5_1.png" />
+<img alt="_images/10-correlation_3_1.png" src="_images/10-correlation_3_1.png" />
 </div>
 </div>
-<p>The mean expenditure is:</p>
-<div class="nbinput docutils container">
+<div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [4]:
+<span></span>In [3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">food</span><span class="o">.</span><span class="n">P550tpr</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[4]:
-</pre></div>
-</div>
-<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
-<span></span>400.63890310982424
+<span></span><span class="n">food</span> <span class="o">=</span> <span class="n">food</span><span class="p">[</span><span class="n">food</span><span class="o">.</span><span class="n">P550tpr</span> <span class="o">&lt;</span> <span class="n">food</span><span class="o">.</span><span class="n">P550tpr</span><span class="o">.</span><span class="n">max</span><span class="p">()]</span>
 </pre></div>
 </div>
 </div>
@@ -496,7 +491,7 @@ correlation coefficient</strong> (usually just called the correlation), which
 is a standardised measure of how much the two variables vary together.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [5]:
+<span></span>In [4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -508,7 +503,7 @@ is a standardised measure of how much the two variables vary together.</p>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[5]:
+<span></span>Out[4]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
@@ -530,15 +525,96 @@ hypothesis and conclude that there is an association between income and
 expenditure on food.</p>
 <div class="section" id="Assumptions">
 <h3>Assumptions<a class="headerlink" href="#Assumptions" title="Permalink to this headline">¶</a></h3>
-<p>Pearson’s correlation coefficient assumes that both variables are
-numeric and normally distributed for the <span class="math notranslate nohighlight">\(p\)</span> value to be accurate.
-In this case our variables are numeric (income and expenditure) so this
+<p>Pearson’s correlation coefficient makes the following assumptions for
+the <span class="math notranslate nohighlight">\(p\)</span> value to be valid:</p>
+<ul>
+<li><p class="first">both variables are numeric,</p>
+</li>
+<li><p class="first">both variables are normally distributed, and</p>
+</li>
+<li><p class="first">there shouldn’t be any outliers (defined as any values $</p>
+<div class="math notranslate nohighlight">
+\pm</div><p>$3.29 standard deviations).</p>
+</li>
+</ul>
+<p>In this case our variables are numeric (income and expenditure) so this
 assumption is met.</p>
-<p>Neither variable should have any outliers (defined as any value greater
-than the mean + 3.29 standard deviations). For income this is ok:</p>
+<p>To test if the variables are normally distributed we can plot a QQ plot.
+If the variable plotted is normally distributed it should lie along the
+straight red line:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># income</span>
+<span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">probplot</span><span class="p">(</span><span class="n">food</span><span class="o">.</span><span class="n">P344pr</span><span class="p">,</span> <span class="n">plot</span> <span class="o">=</span> <span class="n">plt</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[5]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>((array([-3.59517205, -3.35736793, -3.2261741 , ...,  3.2261741 ,
+          3.35736793,  3.59517205]),
+  array([   0.   ,    0.   ,    0.   , ..., 1178.775, 1180.175, 1181.54 ])),
+ (283.2065477823062, 513.1222675247656, 0.9805846375524395))
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/10-correlation_8_1.png" src="_images/10-correlation_8_1.png" />
+</div>
+</div>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># Expenditure</span>
+<span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">probplot</span><span class="p">(</span><span class="n">food</span><span class="o">.</span><span class="n">P550tpr</span><span class="p">,</span> <span class="n">plot</span> <span class="o">=</span> <span class="n">plt</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[6]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>((array([-3.59517205, -3.35736793, -3.2261741 , ...,  3.2261741 ,
+          3.35736793,  3.59517205]),
+  array([  30.525     ,   31.95200058,   32.13598298, ..., 1149.0082924 ,
+         1153.87332197, 1159.28534564])),
+ (220.0619650033565, 400.6389031098243, 0.9746798740473717))
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/10-correlation_9_1.png" src="_images/10-correlation_9_1.png" />
+</div>
+</div>
+<p>Clearly neither income nor expenditure are normally distributed, so this
+is a violation of the assumption and may be a problem. Let’s move on to
+outliers for now.</p>
+<p>Neither variable should have any outliers (defined as any value greater
+than the mean $</p>
+<div class="math notranslate nohighlight">
+\pm</div><p>$3.29 standard deviations). For income this is ok:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -551,7 +627,7 @@ than the mean + 3.29 standard deviations). For income this is ok:</p>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[6]:
+<span></span>Out[7]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
@@ -562,7 +638,7 @@ than the mean + 3.29 standard deviations). For income this is ok:</p>
 <p>But there are a few outliers for the expenditure variable:</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [7]:
+<span></span>In [8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -575,7 +651,7 @@ than the mean + 3.29 standard deviations). For income this is ok:</p>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[7]:
+<span></span>Out[8]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
@@ -583,10 +659,12 @@ than the mean + 3.29 standard deviations). For income this is ok:</p>
 </pre></div>
 </div>
 </div>
-<p>To be safe, let’s remove these:</p>
+<p>To be safe, let’s remove these for our example, but you would want to
+understand these outliers a bit more in any real research (i.e.&nbsp;why are
+they outliers?):</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [8]:
+<span></span>In [9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -597,7 +675,7 @@ than the mean + 3.29 standard deviations). For income this is ok:</p>
 <p>A scatterplot of these two variables:</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [9]:
+<span></span>In [10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -609,7 +687,7 @@ than the mean + 3.29 standard deviations). For income this is ok:</p>
 </div>
 <div class="nboutput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[9]:
+<span></span>Out[10]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
@@ -626,20 +704,30 @@ than the mean + 3.29 standard deviations). For income this is ok:</p>
 </div>
 <p>The points should be linear (i.e.&nbsp;a straight line) and roughly
 cylindrical to meet the assumptions. If it’s too conincal it means the
-deviances aren’t consistent (heteroskedasticity).</p>
-<p>If these assumptions aren’t true of our data we can use <strong>Spearman’s
-:math:`rho`</strong> (pronounced ‘row’). Spearman’s <span class="math notranslate nohighlight">\(\rho\)</span> is also
-useful when we have a numeric variable and an ordinal variable
-(something we couldn’t test with Pearson’s <span class="math notranslate nohighlight">\(r\)</span>).</p>
+deviances aren’t consistent (heteroskedasticity). If the assumptions of
+Pearson’s correlation coefficient are not met we can use a
+non–parametric correlation statistic, as we may need to do in the case
+of our example.</p>
+</div>
+</div>
+<div class="section" id="Spearman’s-\rho">
+<h2>Spearman’s <span class="math notranslate nohighlight">\(\rho\)</span><a class="headerlink" href="#Spearman’s-\rho" title="Permalink to this headline">¶</a></h2>
+<p>Spearman’s <span class="math notranslate nohighlight">\(\rho\)</span> (pronounced ‘row’) is a non–parametric
+correlation statistic that is very useful when we cannot use Pearson’s
+correlation coefficient, either because our data is ordinal but not
+numerical (interval or scale) or otherwise violates the assumptions of
+Pearson’s <span class="math notranslate nohighlight">\(r\)</span>.</p>
 <p>This is a <strong>non–parametric</strong> test. Non–parametric tests tend to be more
 robust (which is why we can use them when we violate some of the
 assumptions of the parametric equivalents, in this case Pearon’s
 <span class="math notranslate nohighlight">\(r\)</span>) but sometimes have lower statistical power. Therefore, try to
 use the parametric version by default and switch to the non–parametric
 version when necessary.</p>
+<p>A Spearman correlation test of our variables (income and expenditure) is
+as follows:</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [10]:
+<span></span>In [11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -651,7 +739,7 @@ version when necessary.</p>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[10]:
+<span></span>Out[11]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
@@ -660,8 +748,48 @@ version when necessary.</p>
 </div>
 </div>
 <p>As you can see in this example the correlation statistic is very similar
-and the <span class="math notranslate nohighlight">\(p\)</span> value is still significant (<span class="math notranslate nohighlight">\(&lt;&lt; 0.01\)</span>).</p>
+to the results of the Pearson’s <span class="math notranslate nohighlight">\(r\)</span> and the <span class="math notranslate nohighlight">\(p\)</span> value is
+still significant (<span class="math notranslate nohighlight">\(&lt;&lt; 0.01\)</span>).</p>
 </div>
+<div class="section" id="Kendall’s-\tau">
+<h2>Kendall’s <span class="math notranslate nohighlight">\(\tau\)</span><a class="headerlink" href="#Kendall’s-\tau" title="Permalink to this headline">¶</a></h2>
+<p>Kendall’s <span class="math notranslate nohighlight">\(\tau\)</span> (pronounced to rhyme with ‘ow’, or more correctly
+as ‘<a class="reference external" href="https://en.wikipedia.org/wiki/Tau">taff</a>’) is another
+non–parametric correlation statistic, similar to Spearman’s
+<span class="math notranslate nohighlight">\(\rho\)</span>, but useful when we have lots of tied ranks.</p>
+<p>Tied ranks means that the data share the same value. For example, if we
+have five possible responses (1–5) and 100 respondents in our sample we
+must have a lot of tied ranks (i.e.&nbsp;about 20 respondents tied for each
+level of response). This condition is quite common in the social
+sciences because we use Likert scales a lot (e.g.&nbsp;strongly agree, agree,
+neither agree nor disagree, disagree, strongly disagree).</p>
+<p>This was not a problem for our example (income and food expenditure)
+because these responses were not tied. We can nevertheless still
+calculate Kendall’s <span class="math notranslate nohighlight">\(\tau\)</span> for these variables:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">kendalltau</span><span class="p">(</span>
+    <span class="n">food</span><span class="p">[</span><span class="s2">&quot;P344pr&quot;</span><span class="p">],</span> <span class="n">food</span><span class="p">[</span><span class="s2">&quot;P550tpr&quot;</span><span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[12]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>KendalltauResult(correlation=0.5028338653574032, pvalue=0.0)
+</pre></div>
+</div>
+</div>
+<p>Notice that the <span class="math notranslate nohighlight">\(p\)</span> value is still significant (<span class="math notranslate nohighlight">\(&lt;&lt; 0.01\)</span>)
+but the estimate of the amount of correlation is lower.</p>
 </div>
 </div>
 
@@ -670,6 +798,13 @@ and the <span class="math notranslate nohighlight">\(p\)</span> value is still s
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="09-chi-squared-test.html" class="btn btn-neutral" title="Chi–squared test" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>
