@@ -19,7 +19,7 @@ stats101
    07-normal-distribution.ipynb
    08-hypothesis-testing.ipynb
    09-chi-squared-test.ipynb
-   10-effect-sizes.ipynb
+   10-correlation.ipynb
 
 Indices and tables
 ==================
