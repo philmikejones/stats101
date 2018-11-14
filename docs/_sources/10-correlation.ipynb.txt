@@ -26,7 +26,7 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "With nominal variables we have seen that we can perform a [$\\chi ^ 2$ test of association](09-chi-squared-test.html) to see if there is a relationship between the two variables.\n",
+    "With nominal variables we have seen that we can perform a [chi--squared test of association](09-chi-squared-test.html) to see if there is a relationship between the two variables.\n",
     "If we have two variables that are both at least ordinal we can use more powerful statistical techniques and test more purposeful hypotheses.\n",
     "\n",
     "For example, with nominal data we can only test to see if there is an association.\n",
@@ -100,7 +100,7 @@
     "In this example the first number is the correlation coefficient and the second number is its associated $p$ value.\n",
     "\n",
     "The correlation is positive so as income goes up, expenditure on food goes up (if it were negative it would be a negative correlation, which would state that as income went up expenditure on food went down for some reason).\n",
-    "The value of 0.63 suggests quite a lot of the variance in expenditure is accounted for by income (so the correlation is strong).\n",
+    "The value of 0.63 suggests 63% ($0.63 \\times 100$) of the variance in expenditure is accounted for by income (so the correlation is strong).\n",
     "\n",
     "The $p$ value is $<< 0.01$ ($<<$ means 'much less than') so it is highly improbable we would see a correlation this large by chance alone, so we have strong evidence to reject the null hypothesis and conclude that there is an association between income and expenditure on food.\n",
     "\n",
@@ -110,7 +110,7 @@
     "\n",
     "- both variables are numeric,\n",
     "- both variables are normally distributed, and\n",
-    "- there shouldn't be any outliers (defined as any values $\\pm$3.29 standard deviations).\n",
+    "- there shouldn't be any outliers (defined as any values more than 3.29 standard deviations from the mean).\n",
     "\n",
     "In this case our variables are numeric (income and expenditure) so this assumption is met.\n",
     "\n",
@@ -145,7 +145,7 @@
     "Clearly neither income nor expenditure are normally distributed, so this is a violation of the assumption and may be a problem.\n",
     "Let's move on to outliers for now.\n",
     "\n",
-    "Neither variable should have any outliers (defined as any value greater than the mean $\\pm$3.29 standard deviations).\n",
+    "Neither variable should have any outliers (defined as any value more than 3.29 standard deviations from the mean).\n",
     "For income this is ok:"
    ]
   },
@@ -157,7 +157,7 @@
    "source": [
     "len(\n",
     "    food[food.P344pr > \n",
-    "                 food.P344pr.mean() + (3.29 * food.P344pr.std())]\n",
+    "        food.P344pr.mean() + (3.29 * food.P344pr.std())]\n",
     ")"
    ]
   },
@@ -176,7 +176,7 @@
    "source": [
     "len(\n",
     "    food[food.P550tpr > \n",
-    "                 food.P550tpr.mean() + (3.29 * food.P550tpr.std())]\n",
+    "        food.P550tpr.mean() + (3.29 * food.P550tpr.std())]\n",
     ")"
    ]
   },
@@ -248,7 +248,7 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "As you can see in this example the correlation statistic is very similar to the results of the Pearson's $r$ and the $p$ value is still significant ($<< 0.01$).\n",
+    "As you can see in this example the correlation statistic (denoted $r_{s}$) is very similar to the results of the Pearson's $r$ and the $p$ value is still significant ($<< 0.01$).\n",
     "\n",
     "## Kendall's $\\tau$\n",
     "\n",

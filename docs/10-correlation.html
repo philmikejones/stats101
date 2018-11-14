@@ -417,11 +417,11 @@ div.nboutput div.output_area.stderr {
 </pre></div>
 </div>
 </div>
-<p>With nominal variables we have seen that we can perform a
-<cite>:math:</cite>chi ^ 2` test of association &lt;09-chi-squared-test.html&gt;`__ to
-see if there is a relationship between the two variables. If we have two
-variables that are both at least ordinal we can use more powerful
-statistical techniques and test more purposeful hypotheses.</p>
+<p>With nominal variables we have seen that we can perform a <a class="reference external" href="09-chi-squared-test.html">chi–squared
+test of association</a> to see if there is a
+relationship between the two variables. If we have two variables that
+are both at least ordinal we can use more powerful statistical
+techniques and test more purposeful hypotheses.</p>
 <p>For example, with nominal data we can only test to see if there is an
 association. We cannot test the nature or size of this association
 (except with 2x2 contingency tables we can calculate odds ratios). With
@@ -525,8 +525,9 @@ second number is its associated <span class="math notranslate nohighlight">\(p\)
 <p>The correlation is positive so as income goes up, expenditure on food
 goes up (if it were negative it would be a negative correlation, which
 would state that as income went up expenditure on food went down for
-some reason). The value of 0.63 suggests quite a lot of the variance in
-expenditure is accounted for by income (so the correlation is strong).</p>
+some reason). The value of 0.63 suggests 63% (<span class="math notranslate nohighlight">\(0.63 \times 100\)</span>)
+of the variance in expenditure is accounted for by income (so the
+correlation is strong).</p>
 <p>The <span class="math notranslate nohighlight">\(p\)</span> value is <span class="math notranslate nohighlight">\(&lt;&lt; 0.01\)</span> (<span class="math notranslate nohighlight">\(&lt;&lt;\)</span> means ‘much less
 than’) so it is highly improbable we would see a correlation this large
 by chance alone, so we have strong evidence to reject the null
@@ -536,15 +537,11 @@ expenditure on food.</p>
 <h3>Assumptions<a class="headerlink" href="#Assumptions" title="Permalink to this headline">¶</a></h3>
 <p>Pearson’s correlation coefficient makes the following assumptions for
 the <span class="math notranslate nohighlight">\(p\)</span> value to be valid:</p>
-<ul>
-<li><p class="first">both variables are numeric,</p>
-</li>
-<li><p class="first">both variables are normally distributed, and</p>
-</li>
-<li><p class="first">there shouldn’t be any outliers (defined as any values $</p>
-<div class="math notranslate nohighlight">
-\pm</div><p>$3.29 standard deviations).</p>
-</li>
+<ul class="simple">
+<li>both variables are numeric,</li>
+<li>both variables are normally distributed, and</li>
+<li>there shouldn’t be any outliers (defined as any values more than 3.29
+standard deviations from the mean).</li>
 </ul>
 <p>In this case our variables are numeric (income and expenditure) so this
 assumption is met.</p>
@@ -617,10 +614,8 @@ straight red line:</p>
 <p>Clearly neither income nor expenditure are normally distributed, so this
 is a violation of the assumption and may be a problem. Let’s move on to
 outliers for now.</p>
-<p>Neither variable should have any outliers (defined as any value greater
-than the mean $</p>
-<div class="math notranslate nohighlight">
-\pm</div><p>$3.29 standard deviations). For income this is ok:</p>
+<p>Neither variable should have any outliers (defined as any value more
+than 3.29 standard deviations from the mean). For income this is ok:</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [7]:
@@ -629,7 +624,7 @@ than the mean $</p>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="nb">len</span><span class="p">(</span>
     <span class="n">food</span><span class="p">[</span><span class="n">food</span><span class="o">.</span><span class="n">P344pr</span> <span class="o">&gt;</span>
-                 <span class="n">food</span><span class="o">.</span><span class="n">P344pr</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">+</span> <span class="p">(</span><span class="mf">3.29</span> <span class="o">*</span> <span class="n">food</span><span class="o">.</span><span class="n">P344pr</span><span class="o">.</span><span class="n">std</span><span class="p">())]</span>
+        <span class="n">food</span><span class="o">.</span><span class="n">P344pr</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">+</span> <span class="p">(</span><span class="mf">3.29</span> <span class="o">*</span> <span class="n">food</span><span class="o">.</span><span class="n">P344pr</span><span class="o">.</span><span class="n">std</span><span class="p">())]</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -653,7 +648,7 @@ than the mean $</p>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="nb">len</span><span class="p">(</span>
     <span class="n">food</span><span class="p">[</span><span class="n">food</span><span class="o">.</span><span class="n">P550tpr</span> <span class="o">&gt;</span>
-                 <span class="n">food</span><span class="o">.</span><span class="n">P550tpr</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">+</span> <span class="p">(</span><span class="mf">3.29</span> <span class="o">*</span> <span class="n">food</span><span class="o">.</span><span class="n">P550tpr</span><span class="o">.</span><span class="n">std</span><span class="p">())]</span>
+        <span class="n">food</span><span class="o">.</span><span class="n">P550tpr</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">+</span> <span class="p">(</span><span class="mf">3.29</span> <span class="o">*</span> <span class="n">food</span><span class="o">.</span><span class="n">P550tpr</span><span class="o">.</span><span class="n">std</span><span class="p">())]</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -756,9 +751,9 @@ as follows:</p>
 </pre></div>
 </div>
 </div>
-<p>As you can see in this example the correlation statistic is very similar
-to the results of the Pearson’s <span class="math notranslate nohighlight">\(r\)</span> and the <span class="math notranslate nohighlight">\(p\)</span> value is
-still significant (<span class="math notranslate nohighlight">\(&lt;&lt; 0.01\)</span>).</p>
+<p>As you can see in this example the correlation statistic (denoted
+<span class="math notranslate nohighlight">\(r_{s}\)</span>) is very similar to the results of the Pearson’s <span class="math notranslate nohighlight">\(r\)</span>
+and the <span class="math notranslate nohighlight">\(p\)</span> value is still significant (<span class="math notranslate nohighlight">\(&lt;&lt; 0.01\)</span>).</p>
 </div>
 <div class="section" id="Kendall’s-\tau">
 <h2>Kendall’s <span class="math notranslate nohighlight">\(\tau\)</span><a class="headerlink" href="#Kendall’s-\tau" title="Permalink to this headline">¶</a></h2>
