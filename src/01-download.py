@@ -15,13 +15,13 @@ os.makedirs("../data/external", exist_ok = True)
 
 # Living costs and food survey
 if not os.path.isfile("../data/external/food.zip"):
-    food = "https://beta.ukdataservice.ac.uk/Umbraco/Surface/Discover/GetDownload?studyNumber=7932&fileName=7932tab_818dcb297393b2557b07f05acaae70b9.zip"
+    food = "https://beta.ukdataservice.ac.uk/Umbraco/Surface/Discover/GetDownload?studyNumber=7932&fileName=7932tab_F0D69C16C7D03850A0C94A9991F84D5D_V1.zip"
     food = requests.get(food)
     food = food.content
     outfile = open("../data/external/food.zip", "wb")
     outfile.write(food)
 
-if os.stat("../data/external/food.zip").st_size < 970000:
+if os.stat("../data/external/food.zip").st_size < 900000:
     raise Exception("Size of food.zip too small. Likely a json error")
 
 # unzip
