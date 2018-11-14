@@ -167,7 +167,19 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "And reassuringly we can see the statistic is statistically significant."
+    "And reassuringly we can see the statistic is statistically significant.\n",
+    "\n",
+    "## Dependent groups\n",
+    "\n",
+    "The $t$--test and Mann--Whitney U test assume that the observations are independent.\n",
+    "In our example the two groups are independent because the age of people in Sheffield does not affect the age of people in Eastbourne.\n",
+    "\n",
+    "There are situations when the observations are *dependent* and these tests are not appropriate for this type of data.\n",
+    "In the social sciences, this is common with longitudinal data (data where the same individuals are asked a survey at different points in time).\n",
+    "Such *repeated measures* data is not independent.\n",
+    "\n",
+    "In these cases we can test for differences in means, but I'm not going to go into how to do this here; there are plenty of resources to help.\n",
+    "I'm bringing this up here so that you are mindful of the test(s) you use if you have repeated measures or longitudinal data."
    ]
   }
  ],
