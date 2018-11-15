@@ -1,5 +1,6 @@
 # Checkpoints
 source/.ipynb_checkpoints/
+.ipynb_checkpoints/
 
 # Output files from R CMD build
 /*.tar.gz
