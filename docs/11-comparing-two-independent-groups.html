@@ -527,12 +527,74 @@ only.</p>
 independent observations and the variable (age) is continuous, so these
 assumptions were met. The <span class="math notranslate nohighlight">\(t\)</span>–test also assumes that if the sample
 sizes are small they should be normally distributed, but this is not
-relevant in our case. If you need to test for this, plot a QQ plot. We
-also need to check that the variances of the two groups are
-approximately equal using a Levene’s test:</p>
+relevant in our case. If you need to test for this, plot a QQ plot:</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">probplot</span><span class="p">(</span><span class="n">age_ebn</span><span class="o">.</span><span class="n">C_AGE_NAME</span><span class="p">,</span> <span class="n">plot</span> <span class="o">=</span> <span class="n">plt</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[5]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>((array([-4.3447271 , -4.14589489, -4.03774648, ...,  4.03774648,
+          4.14589489,  4.3447271 ]),
+  array([  0,   0,   0, ..., 100, 100, 100])),
+ (24.361214673692874, 42.833169033919454, 0.9854839451271551))
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/11-comparing-two-independent-groups_8_1.png" src="_images/11-comparing-two-independent-groups_8_1.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">probplot</span><span class="p">(</span><span class="n">age_shf</span><span class="o">.</span><span class="n">C_AGE_NAME</span><span class="p">,</span> <span class="n">plot</span> <span class="o">=</span> <span class="n">plt</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[6]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>((array([-4.70745961, -4.52329906, -4.423601  , ...,  4.423601  ,
+          4.52329906,  4.70745961]),
+  array([  0,   0,   0, ..., 100, 100, 100])),
+ (22.700384057589815, 37.872098324944176, 0.9846609326125065))
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/11-comparing-two-independent-groups_9_1.png" src="_images/11-comparing-two-independent-groups_9_1.png" />
+</div>
+</div>
+<p>These are not normally distributed (if they were the blue points would
+lie along the red line), but this doesn’t matter in this case because we
+do not have small samples. We also need to check that the variances of
+the two groups are approximately equal using a Levene’s test:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -544,7 +606,7 @@ approximately equal using a Levene’s test:</p>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[5]:
+<span></span>Out[7]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
@@ -559,28 +621,30 @@ variances (this is actually the default behaviour for
 <code class="docutils literal notranslate"><span class="pre">scipy.stats.ttest_ind()</span></code>):</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [6]:
+<span></span>In [8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">ttest_ind</span><span class="p">(</span>
-    <span class="n">age_shf</span><span class="o">.</span><span class="n">C_AGE_NAME</span><span class="p">,</span> <span class="n">age_ebn</span><span class="o">.</span><span class="n">C_AGE_NAME</span><span class="p">,</span> <span class="n">equal_var</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">age_shf</span><span class="o">.</span><span class="n">C_AGE_NAME</span><span class="p">,</span> <span class="n">age_ebn</span><span class="o">.</span><span class="n">C_AGE_NAME</span><span class="p">,</span> <span class="n">equal_var</span> <span class="o">=</span> <span class="kc">False</span>
 <span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[6]:
+<span></span>Out[8]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Ttest_indResult(statistic=-61.76408470042736, pvalue=0.0)
+<span></span>Ttest_indResult(statistic=-58.84359690127882, pvalue=0.0)
 </pre></div>
 </div>
 </div>
-<p>So in this case the result is still statistically significant and we can
-reject the null hypothesis (i.e.&nbsp;the ages are different).</p>
+<p>If the variances were approximately equal the <span class="math notranslate nohighlight">\(p\)</span> value would be
+<span class="math notranslate nohighlight">\(&gt; 0.05\)</span> and we would not reject the null. If this were the case
+we could perform an equal variances <span class="math notranslate nohighlight">\(t\)</span>–test, by specifying
+<code class="docutils literal notranslate"><span class="pre">equal_var</span> <span class="pre">=</span> <span class="pre">True</span></code>.</p>
 </div>
 </div>
 <div class="section" id="Mann–Whitney-U">
@@ -597,7 +661,7 @@ between groups the sum of the ranks for each group will differ. Using
 our example age data:</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [7]:
+<span></span>In [9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -609,7 +673,7 @@ our example age data:</p>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[7]:
+<span></span>Out[9]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
@@ -617,7 +681,11 @@ our example age data:</p>
 </pre></div>
 </div>
 </div>
-<p>And reassuringly we can see the statistic is statistically significant.</p>
+<p>And reassuringly we can see the statistic is statistically significant.
+We wouldn’t really use a Mann–Whitney U test for age (continuous) data;
+this is just to demonstrate the syntax and interpretation. Mann–Whitney
+U tests are useful in the social sciences though because we deal with
+ordinal data (e.g.&nbsp;Likert scales) a lot.</p>
 </div>
 <div class="section" id="Dependent-groups">
 <h2>Dependent groups<a class="headerlink" href="#Dependent-groups" title="Permalink to this headline">¶</a></h2>
