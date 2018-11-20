@@ -62,3 +62,21 @@ if len(age_ebn.index) != sum_obsvalue:
 age_ebn = age_ebn.drop("OBS_VALUE", axis = 1)
 
 age_ebn.to_pickle("../data/processed/age_ebn")
+
+# Oxford age Census
+age_oxf = pd.read_csv("../data/external/age_oxf.csv")
+age_oxf = age_oxf[["C_AGE_NAME", "OBS_VALUE"]]
+age_oxf.C_AGE_NAME = age_oxf.C_AGE_NAME.str.replace("Age under 1", "0")
+age_oxf.C_AGE_NAME = age_oxf.C_AGE_NAME.str.replace(" and over", "")
+age_oxf.C_AGE_NAME = age_oxf.C_AGE_NAME.str.replace("Age ", "")
+age_oxf.C_AGE_NAME = pd.to_numeric(age_oxf.C_AGE_NAME)
+
+sum_obsvalue = age_oxf.OBS_VALUE.sum()  # for checks
+age_oxf = age_oxf.loc[age_oxf.index.repeat(age_oxf["OBS_VALUE"])]
+
+if len(age_oxf.index) != sum_obsvalue:
+    raise Exception("age_oxf data frame not spread correctly")
+
+age_oxf = age_oxf.drop("OBS_VALUE", axis = 1)
+
+age_oxf.to_pickle("../data/processed/age_oxf")

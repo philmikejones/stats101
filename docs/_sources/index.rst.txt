@@ -21,6 +21,7 @@ stats101
    09-chi-squared-test.ipynb
    10-correlation.ipynb
    11-comparing-two-independent-groups.ipynb
+   12-comparing-three-or-more-means.ipynb
 
 Indices and tables
 ==================

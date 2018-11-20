@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Data sources &mdash; stats101 0.1.0 documentation</title>
+  <title>Comparing three or more means &mdash; stats101 0.1.0 documentation</title>
   
 
   
@@ -26,9 +26,7 @@
 
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Levels of measurement" href="03-levels-of-measurement.html" />
-    <link rel="prev" title="Introduction" href="01-introduction.html" /> 
+    <link rel="search" title="Search" href="search.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -82,13 +80,13 @@
             
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
-<ul class="current">
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="01-introduction.html">Introduction</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="01-introduction.html#Inferring-from-a-sample">Inferring from a sample</a></li>
 <li class="toctree-l2"><a class="reference internal" href="01-introduction.html#Description-and-inference">Description and inference</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Data sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02-data-sources.html">Data sources</a></li>
 <li class="toctree-l1"><a class="reference internal" href="03-levels-of-measurement.html">Levels of measurement</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="03-levels-of-measurement.html#Nominal">Nominal</a></li>
 <li class="toctree-l2"><a class="reference internal" href="03-levels-of-measurement.html#Ordinal">Ordinal</a></li>
@@ -198,13 +196,13 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Data sources</li>
+      <li>Comparing three or more means</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="_sources/02-data-sources.ipynb.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/12-comparing-three-or-more-means.ipynb.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -400,51 +398,45 @@ div.nboutput div.output_area.stderr {
     margin-right: 4px;  /* make room for the exclamation icon */
 }
 </style>
-<div class="section" id="Data-sources">
-<h1>Data sources<a class="headerlink" href="#Data-sources" title="Permalink to this headline">¶</a></h1>
-<p>These tutorials use a number of teaching data sets available from the
-<a class="reference external" href="https://www.ukdataservice.ac.uk/">UK Data Service</a> and Nomisweb (FYI
-<a class="reference external" href="https://www.nomisweb.co.uk/api/v01/help">Nomisweb have a great API</a>
-for reproducible research) under terms of the <a class="reference external" href="http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/">Open Government
-License</a>:</p>
-<blockquote>
-<div>Office for National Statistics, University of Manchester, Cathie
-Marsh Institute for Social Research (CMIST), UK Data Service, 2016,
-Living Costs and Food Survey, 2013: Unrestricted Access Teaching
-Dataset, [data collection], Office for National Statistics, 2nd
-Edition, Office for National Statistics, [original data producer(s)].
-Accessed 1 October 2018. SN: 7932,
-<a class="reference external" href="http://doi.org/10.5255/UKDA-SN-7932-2">http://doi.org/10.5255/UKDA-SN-7932-2</a>. Contains public sector
-information licensed under the Open Government Licence v2.0</div></blockquote>
-<blockquote>
-<div>Office for National Statistics, 2014, 2011 Census. Accessed October
-2018. Contains public sector information licensed under the Open
-Government Licence v2.0.</div></blockquote>
-<p>If you’re following along at home I download and process the data sets
-with scripts in the <a class="reference external" href="https://github.com/philmikejones/stats101/tree/master/src">src/
-directory</a>.</p>
+<div class="section" id="Comparing-three-or-more-means">
+<h1>Comparing three or more means<a class="headerlink" href="#Comparing-three-or-more-means" title="Permalink to this headline">¶</a></h1>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [1]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="o">%</span><span class="k">run</span> ../src/01-download.py
+<span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">scipy.stats</span>
+
+<span class="n">age_shf</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_pickle</span><span class="p">(</span><span class="s2">&quot;../data/processed/age_shf&quot;</span><span class="p">)</span>
+<span class="n">age_ebn</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_pickle</span><span class="p">(</span><span class="s2">&quot;../data/processed/age_ebn&quot;</span><span class="p">)</span>
+<span class="n">age_oxf</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_pickle</span><span class="p">(</span><span class="s2">&quot;../data/processed/age_oxf&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
-<p>The <code class="docutils literal notranslate"><span class="pre">food</span></code> dataset (Living costs and food survey) includes income, but
-this is top–coded. For the purpose of these exercises I simply remove
-the top–coded cases to make the distributions a bit more normal. If you
-were analysing this data for real you would need to consider how to
-handle these top–coded cases.</p>
-<div class="nbinput nblast docutils container">
+<div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [2]:
+<span></span>In [3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="o">%</span><span class="k">run</span> ../src/02-process.py
+<span></span><span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">f_oneway</span><span class="p">(</span>
+    <span class="n">age_shf</span><span class="p">,</span> <span class="n">age_ebn</span><span class="p">,</span> <span class="n">age_oxf</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[3]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>F_onewayResult(statistic=array([4147.40874864]), pvalue=array([0.]))
 </pre></div>
 </div>
 </div>
@@ -455,15 +447,6 @@ handle these top–coded cases.</p>
            
           </div>
           <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="03-levels-of-measurement.html" class="btn btn-neutral float-right" title="Levels of measurement" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="01-introduction.html" class="btn btn-neutral" title="Introduction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
-    </div>
   
 
   <hr/>
