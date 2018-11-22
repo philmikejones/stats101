@@ -26,7 +26,8 @@
 
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Comparing two independent groups" href="11-comparing-two-independent-groups.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -80,7 +81,7 @@
             
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="01-introduction.html">Introduction</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="01-introduction.html#Inferring-from-a-sample">Inferring from a sample</a></li>
 <li class="toctree-l2"><a class="reference internal" href="01-introduction.html#Description-and-inference">Description and inference</a></li>
@@ -149,6 +150,13 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="11-comparing-two-independent-groups.html#Mann–Whitney-U">Mann–Whitney U</a></li>
 <li class="toctree-l2"><a class="reference internal" href="11-comparing-two-independent-groups.html#Dependent-groups">Dependent groups</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Comparing three or more means</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Example">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Assumptions">Assumptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Equality-of-variance">Equality of variance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ANOVA">ANOVA</a></li>
 </ul>
 </li>
 </ul>
@@ -418,6 +426,105 @@ div.nboutput div.output_area.stderr {
 </pre></div>
 </div>
 </div>
+<p>In the previous section we compared the means of two different groups to
+see if they were statistically significantly different. Specifically we
+tested to see if the mean age of residents of Eastbourne is greater than
+the mean age of residents of Sheffield, and it was. This suggests that,
+overall, the population of Eastbourne is older than the population of
+Sheffield, and so there might be some truth to the caricature that
+Eastbourne is a popular retirement destination.</p>
+<p>But what if we want to compare the means of more than two groups? Could
+we perform multiple <span class="math notranslate nohighlight">\(t\)</span>–tests? Well, no. It has been argued that
+the process of performing multiple <span class="math notranslate nohighlight">\(t\)</span>–tests is laborious because
+you need to perform one for each pair of means. These days, with the
+automation provided by computers, we no longer need to do the tests
+manually so this is no longer relevant; performing multiple
+<span class="math notranslate nohighlight">\(t\)</span>–tests in a loop is now a trivial task with <code class="docutils literal notranslate"><span class="pre">R</span></code> or
+<code class="docutils literal notranslate"><span class="pre">Python</span></code>.</p>
+<p>But, there’s a more important reason we shouldn’t perform multiple
+<span class="math notranslate nohighlight">\(t\)</span>–tests, even though we can. By performing multiple
+<span class="math notranslate nohighlight">\(t\)</span>–tests we increase the risk of making a <a class="reference external" href="08-hypothesis-testing.html#Errors-interpreting-the-results">Type I
+error</a>.
+Remember we can never <em>prove</em> things with statistics, only calculate how
+likely something is to happen by chance alone.</p>
+<p>By convention we use a threshold of 0.05, or less than a 5% chance that
+the results we observe are by chance. But at 5% there’s a 1 in 20 chance
+we commit a Type I error. So if we performed 20 pairs of <span class="math notranslate nohighlight">\(t\)</span>–tests
+we would be almost guaranteed to make at least one Type I error! XKCD,
+as always, neatly sums this up.</p>
+<div class="figure" id="id1">
+<img alt="Significant" src="https://imgs.xkcd.com/comics/significant.png" />
+<p class="caption"><span class="caption-text">Significant</span></p>
+</div>
+<p>So instead of making multiple <span class="math notranslate nohighlight">\(t\)</span>–tests we perform an analysis of
+variance (ANOVA).</p>
+<div class="section" id="Example">
+<h2>Example<a class="headerlink" href="#Example" title="Permalink to this headline">¶</a></h2>
+<p>For this example I use the ages of a sample of 1,000 people from
+Sheffield and Eastbourne as before, but to compare an additional mean I
+include a sample of 1,000 people from Oxford. Oxford is one of the
+youngest populations overall for any city in the UK, perhaps because of
+the student population, so this test will see if there is a difference
+between the ages of Oxford, Sheffield, and Eastbourne. Our null
+hypothesis (<span class="math notranslate nohighlight">\(H_0\)</span>) is therefore that there is no statistically
+significant difference between the mean ages of residents in Oxford,
+Sheffield, and Eastbourne.</p>
+</div>
+<div class="section" id="Assumptions">
+<h2>Assumptions<a class="headerlink" href="#Assumptions" title="Permalink to this headline">¶</a></h2>
+<p>The assumptions of ANOVA are, not surprisingly, very similar to those of
+a <span class="math notranslate nohighlight">\(t\)</span>–test:</p>
+<ul class="simple">
+<li>Measurements/observations are independent of each other (i.e.&nbsp;from
+different people)</li>
+<li>Measurements are on a continuous scale</li>
+<li>If the sample size is small the variables should have a normal
+distribution.</li>
+</ul>
+<p>For our example the observations are independent (the ages of people in
+Sheffield do not affect the ages of people in Eastbourne or Oxford). Age
+is a continuous measure (even though it’s measured here on a discrete
+scale we can treat it as continuous). We have sample sizes of 1,000 per
+group so do not need to check for normality, but if we did we would plot
+a series of <a class="reference external" href="11-comparing-two-independent-groups.html#Assumptions">QQ
+plots</a> as we
+did for <span class="math notranslate nohighlight">\(t\)</span>–tests.</p>
+</div>
+<div class="section" id="Equality-of-variance">
+<h2>Equality of variance<a class="headerlink" href="#Equality-of-variance" title="Permalink to this headline">¶</a></h2>
+<p>As with the <span class="math notranslate nohighlight">\(t\)</span>–test we need to first test to see if the variances
+of the groups are equal, as this affects how we interpret the ANOVA. We
+again use a Levene test for equality of variance.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">levene</span><span class="p">(</span>
+    <span class="n">age_oxf</span><span class="o">.</span><span class="n">C_AGE_NAME</span><span class="p">,</span> <span class="n">age_shf</span><span class="o">.</span><span class="n">C_AGE_NAME</span><span class="p">,</span> <span class="n">age_ebn</span><span class="o">.</span><span class="n">C_AGE_NAME</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[2]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>LeveneResult(statistic=3489.7063361629125, pvalue=0.0)
+</pre></div>
+</div>
+</div>
+<p>Here the Levene statistic is statistically significant
+(<span class="math notranslate nohighlight">\(p &lt;&lt; 0.01\)</span>) so we must reject the null that there is no
+difference between the variances, and assume that the variances are not
+equal.</p>
+</div>
+<div class="section" id="ANOVA">
+<h2>ANOVA<a class="headerlink" href="#ANOVA" title="Permalink to this headline">¶</a></h2>
+<p>As we do not have groups with equal variance, we need to specify a</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [3]:
@@ -441,12 +548,20 @@ div.nboutput div.output_area.stderr {
 </div>
 </div>
 </div>
+</div>
 
 
            </div>
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="11-comparing-two-independent-groups.html" class="btn btn-neutral" title="Comparing two independent groups" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>
