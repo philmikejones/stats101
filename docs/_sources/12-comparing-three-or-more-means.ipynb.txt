@@ -18,10 +18,16 @@
     "import numpy as np\n",
     "import math\n",
     "import scipy.stats\n",
+    "import statsmodels.stats.multicomp\n",
     "\n",
     "age_shf = pd.read_pickle(\"../data/processed/age_shf\")\n",
     "age_ebn = pd.read_pickle(\"../data/processed/age_ebn\")\n",
-    "age_oxf = pd.read_pickle(\"../data/processed/age_oxf\")"
+    "age_oxf = pd.read_pickle(\"../data/processed/age_oxf\")\n",
+    "\n",
+    "# we want just a sample; a population is more likely to be statistically significant!\n",
+    "age_shf = age_shf.sample(n = 1000, replace = True, random_state = 42)\n",
+    "age_ebn = age_ebn.sample(n = 1000, replace = True, random_state = 42)\n",
+    "age_oxf = age_oxf.sample(n = 1000, replace = True, random_state = 42)"
    ]
   },
   {
@@ -71,8 +77,11 @@
     "\n",
     "## Equality of variance\n",
     "\n",
-    "As with the $t$--test we need to first test to see if the variances of the groups are equal, as this affects how we interpret the ANOVA.\n",
-    "We again use a Levene test for equality of variance."
+    "As with the $t$--test it is ideal if the variances of the three (or more) groups are equal, so we are looking for *equality of variance*.\n",
+    "However, as a rule of thumb [ANOVA is robust to differences in variance of up to 4x](https://stats.stackexchange.com/a/56994/35674).\n",
+    "That is, if the largest variance is no larger than 4x the smallest variance the ANOVA is still reliable.\n",
+    "\n",
+    "First, let's try a Levene test for equality of variance as we might not even need to worry about this:"
    ]
   },
   {
@@ -91,10 +100,32 @@
    "metadata": {},
    "source": [
     "Here the Levene statistic is statistically significant ($p << 0.01$) so we must reject the null that there is no difference between the variances, and assume that the variances are not equal.\n",
-    "\n",
-    "## ANOVA\n",
-    "\n",
-    "As we do not have groups with equal variance, we need to specify a "
+    "So is the largest variance less than 4x the smallest variance?"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "max_var = max(age_shf.C_AGE_NAME.var(), age_ebn.C_AGE_NAME.var(), age_oxf.C_AGE_NAME.var())\n",
+    "min_var = min(age_shf.C_AGE_NAME.var(), age_ebn.C_AGE_NAME.var(), age_oxf.C_AGE_NAME.var())\n",
+    "print(max_var / min_var)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "The maximum variance is therefore less than twice as large as the minimum variance, so our rule of thumb holds for this data set and we can interpret the ANOVA as reliable."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## ANOVA"
    ]
   },
   {
@@ -106,6 +137,58 @@
     "scipy.stats.f_oneway(\n",
     "    age_shf, age_ebn, age_oxf\n",
     ")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "The ANOVA result is statistically significant ($p << 0.01$) so there is a statistically significant difference between the mean ages of people in Sheffield, Eastbourne, and Oxford overall.\n",
+    "Now let's run some post--hoc tests to see which group(s) actually differ.\n",
+    "First we should transform the data into 'long' form, so one row per obvservation.\n",
+    "So that we know which observation is from which city I add a '`city`' variable:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "age_shf = age_shf.assign(city = \"Sheffield\")\n",
+    "age_ebn = age_ebn.assign(city = \"Eastbourne\")\n",
+    "age_oxf = age_oxf.assign(city = \"Oxford\")\n",
+    "ages = age_shf.append(age_ebn)\n",
+    "ages = ages.append(age_oxf)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Now the post--hoc tests:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "posthoc = statsmodels.stats.multicomp.MultiComparison(\n",
+    "    ages.C_AGE_NAME, ages.city\n",
+    ")\n",
+    "\n",
+    "posthoc = posthoc.tukeyhsd()\n",
+    "print(posthoc)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "The post--hoc tests suggest that there is a difference in ages between people in Oxford and Eastbourne, and Sheffield and Eastbourne, but *not* between Oxford and Sheffield.\n",
+    "This would indicate that people in Eastbourne are older, on average, than people in Oxford or in Sheffield, but that people in Oxford are not younger than people in Sheffield overall."
    ]
   }
  ],
@@ -125,7 +208,7 @@
    "name": "python",
    "nbconvert_exporter": "python",
    "pygments_lexer": "ipython3",
-   "version": "3.6.6"
+   "version": "3.6.7"
   }
  },
  "nbformat": 4,

@@ -419,10 +419,16 @@ div.nboutput div.output_area.stderr {
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">math</span>
 <span class="kn">import</span> <span class="nn">scipy.stats</span>
+<span class="kn">import</span> <span class="nn">statsmodels.stats.multicomp</span>
 
 <span class="n">age_shf</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_pickle</span><span class="p">(</span><span class="s2">&quot;../data/processed/age_shf&quot;</span><span class="p">)</span>
 <span class="n">age_ebn</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_pickle</span><span class="p">(</span><span class="s2">&quot;../data/processed/age_ebn&quot;</span><span class="p">)</span>
 <span class="n">age_oxf</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_pickle</span><span class="p">(</span><span class="s2">&quot;../data/processed/age_oxf&quot;</span><span class="p">)</span>
+
+<span class="c1"># we want just a sample; a population is more likely to be statistically significant!</span>
+<span class="n">age_shf</span> <span class="o">=</span> <span class="n">age_shf</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">n</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span> <span class="n">replace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">random_state</span> <span class="o">=</span> <span class="mi">42</span><span class="p">)</span>
+<span class="n">age_ebn</span> <span class="o">=</span> <span class="n">age_ebn</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">n</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span> <span class="n">replace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">random_state</span> <span class="o">=</span> <span class="mi">42</span><span class="p">)</span>
+<span class="n">age_oxf</span> <span class="o">=</span> <span class="n">age_oxf</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">n</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span> <span class="n">replace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">random_state</span> <span class="o">=</span> <span class="mi">42</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -492,9 +498,14 @@ did for <span class="math notranslate nohighlight">\(t\)</span>–tests.</p>
 </div>
 <div class="section" id="Equality-of-variance">
 <h2>Equality of variance<a class="headerlink" href="#Equality-of-variance" title="Permalink to this headline">¶</a></h2>
-<p>As with the <span class="math notranslate nohighlight">\(t\)</span>–test we need to first test to see if the variances
-of the groups are equal, as this affects how we interpret the ANOVA. We
-again use a Levene test for equality of variance.</p>
+<p>As with the <span class="math notranslate nohighlight">\(t\)</span>–test it is ideal if the variances of the three (or
+more) groups are equal, so we are looking for <em>equality of variance</em>.
+However, as a rule of thumb <a class="reference external" href="https://stats.stackexchange.com/a/56994/35674">ANOVA is robust to differences in variance
+of up to 4x</a>. That is,
+if the largest variance is no larger than 4x the smallest variance the
+ANOVA is still reliable.</p>
+<p>First, let’s try a Levene test for equality of variance as we might not
+even need to worry about this:</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [2]:
@@ -513,21 +524,43 @@ again use a Levene test for equality of variance.</p>
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
-<span></span>LeveneResult(statistic=3489.7063361629125, pvalue=0.0)
+<span></span>LeveneResult(statistic=18.98095012875844, pvalue=6.4335243559541896e-09)
 </pre></div>
 </div>
 </div>
 <p>Here the Levene statistic is statistically significant
 (<span class="math notranslate nohighlight">\(p &lt;&lt; 0.01\)</span>) so we must reject the null that there is no
 difference between the variances, and assume that the variances are not
-equal.</p>
-</div>
-<div class="section" id="ANOVA">
-<h2>ANOVA<a class="headerlink" href="#ANOVA" title="Permalink to this headline">¶</a></h2>
-<p>As we do not have groups with equal variance, we need to specify a</p>
+equal. So is the largest variance less than 4x the smallest variance?</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">max_var</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">age_shf</span><span class="o">.</span><span class="n">C_AGE_NAME</span><span class="o">.</span><span class="n">var</span><span class="p">(),</span> <span class="n">age_ebn</span><span class="o">.</span><span class="n">C_AGE_NAME</span><span class="o">.</span><span class="n">var</span><span class="p">(),</span> <span class="n">age_oxf</span><span class="o">.</span><span class="n">C_AGE_NAME</span><span class="o">.</span><span class="n">var</span><span class="p">())</span>
+<span class="n">min_var</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">age_shf</span><span class="o">.</span><span class="n">C_AGE_NAME</span><span class="o">.</span><span class="n">var</span><span class="p">(),</span> <span class="n">age_ebn</span><span class="o">.</span><span class="n">C_AGE_NAME</span><span class="o">.</span><span class="n">var</span><span class="p">(),</span> <span class="n">age_oxf</span><span class="o">.</span><span class="n">C_AGE_NAME</span><span class="o">.</span><span class="n">var</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">max_var</span> <span class="o">/</span> <span class="n">min_var</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+1.33605875828
+</pre></div></div>
+</div>
+<p>The maximum variance is therefore less than twice as large as the
+minimum variance, so our rule of thumb holds for this data set and we
+can interpret the ANOVA as reliable.</p>
+</div>
+<div class="section" id="ANOVA">
+<h2>ANOVA<a class="headerlink" href="#ANOVA" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -539,14 +572,72 @@ equal.</p>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[3]:
+<span></span>Out[4]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
-<span></span>F_onewayResult(statistic=array([4147.40874864]), pvalue=array([0.]))
+<span></span>F_onewayResult(statistic=array([ 27.76084434]), pvalue=array([  1.13223062e-12]))
 </pre></div>
 </div>
 </div>
+<p>The ANOVA result is statistically significant (<span class="math notranslate nohighlight">\(p &lt;&lt; 0.01\)</span>) so
+there is a statistically significant difference between the mean ages of
+people in Sheffield, Eastbourne, and Oxford overall. Now let’s run some
+post–hoc tests to see which group(s) actually differ. First we should
+transform the data into ‘long’ form, so one row per obvservation. So
+that we know which observation is from which city I add a ‘<code class="docutils literal notranslate"><span class="pre">city</span></code>’
+variable:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">age_shf</span> <span class="o">=</span> <span class="n">age_shf</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">city</span> <span class="o">=</span> <span class="s2">&quot;Sheffield&quot;</span><span class="p">)</span>
+<span class="n">age_ebn</span> <span class="o">=</span> <span class="n">age_ebn</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">city</span> <span class="o">=</span> <span class="s2">&quot;Eastbourne&quot;</span><span class="p">)</span>
+<span class="n">age_oxf</span> <span class="o">=</span> <span class="n">age_oxf</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">city</span> <span class="o">=</span> <span class="s2">&quot;Oxford&quot;</span><span class="p">)</span>
+<span class="n">ages</span> <span class="o">=</span> <span class="n">age_shf</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">age_ebn</span><span class="p">)</span>
+<span class="n">ages</span> <span class="o">=</span> <span class="n">ages</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">age_oxf</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Now the post–hoc tests:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">posthoc</span> <span class="o">=</span> <span class="n">statsmodels</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">multicomp</span><span class="o">.</span><span class="n">MultiComparison</span><span class="p">(</span>
+    <span class="n">ages</span><span class="o">.</span><span class="n">C_AGE_NAME</span><span class="p">,</span> <span class="n">ages</span><span class="o">.</span><span class="n">city</span>
+<span class="p">)</span>
+
+<span class="n">posthoc</span> <span class="o">=</span> <span class="n">posthoc</span><span class="o">.</span><span class="n">tukeyhsd</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">posthoc</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+ Multiple Comparison of Means - Tukey HSD,FWER=0.05
+====================================================
+  group1     group2  meandiff  lower   upper  reject
+----------------------------------------------------
+Eastbourne   Oxford   -7.542  -9.9761 -5.1079  True
+Eastbourne Sheffield  -5.257  -7.6911 -2.8229  True
+  Oxford   Sheffield  2.285   -0.1491  4.7191 False
+----------------------------------------------------
+</pre></div></div>
+</div>
+<p>The post–hoc tests suggest that there is a difference in ages between
+people in Oxford and Eastbourne, and Sheffield and Eastbourne, but <em>not</em>
+between Oxford and Sheffield. This would indicate that people in
+Eastbourne are older, on average, than people in Oxford or in Sheffield,
+but that people in Oxford are not younger than people in Sheffield
+overall.</p>
 </div>
 </div>
 

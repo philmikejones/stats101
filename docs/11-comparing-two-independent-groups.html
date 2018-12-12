@@ -27,6 +27,7 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Comparing three or more means" href="12-comparing-three-or-more-means.html" />
     <link rel="prev" title="Correlation" href="10-correlation.html" /> 
 
   
@@ -150,6 +151,13 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#Mann–Whitney-U">Mann–Whitney U</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Dependent-groups">Dependent groups</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="12-comparing-three-or-more-means.html">Comparing three or more means</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="12-comparing-three-or-more-means.html#Example">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="12-comparing-three-or-more-means.html#Assumptions">Assumptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="12-comparing-three-or-more-means.html#Equality-of-variance">Equality of variance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="12-comparing-three-or-more-means.html#ANOVA">ANOVA</a></li>
 </ul>
 </li>
 </ul>
@@ -465,7 +473,7 @@ the population means were different also:</p>
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
-<span></span>37.87209832494418
+<span></span>37.872098324944183
 </pre></div>
 </div>
 </div>
@@ -485,7 +493,7 @@ the population means were different also:</p>
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
-<span></span>42.83316903391945
+<span></span>42.833169033919447
 </pre></div>
 </div>
 </div>
@@ -511,7 +519,7 @@ statistically test if the means are different:</p>
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Ttest_indResult(statistic=-58.84359690127882, pvalue=0.0)
+<span></span>Ttest_indResult(statistic=-58.843596901278822, pvalue=0.0)
 </pre></div>
 </div>
 </div>
@@ -547,7 +555,7 @@ relevant in our case. If you need to test for this, plot a QQ plot:</p>
 <span></span>((array([-4.3447271 , -4.14589489, -4.03774648, ...,  4.03774648,
           4.14589489,  4.3447271 ]),
   array([  0,   0,   0, ..., 100, 100, 100])),
- (24.361214673692874, 42.833169033919454, 0.9854839451271551))
+ (24.361214673692874, 42.833169033919454, 0.98548394512715509))
 </pre></div>
 </div>
 </div>
@@ -577,7 +585,7 @@ relevant in our case. If you need to test for this, plot a QQ plot:</p>
 <span></span>((array([-4.70745961, -4.52329906, -4.423601  , ...,  4.423601  ,
           4.52329906,  4.70745961]),
   array([  0,   0,   0, ..., 100, 100, 100])),
- (22.700384057589815, 37.872098324944176, 0.9846609326125065))
+ (22.700384057589815, 37.872098324944176, 0.98466093261250653))
 </pre></div>
 </div>
 </div>
@@ -637,7 +645,7 @@ variances (this is actually the default behaviour for
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Ttest_indResult(statistic=-58.84359690127882, pvalue=0.0)
+<span></span>Ttest_indResult(statistic=-58.843596901278822, pvalue=0.0)
 </pre></div>
 </div>
 </div>
@@ -712,6 +720,8 @@ if you have repeated measures or longitudinal data.</p>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="12-comparing-three-or-more-means.html" class="btn btn-neutral float-right" title="Comparing three or more means" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="10-correlation.html" class="btn btn-neutral" title="Correlation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

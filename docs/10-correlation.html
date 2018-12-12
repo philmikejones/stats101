@@ -150,6 +150,14 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="11-comparing-two-independent-groups.html#Mann–Whitney-U">Mann–Whitney U</a></li>
+<li class="toctree-l2"><a class="reference internal" href="11-comparing-two-independent-groups.html#Dependent-groups">Dependent groups</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="12-comparing-three-or-more-means.html">Comparing three or more means</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="12-comparing-three-or-more-means.html#Example">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="12-comparing-three-or-more-means.html#Assumptions">Assumptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="12-comparing-three-or-more-means.html#Equality-of-variance">Equality of variance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="12-comparing-three-or-more-means.html#ANOVA">ANOVA</a></li>
 </ul>
 </li>
 </ul>
@@ -516,7 +524,7 @@ is a standardised measure of how much the two variables vary together.</p>
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
-<span></span>(0.6317428068963729, 0.0)
+<span></span>(0.63174280689637285, 0.0)
 </pre></div>
 </div>
 </div>
@@ -567,8 +575,8 @@ straight red line:</p>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
 <span></span>((array([-3.59517205, -3.35736793, -3.2261741 , ...,  3.2261741 ,
           3.35736793,  3.59517205]),
-  array([   0.   ,    0.   ,    0.   , ..., 1178.775, 1180.175, 1181.54 ])),
- (283.2065477823062, 513.1222675247656, 0.9805846375524395))
+  array([    0.   ,     0.   ,     0.   , ...,  1178.775,  1180.175,  1181.54 ])),
+ (283.20654778230619, 513.12226752476556, 0.98058463755243952))
 </pre></div>
 </div>
 </div>
@@ -598,9 +606,9 @@ straight red line:</p>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
 <span></span>((array([-3.59517205, -3.35736793, -3.2261741 , ...,  3.2261741 ,
           3.35736793,  3.59517205]),
-  array([  30.525     ,   31.95200058,   32.13598298, ..., 1149.0082924 ,
-         1153.87332197, 1159.28534564])),
- (220.0619650033565, 400.6389031098243, 0.9746798740473717))
+  array([   30.525     ,    31.95200058,    32.13598298, ...,  1149.0082924 ,
+          1153.87332197,  1159.28534564])),
+ (220.06196500335651, 400.6389031098243, 0.97467987404737166))
 </pre></div>
 </div>
 </div>
@@ -788,7 +796,7 @@ calculate Kendall’s <span class="math notranslate nohighlight">\(\tau\)</span>
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
-<span></span>KendalltauResult(correlation=0.5028338653574032, pvalue=0.0)
+<span></span>KendalltauResult(correlation=0.50283386535740315, pvalue=0.0)
 </pre></div>
 </div>
 </div>
