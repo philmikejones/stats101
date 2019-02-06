@@ -7,7 +7,16 @@ You're welcome to use or adapt them, for example to share with colleagues, but y
 
 ## Generating documentation
 
-This project uses [`nbsphinx`](https://nbsphinx.readthedocs.io/) to generate documentation webpages from the notebooks.
+This project used [Jupyter notebooks](https://jupyter.org/) to write functionality and run code.
+You can edit the notebooks by opening a terminal, navigating to the `stats101` folder, and running:
+
+```j
+upyter notebook
+```
+
+This should open the notebooks in your browser to edit.
+
+[`nbsphinx`](https://nbsphinx.readthedocs.io/) is then used to generate documentation webpages from the notebooks.
 To generate the docs, run:
 
 ```
@@ -17,7 +26,7 @@ python3 -m sphinx source/ docs/
 
 ## License
 
-&copy; 2018 Phil Mike Jones.
+&copy; 2018--19 Phil Mike Jones.
 
 ![CC BY-NC](cc-by-nc.png)
 
