@@ -85,7 +85,9 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="01-introduction.html">Introduction</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="01-introduction.html#Inferring-from-a-sample">Inferring from a sample</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01-introduction.html#Types-of-samples">Types of samples</a></li>
 <li class="toctree-l2"><a class="reference internal" href="01-introduction.html#Description-and-inference">Description and inference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01-introduction.html#Units-of-observation">Units of observation</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="02-data-sources.html">Data sources</a></li>
@@ -279,18 +281,18 @@ div.nblast {
 
 /* input prompt */
 div.nbinput div.prompt pre {
-    color: #303F9F;
+    color: #307FC1;
 }
 
 /* output prompt */
 div.nboutput div.prompt pre {
-    color: #D84315;
+    color: #BF5B3D;
 }
 
 /* all prompts */
 div.nbinput div.prompt,
 div.nboutput div.prompt {
-    min-width: 8ex;
+    min-width: 5ex;
     padding-top: 0.4em;
     padding-right: 0.4em;
     text-align: right;
@@ -330,9 +332,9 @@ div.nboutput div.output_area {
 
 /* input area */
 div.nbinput div.input_area {
-    border: 1px solid #cfcfcf;
+    border: 1px solid #e0e0e0;
     border-radius: 2px;
-    background: #f7f7f7;
+    background: #f5f5f5;
 }
 
 /* override MathJax center alignment in output cells */
@@ -340,7 +342,7 @@ div.nboutput div[class*=MathJax] {
     text-align: left !important;
 }
 
-/* override sphinx.ext.pngmath center alignment in output cells */
+/* override sphinx.ext.imgmath center alignment in output cells */
 div.nboutput div.math p {
     text-align: left;
 }
@@ -390,6 +392,40 @@ div.nboutput div.output_area.stderr {
 .ansi-bold { font-weight: bold; }
 .ansi-underline { text-decoration: underline; }
 
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+
 /* CSS overrides for sphinx_rtd_theme */
 
 /* 24px margin */
@@ -406,12 +442,16 @@ div.nboutput div.output_area.stderr {
 .admonition > p:before {
     margin-right: 4px;  /* make room for the exclamation icon */
 }
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
 </style>
 <div class="section" id="Normal-distribution">
 <h1>Normal distribution<a class="headerlink" href="#Normal-distribution" title="Permalink to this headline">¶</a></h1>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [1]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -425,25 +465,10 @@ div.nboutput div.output_area.stderr {
 </pre></div>
 </div>
 </div>
-<p>The normal distribution is central to our ability to infer about a
-population from a sample. The normal distribution looks like this (by
-Dan Kernler from Wikimedia Commons, CC BY-SA 4.0):</p>
-<div class="figure" id="id1">
-<img alt="Normal distribution CC BY-SA 4.0 by Dan Kernler" src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Empirical_Rule.PNG" />
-<p class="caption"><span class="caption-text">Normal distribution CC BY-SA 4.0 by Dan Kernler</span></p>
-</div>
-<p>The normal distribution was discovered by Gauss (which is why it’s also
-sometimes called the Gaussian distribution) and described an ‘ideal’
-situation. Lots of data follow this pattern: the height or weight of a
-population; The mean of the normal distribution (<span class="math notranslate nohighlight">\(\mu\)</span> on the
-diagram above) is the centre. Because the normal distribution is
-<strong>symmetrical</strong> we know that 50% of cases fall below and 50% of cases
-fall above the mean.</p>
-<p>Another useful property of the normal distribution is we know, or can
-calculate, how many cases fall with 1, 2, 3, or more standard deviations
-of the mean (these are shown as
-<span class="math notranslate nohighlight">\(\mu \pm \sigma; \mu \pm 2\sigma; \mu \pm 3\sigma\)</span> on the figure).
-These are about 68%, 95%, and 97.5% respectively.</p>
+<p>The normal distribution is central to our ability to infer about a population from a sample. The normal distribution looks like this (by Dan Kernler from Wikimedia Commons, CC BY-SA 4.0):</p>
+<p><img alt="Normal distribution CC BY-SA 4.0 by Dan Kernler" src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Empirical_Rule.PNG" /></p>
+<p>The normal distribution was discovered by Gauss (which is why it’s also sometimes called the Gaussian distribution) and described an ‘ideal’ situation. Lots of data follow this pattern: the height or weight of a population; The mean of the normal distribution (<span class="math notranslate nohighlight">\(\mu\)</span> on the diagram above) is the centre. Because the normal distribution is <strong>symmetrical</strong> we know that 50% of cases fall below and 50% of cases fall above the mean.</p>
+<p>Another useful property of the normal distribution is we know, or can calculate, how many cases fall with 1, 2, 3, or more standard deviations of the mean (these are shown as <span class="math notranslate nohighlight">\(\mu \pm \sigma; \mu \pm 2\sigma; \mu \pm 3\sigma\)</span> on the figure). These are about 68%, 95%, and 97.5% respectively.</p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="67%" />
@@ -472,26 +497,12 @@ These are about 68%, 95%, and 97.5% respectively.</p>
 </tr>
 </tbody>
 </table>
-<p>Therefore if we know the mean (<span class="math notranslate nohighlight">\(\mu\)</span>) and standard deviation
-(<span class="math notranslate nohighlight">\(\sigma\)</span>) of our sample we can calculate the confidence interval
-of our sample mean (as we did above). Typically we calculate a 95%
-confidence interval (although 99% is also common), and this tells us the
-likely range the population mean falls within. This is why we used the
-figure 1.96 when calculating our confidence interval earlier, and this
-is the property that allows us to infer information about the population
-from our smaller sample.</p>
-<p>The other, related, way we can use this information is if we have a mean
-and standard deviation and observe a data point, we can calculate how
-many standard deviations from the mean this data point is. We can then
-see if the observed data point falls within the normal variation we
-expect (i.e.&nbsp;within 1.96 standard deviations for 95% confidence) or
-outside it, and is therefore the result of something not within the
-normal range.</p>
-<p>Remember our household weekly income example, after we removed the
-top–coded responses? It looked something like this:</p>
+<p>Therefore if we know the mean (<span class="math notranslate nohighlight">\(\mu\)</span>) and standard deviation (<span class="math notranslate nohighlight">\(\sigma\)</span>) of our sample we can calculate the confidence interval of our sample mean (as we did above). Typically we calculate a 95% confidence interval (although 99% is also common), and this tells us the likely range the population mean falls within. This is why we used the figure 1.96 when calculating our confidence interval earlier, and this is the property that allows us to infer information about the population from
+our smaller sample.</p>
+<p>The other, related, way we can use this information is if we have a mean and standard deviation and observe a data point, we can calculate how many standard deviations from the mean this data point is. We can then see if the observed data point falls within the normal variation we expect (i.e.&nbsp;within 1.96 standard deviations for 95% confidence) or outside it, and is therefore the result of something not within the normal range.</p>
+<p>Remember our household weekly income example, after we removed the top–coded responses? It looked something like this:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -502,8 +513,7 @@ top–coded responses? It looked something like this:</p>
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
@@ -520,8 +530,7 @@ top–coded responses? It looked something like this:</p>
 </div>
 <p>The mean income is:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -530,8 +539,7 @@ top–coded responses? It looked something like this:</p>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
@@ -541,8 +549,7 @@ top–coded responses? It looked something like this:</p>
 </div>
 <p>and the standard deviation is:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -551,8 +558,7 @@ top–coded responses? It looked something like this:</p>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
@@ -560,25 +566,17 @@ top–coded responses? It looked something like this:</p>
 </pre></div>
 </div>
 </div>
-<p>Now let’s imagine we find a respondent who lives in Chelsea and we ask
-them to complete our survey. They respond that their income is £2,000
-per week. Does this fall within the variability we expect, or is it
-statistically significantly likely that this respondent has a higher
-income than most? Well, we can calculate how many standard deviations
-our observed data point is away from the mean. We know:</p>
+<p>Now let’s imagine we find a respondent who lives in Chelsea and we ask them to complete our survey. They respond that their income is £2,000 per week. Does this fall within the variability we expect, or is it statistically significantly likely that this respondent has a higher income than most? Well, we can calculate how many standard deviations our observed data point is away from the mean. We know:</p>
 <div class="math notranslate nohighlight">
 \[2000 = \mu + x.\sigma\]</div>
-<p>where <span class="math notranslate nohighlight">\(\mu\)</span> is the mean, <span class="math notranslate nohighlight">\(\sigma\)</span> is the standard deviation,
-and <span class="math notranslate nohighlight">\(x\)</span> is the number of standard deviations we want to calculate.
-If we rearrange the equation we get:</p>
+<p>where <span class="math notranslate nohighlight">\(\mu\)</span> is the mean, <span class="math notranslate nohighlight">\(\sigma\)</span> is the standard deviation, and <span class="math notranslate nohighlight">\(x\)</span> is the number of standard deviations we want to calculate. If we rearrange the equation we get:</p>
 <div class="math notranslate nohighlight">
 \[\frac{2000}{\sigma} = \frac{\mu}{\sigma} + x\]</div>
 <div class="math notranslate nohighlight">
 \[\frac{(2000 - \mu)}{\sigma} = x\]</div>
 <p>Plugging in the mean and standard deviation we get:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -587,8 +585,7 @@ If we rearrange the equation we get:</p>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
@@ -596,38 +593,19 @@ If we rearrange the equation we get:</p>
 </pre></div>
 </div>
 </div>
-<p>So our observed data point is more than five standard deviations higher
-than the mean, which means that if we were to interview 3.5 million
-people, only one would have an income that high. It’s therefore highly
-likely that this respondent has a higher income than the average. In
-physics this would be known as a ‘five-sigma’ result: i.e.&nbsp;the result is
-more than five standard deviations (<span class="math notranslate nohighlight">\(\sigma\)</span>) from the mean and is
-therefore highly unlikely to be through chance alone (in the social
+<p>So our observed data point is more than five standard deviations higher than the mean, which means that if we were to interview 3.5 million people, only one would have an income that high. It’s therefore highly likely that this respondent has a higher income than the average. In physics this would be known as a ‘five-sigma’ result: i.e.&nbsp;the result is more than five standard deviations (<span class="math notranslate nohighlight">\(\sigma\)</span>) from the mean and is therefore highly unlikely to be through chance alone (in the social
 sciences we usually opt for the ‘1.96 sigma’ rule).</p>
-<p>Not all observed data form a perfect normal distribution (in fact most
-differ at least slightly). There are two ways we need to describe a
-distribution if it is different from the normal: skewness and kurtosis.</p>
+<p>Not all observed data form a perfect normal distribution (in fact most differ at least slightly). There are two ways we need to describe a distribution if it is different from the normal: skewness and kurtosis.</p>
 <div class="section" id="Skewness">
 <h2>Skewness<a class="headerlink" href="#Skewness" title="Permalink to this headline">¶</a></h2>
-<p>A normal distribution has its mean, median, and mode at the same point
-(the centre). Skewness means the data points are skewed one way or the
-other:</p>
-<p>Negative skew means the tail is to the left; positive skew means the
-tail is to the right. In a positively skewed distribution the mode and
-median are lower than the mean. In a negatively skewed distribution the
-median and mode are higher than the mean.</p>
+<p>A normal distribution has its mean, median, and mode at the same point (the centre). Skewness means the data points are skewed one way or the other:</p>
+<p>Negative skew means the tail is to the left; positive skew means the tail is to the right. In a positively skewed distribution the mode and median are lower than the mean. In a negatively skewed distribution the median and mode are higher than the mean.</p>
 </div>
 <div class="section" id="Kurtosis">
 <h2>Kurtosis<a class="headerlink" href="#Kurtosis" title="Permalink to this headline">¶</a></h2>
-<p>Kurtosis refers to how bunched (clustered) around the mean the data
-points are. Positive kurtosis (leptokurtic) means the points are
-clustered around the mean, making the distribution narrower and taller
-than a normal distribution. Negative kurtosis (platykurtic) means the
-data points are spread out more widely, resulting in a distribution that
-is flatter and broader than a normal distribution.</p>
+<p>Kurtosis refers to how bunched (clustered) around the mean the data points are. Positive kurtosis (leptokurtic) means the points are clustered around the mean, making the distribution narrower and taller than a normal distribution. Negative kurtosis (platykurtic) means the data points are spread out more widely, resulting in a distribution that is flatter and broader than a normal distribution.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -661,10 +639,8 @@ is flatter and broader than a normal distribution.</p>
 <p>In the figure above:</p>
 <ul class="simple">
 <li>the <strong>blue</strong> line is a normal distribution,</li>
-<li>the <strong>green</strong> line is a distribution with positive kurtosis
-(leptokurtic)</li>
-<li>the <strong>orange</strong> line is a distribution with negative kurtosis
-(platykurtic)</li>
+<li>the <strong>green</strong> line is a distribution with positive kurtosis (leptokurtic)</li>
+<li>the <strong>orange</strong> line is a distribution with negative kurtosis (platykurtic)</li>
 </ul>
 </div>
 </div>
@@ -715,6 +691,7 @@ is flatter and broader than a normal distribution.</p>
         <script type="text/javascript" src="_static/underscore.js"></script>
         <script type="text/javascript" src="_static/doctools.js"></script>
         <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     
 
   

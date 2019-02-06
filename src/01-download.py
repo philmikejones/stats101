@@ -1,4 +1,4 @@
-#! ~/miniconda3/bin/python3
+#!/usr/bin/env python
 # Source from ../source/02-data-sources.ipynb
 # Don't run from root
 

@@ -85,7 +85,9 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="01-introduction.html">Introduction</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="01-introduction.html#Inferring-from-a-sample">Inferring from a sample</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01-introduction.html#Types-of-samples">Types of samples</a></li>
 <li class="toctree-l2"><a class="reference internal" href="01-introduction.html#Description-and-inference">Description and inference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01-introduction.html#Units-of-observation">Units of observation</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Data sources</a></li>
@@ -279,18 +281,18 @@ div.nblast {
 
 /* input prompt */
 div.nbinput div.prompt pre {
-    color: #303F9F;
+    color: #307FC1;
 }
 
 /* output prompt */
 div.nboutput div.prompt pre {
-    color: #D84315;
+    color: #BF5B3D;
 }
 
 /* all prompts */
 div.nbinput div.prompt,
 div.nboutput div.prompt {
-    min-width: 8ex;
+    min-width: 5ex;
     padding-top: 0.4em;
     padding-right: 0.4em;
     text-align: right;
@@ -330,9 +332,9 @@ div.nboutput div.output_area {
 
 /* input area */
 div.nbinput div.input_area {
-    border: 1px solid #cfcfcf;
+    border: 1px solid #e0e0e0;
     border-radius: 2px;
-    background: #f7f7f7;
+    background: #f5f5f5;
 }
 
 /* override MathJax center alignment in output cells */
@@ -340,7 +342,7 @@ div.nboutput div[class*=MathJax] {
     text-align: left !important;
 }
 
-/* override sphinx.ext.pngmath center alignment in output cells */
+/* override sphinx.ext.imgmath center alignment in output cells */
 div.nboutput div.math p {
     text-align: left;
 }
@@ -390,6 +392,40 @@ div.nboutput div.output_area.stderr {
 .ansi-bold { font-weight: bold; }
 .ansi-underline { text-decoration: underline; }
 
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+
 /* CSS overrides for sphinx_rtd_theme */
 
 /* 24px margin */
@@ -406,33 +442,22 @@ div.nboutput div.output_area.stderr {
 .admonition > p:before {
     margin-right: 4px;  /* make room for the exclamation icon */
 }
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
 </style>
 <div class="section" id="Data-sources">
 <h1>Data sources<a class="headerlink" href="#Data-sources" title="Permalink to this headline">¶</a></h1>
-<p>These tutorials use a number of teaching data sets available from the
-<a class="reference external" href="https://www.ukdataservice.ac.uk/">UK Data Service</a> and Nomisweb (FYI
-<a class="reference external" href="https://www.nomisweb.co.uk/api/v01/help">Nomisweb have a great API</a>
-for reproducible research) under terms of the <a class="reference external" href="http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/">Open Government
-License</a>:</p>
+<p>These tutorials use a number of teaching data sets available from the <a class="reference external" href="https://www.ukdataservice.ac.uk/">UK Data Service</a> and Nomisweb (FYI <a class="reference external" href="https://www.nomisweb.co.uk/api/v01/help">Nomisweb have a great API</a> for reproducible research) under terms of the <a class="reference external" href="http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/">Open Government License</a>:</p>
 <blockquote>
-<div>Office for National Statistics, University of Manchester, Cathie
-Marsh Institute for Social Research (CMIST), UK Data Service, 2016,
-Living Costs and Food Survey, 2013: Unrestricted Access Teaching
-Dataset, [data collection], Office for National Statistics, 2nd
-Edition, Office for National Statistics, [original data producer(s)].
-Accessed 1 October 2018. SN: 7932,
-<a class="reference external" href="http://doi.org/10.5255/UKDA-SN-7932-2">http://doi.org/10.5255/UKDA-SN-7932-2</a>. Contains public sector
-information licensed under the Open Government Licence v2.0</div></blockquote>
+<div>Office for National Statistics, University of Manchester, Cathie Marsh Institute for Social Research (CMIST), UK Data Service, 2016, Living Costs and Food Survey, 2013: Unrestricted Access Teaching Dataset, [data collection], Office for National Statistics, 2nd Edition, Office for National Statistics, [original data producer(s)]. Accessed 1 October 2018. SN: 7932, <a class="reference external" href="http://doi.org/10.5255/UKDA-SN-7932-2">http://doi.org/10.5255/UKDA-SN-7932-2</a>. Contains public sector information licensed under the Open Government Licence v2.0</div></blockquote>
 <blockquote>
-<div>Office for National Statistics, 2014, 2011 Census. Accessed October
-2018. Contains public sector information licensed under the Open
-Government Licence v2.0.</div></blockquote>
-<p>If you’re following along at home I download and process the data sets
-with scripts in the <a class="reference external" href="https://github.com/philmikejones/stats101/tree/master/src">src/
-directory</a>.</p>
+<div>Office for National Statistics, 2014, 2011 Census. Accessed October 2018. Contains public sector information licensed under the Open Government Licence v2.0.</div></blockquote>
+<p>If you’re following along at home I download and process the data sets with scripts in the <a class="reference external" href="https://github.com/philmikejones/stats101/tree/master/src">src/ directory</a>.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [1]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -440,14 +465,9 @@ directory</a>.</p>
 </pre></div>
 </div>
 </div>
-<p>The <code class="docutils literal notranslate"><span class="pre">food</span></code> dataset (Living costs and food survey) includes income, but
-this is top–coded. For the purpose of these exercises I simply remove
-the top–coded cases to make the distributions a bit more normal. If you
-were analysing this data for real you would need to consider how to
-handle these top–coded cases.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">food</span></code> dataset (Living costs and food survey) includes income, but this is top–coded. For the purpose of these exercises I simply remove the top–coded cases to make the distributions a bit more normal. If you were analysing this data for real you would need to consider how to handle these top–coded cases.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -503,6 +523,7 @@ handle these top–coded cases.</p>
         <script type="text/javascript" src="_static/underscore.js"></script>
         <script type="text/javascript" src="_static/doctools.js"></script>
         <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     
 
   

@@ -85,7 +85,9 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="01-introduction.html">Introduction</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="01-introduction.html#Inferring-from-a-sample">Inferring from a sample</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01-introduction.html#Types-of-samples">Types of samples</a></li>
 <li class="toctree-l2"><a class="reference internal" href="01-introduction.html#Description-and-inference">Description and inference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01-introduction.html#Units-of-observation">Units of observation</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="02-data-sources.html">Data sources</a></li>
@@ -279,18 +281,18 @@ div.nblast {
 
 /* input prompt */
 div.nbinput div.prompt pre {
-    color: #303F9F;
+    color: #307FC1;
 }
 
 /* output prompt */
 div.nboutput div.prompt pre {
-    color: #D84315;
+    color: #BF5B3D;
 }
 
 /* all prompts */
 div.nbinput div.prompt,
 div.nboutput div.prompt {
-    min-width: 8ex;
+    min-width: 5ex;
     padding-top: 0.4em;
     padding-right: 0.4em;
     text-align: right;
@@ -330,9 +332,9 @@ div.nboutput div.output_area {
 
 /* input area */
 div.nbinput div.input_area {
-    border: 1px solid #cfcfcf;
+    border: 1px solid #e0e0e0;
     border-radius: 2px;
-    background: #f7f7f7;
+    background: #f5f5f5;
 }
 
 /* override MathJax center alignment in output cells */
@@ -340,7 +342,7 @@ div.nboutput div[class*=MathJax] {
     text-align: left !important;
 }
 
-/* override sphinx.ext.pngmath center alignment in output cells */
+/* override sphinx.ext.imgmath center alignment in output cells */
 div.nboutput div.math p {
     text-align: left;
 }
@@ -390,6 +392,40 @@ div.nboutput div.output_area.stderr {
 .ansi-bold { font-weight: bold; }
 .ansi-underline { text-decoration: underline; }
 
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+
 /* CSS overrides for sphinx_rtd_theme */
 
 /* 24px margin */
@@ -406,12 +442,16 @@ div.nboutput div.output_area.stderr {
 .admonition > p:before {
     margin-right: 4px;  /* make room for the exclamation icon */
 }
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
 </style>
 <div class="section" id="Hypothesis-testing">
 <h1>Hypothesis testing<a class="headerlink" href="#Hypothesis-testing" title="Permalink to this headline">¶</a></h1>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [1]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -425,48 +465,24 @@ div.nboutput div.output_area.stderr {
 </pre></div>
 </div>
 </div>
-<p>So far we’ve loaded our data set, described it with measures of central
-tendency and variability, and tested to see if our sample mean
-adequately describes our population mean. Now we move on to testing
-hypotheses.</p>
-<p>A hypothesis is a statement that we make to explain a phenomenon that we
-do not yet know the answer to. A hypothesis must be testable.</p>
-<p>For example, in our data set we have two nominal variables that we might
-propose there is a relationship between:</p>
+<p>So far we’ve loaded our data set, described it with measures of central tendency and variability, and tested to see if our sample mean adequately describes our population mean. Now we move on to testing hypotheses.</p>
+<p>A hypothesis is a statement that we make to explain a phenomenon that we do not yet know the answer to. A hypothesis must be testable.</p>
+<p>For example, in our data set we have two nominal variables that we might propose there is a relationship between:</p>
 <ul class="simple">
 <li>NS-SEC class of the household reference person (<code class="docutils literal notranslate"><span class="pre">A094r</span></code>)</li>
 <li>Tenure (<code class="docutils literal notranslate"><span class="pre">A121r</span></code>)</li>
 </ul>
-<p>NS-SEC stands for ‘<a class="reference external" href="https://www.ons.gov.uk/methodology/classificationsandstandards/otherclassifications/thenationalstatisticssocioeconomicclassificationnssecrebasedonsoc2010">National Statistics Socio–economic
-classification</a>’,
-and is a measure of employment grade, for example if the household
-reference person is a higher manager or professional, or a manual
-worker.</p>
-<p>The <a class="reference external" href="https://www.scotlandscensus.gov.uk/variables-classification/household-reference-person">household reference
-person</a>
-is the person in the household (usually a family) who is full–time
-employed or, if both partners are full–time employed, the one who is
-oldest. This concept is used because families share social, cultural,
-and economic characteristics so, for example, if one partner is
-currently unemployed they share some of their characteristics with the
-HRP (for example they are likely to still live in the family home and
-participate in similar activities). Similarly, children who do not yet
-work can be ascribed economic and social characteristics based on their
-parent or carer’s economic activity.</p>
-<p>Tenure simply means if the respondent owns their home (outright, or with
-a mortgage) or rents their home from a private landlord or council.</p>
+<p>NS-SEC stands for ‘<a class="reference external" href="https://www.ons.gov.uk/methodology/classificationsandstandards/otherclassifications/thenationalstatisticssocioeconomicclassificationnssecrebasedonsoc2010">National Statistics Socio–economic classification</a>’, and is a measure of employment grade, for example if the household reference person is a higher manager or professional, or a manual worker.</p>
+<p>The <a class="reference external" href="https://www.scotlandscensus.gov.uk/variables-classification/household-reference-person">household reference person</a> is the person in the household (usually a family) who is full–time employed or, if both partners are full–time employed, the one who is oldest. This concept is used because families share social, cultural, and economic characteristics so, for example, if one partner is currently unemployed they share some of their characteristics with the HRP (for example they are likely to
+still live in the family home and participate in similar activities). Similarly, children who do not yet work can be ascribed economic and social characteristics based on their parent or carer’s economic activity.</p>
+<p>Tenure simply means if the respondent owns their home (outright, or with a mortgage) or rents their home from a private landlord or council.</p>
 <p>With all this in mind, our hypothesis might be:</p>
 <blockquote>
-<div>There is an association or link between household reference person
-NS-SEC and home ownership (tenure).</div></blockquote>
-<p>For example, people in NS-SEC category 1 (higher managerial,
-administrative, and professional occupations) may be more likely to own
-their home compared to people in routine and manual occupations.</p>
-<p>First of all, let’s look at a crosstabulation (crosstab) of frequencies
-comparing these two variables:</p>
+<div>There is an association or link between household reference person NS-SEC and home ownership (tenure).</div></blockquote>
+<p>For example, people in NS-SEC category 1 (higher managerial, administrative, and professional occupations) may be more likely to own their home compared to people in routine and manual occupations.</p>
+<p>First of all, let’s look at a crosstabulation (crosstab) of frequencies comparing these two variables:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -475,11 +491,10 @@ comparing these two variables:</p>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="output_area docutils container">
+<div class="output_area rendered_html docutils container">
 <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -558,24 +573,11 @@ comparing these two variables:</p>
 </table>
 </div></div>
 </div>
-<p>From this crosstab we can see that similar numbers of people rent their
-homes from local authorities (‘public rented’) and private landlords
-(864 and 715 respectively), but that more than four times as many people
-own their own home (2777) than rent privately or rent publicly.</p>
-<p>We can also see that most people in NS-SEC group 1 (higher managerial,
-administrative, and professional occupations) own their home (763)
-compared to rent (246 (65 + 181)). If we compare this to NS-SEC group 3
-(routine and manual occupations) only 476 own their home, while 282 rent
-from a local authority (much more than the group 1) and 222 rent
-privately (similar to group 1).</p>
-<p>These descriptions are pretty straightforward, but any analysis is
-complicated by the fact that the two groups are different sizes (n =
-1,009 group 1; n = 614 group 2; n = 980 group 3) so we cannot directly
-compare the counts in this table to see if there are differences between
-the groups. The next step is to look at the percentages:</p>
+<p>From this crosstab we can see that similar numbers of people rent their homes from local authorities (‘public rented’) and private landlords (864 and 715 respectively), but that more than four times as many people own their own home (2777) than rent privately or rent publicly.</p>
+<p>We can also see that most people in NS-SEC group 1 (higher managerial, administrative, and professional occupations) own their home (763) compared to rent (246 (65 + 181)). If we compare this to NS-SEC group 3 (routine and manual occupations) only 476 own their home, while 282 rent from a local authority (much more than the group 1) and 222 rent privately (similar to group 1).</p>
+<p>These descriptions are pretty straightforward, but any analysis is complicated by the fact that the two groups are different sizes (n = 1,009 group 1; n = 614 group 2; n = 980 group 3) so we cannot directly compare the counts in this table to see if there are differences between the groups. The next step is to look at the percentages:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -589,11 +591,10 @@ the groups. The next step is to look at the percentages:</p>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="output_area docutils container">
+<div class="output_area rendered_html docutils container">
 <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -658,126 +659,52 @@ the groups. The next step is to look at the percentages:</p>
 </table>
 </div></div>
 </div>
-<p>Using the row percentages (i.e.&nbsp;each row adds up to 100%) we can see
-that approximately 75% of higher managerial and professional families
-own their own home, but only 49% of routine and manual families own
-their own homes. Similarly we can see that only about 6% of managerial
-and professional families rent from a local authority, but 29% of
-routine and manual families do (remember rows 4 and 5 are unemployed and
-unclassified respectively).</p>
-<p>So we think there’s an association between NS-SEC of the household
-reference person and tenure, and the crosstabs certainly seem to support
-this. Unfortunately humans are very, very good at spotting patterns,
-even when there isn’t one there, so instead of just relying on our
-say–so we can statistically test to see if there really is a difference.
-To do this we use a hypothesis test. Before we carry out a hypothesis
-test we should specify it explicitly, and state a <em>null hypothesis</em>.</p>
+<p>Using the row percentages (i.e.&nbsp;each row adds up to 100%) we can see that approximately 75% of higher managerial and professional families own their own home, but only 49% of routine and manual families own their own homes. Similarly we can see that only about 6% of managerial and professional families rent from a local authority, but 29% of routine and manual families do (remember rows 4 and 5 are unemployed and unclassified respectively).</p>
+<p>So we think there’s an association between NS-SEC of the household reference person and tenure, and the crosstabs certainly seem to support this. Unfortunately humans are very, very good at spotting patterns, even when there isn’t one there, so instead of just relying on our say–so we can statistically test to see if there really is a difference. To do this we use a hypothesis test. Before we carry out a hypothesis test we should specify it explicitly, and state a <em>null hypothesis</em>.</p>
 <div class="section" id="Null-hypothesis">
 <h2>Null hypothesis<a class="headerlink" href="#Null-hypothesis" title="Permalink to this headline">¶</a></h2>
-<p>To perform most hypothesis tests we specify a <em>null hypothesis</em>, which
-we denote <span class="math notranslate nohighlight">\(H_0\)</span>. A null hypothesis is a way of framing our
-hypothesis that (usually) states there is <em>no</em> association between our
-variables, so in our case we specify our null hypothesis as:</p>
+<p>To perform most hypothesis tests we specify a <em>null hypothesis</em>, which we denote <span class="math notranslate nohighlight">\(H_0\)</span>. A null hypothesis is a way of framing our hypothesis that (usually) states there is <em>no</em> association between our variables, so in our case we specify our null hypothesis as:</p>
 <blockquote>
-<div>There is <em>no</em> association between NS-SEC of the household reference
-person and housing tenure</div></blockquote>
-<p>The opposite of the null hypothesis is the <em>alternative hypothesis</em>,
-<span class="math notranslate nohighlight">\(H_1\)</span>, which is usually our original hypothesis.</p>
-<p>It is important to frame a hypothesis test in this way because we assume
-the absence of an association, and it is up to us as researchers to
-provide evidence that there is one. For example, we cannot assume that
-people who drink coffee are more intelligent than people who drink tea.
-It is up to us to demonstrate that this is the case. This is what makes
-our hypothesis <em>testable</em> and <em>falsifiable</em>.</p>
-<p>It’s a bit like the presumption of innocence: we cannot be locked up
-unless we are proven to be guilty of a crime. If it were the other way
-around (i.e.&nbsp;presumption of guilt) we would all be incarcerated and we
-would have to prove that we were innocent, not just of one crime, but of
-every conveivable crime in order to be released! This would be an
-impossible task (not least because no doubt someone would add another
-charge arbitrarily).</p>
-<p>Hermione Granger sums this up better than most statistics textbooks ever
-did:</p>
+<div>There is <em>no</em> association between NS-SEC of the household reference person and housing tenure</div></blockquote>
+<p>The opposite of the null hypothesis is the <em>alternative hypothesis</em>, <span class="math notranslate nohighlight">\(H_1\)</span>, which is usually our original hypothesis.</p>
+<p>It is important to frame a hypothesis test in this way because we assume the absence of an association, and it is up to us as researchers to provide evidence that there is one. For example, we cannot assume that people who drink coffee are more intelligent than people who drink tea. It is up to us to demonstrate that this is the case. This is what makes our hypothesis <em>testable</em> and <em>falsifiable</em>.</p>
+<p>It’s a bit like the presumption of innocence: we cannot be locked up unless we are proven to be guilty of a crime. If it were the other way around (i.e.&nbsp;presumption of guilt) we would all be incarcerated and we would have to prove that we were innocent, not just of one crime, but of every conveivable crime in order to be released! This would be an impossible task (not least because no doubt someone would add another charge arbitrarily).</p>
+<p>Hermione Granger sums this up better than most statistics textbooks ever did:</p>
 <blockquote>
 <div><div class="line-block">
 <div class="line">“Well, how can that <code class="docutils literal notranslate"><span class="pre">[the</span> <span class="pre">resurrection</span> <span class="pre">stone]</span></code> be real?”</div>
 <div class="line">“Prove that it is not”, said Xenophilius.</div>
 <div class="line">Hermione looked outraged.</div>
-<div class="line">“But that’s — I’m sorry, but that’s completely ridiculous! How can
-I possibly prove it doesn’t exist? Do you expect me to get hold of
-— of all the pebbles in the world, and test them? I mean, you could
-claim that anything’s real if the only basis for believing in it is
-that nobody’s <em>proved</em> it doesn’t exist!</div>
+<div class="line">“But that’s — I’m sorry, but that’s completely ridiculous! How can I possibly prove it doesn’t exist? Do you expect me to get hold of — of all the pebbles in the world, and test them? I mean, you could claim that anything’s real if the only basis for believing in it is that nobody’s <em>proved</em> it doesn’t exist!</div>
 <div class="line">- Harry Potter and the Deathly Hallows</div>
 </div>
 </div></blockquote>
-<p>Our example uses two nominal variables, so the most appropriate
-hypothesis test in this case is the <cite>:math:</cite>chi ^ 2` test of
-association &lt;09-chi-squared-test.html&gt;`__. For variables of other levels
-of measurement we would use different hypothesis tests which we’ll get
-to.</p>
+<p>Our example uses two nominal variables, so the most appropriate hypothesis test in this case is the <cite>:math:</cite>chi ^ 2` test of association &lt;09-chi-squared-test.html&gt;`__. For variables of other levels of measurement we would use different hypothesis tests which we’ll get to.</p>
 </div>
 <div class="section" id="Errors-interpreting-the-results">
 <h2>Errors interpreting the results<a class="headerlink" href="#Errors-interpreting-the-results" title="Permalink to this headline">¶</a></h2>
-<p>There are two problems to be aware of when interpreting the results of a
-hypothesis test. The hypothesis test does not <em>prove</em> an association
-between our variables; it gives us a statistical level of confidence
-that there is an association.</p>
-<p>There is always a risk that we might reject the null hypothesis
-(i.e.&nbsp;state that there is an association) when there isn’t one.</p>
-<p>If there was really no association but we stated there is one this would
-be called a <strong>Type I (one) error</strong>, sometimes known as a false positive.</p>
-<p>The other type of error we could make is failing to reject the null
-hypothesis when we should (i.e.&nbsp;we state there is no association when
-there <em>is</em> one), also known as a false negative. This is known as a
-<strong>Type II (two) error</strong>.</p>
-<p>When we perform a hypothesis test we therefore need to balance the risk
-of stating that there is an association when there isn’t, and the risk
-of stating that there is no association when there is one.</p>
-<p>Depending on our research question, one or the other errors might be
-more problematic. For example, if we are testing a new drug we want to
-make sure it is effective, so we do not want to make a type I error
-(i.e.&nbsp;state that there is an association when there isn’t one). But if
-we’re testing the drug for side effects we want to make sure we don’t
-make a type II error (i.e.&nbsp;assert that there are no side effects when,
-in fact, there are).</p>
+<p>There are two problems to be aware of when interpreting the results of a hypothesis test. The hypothesis test does not <em>prove</em> an association between our variables; it gives us a statistical level of confidence that there is an association.</p>
+<p>There is always a risk that we might reject the null hypothesis (i.e.&nbsp;state that there is an association) when there isn’t one.</p>
+<p>If there was really no association but we stated there is one this would be called a <strong>Type I (one) error</strong>, sometimes known as a false positive.</p>
+<p>The other type of error we could make is failing to reject the null hypothesis when we should (i.e.&nbsp;we state there is no association when there <em>is</em> one), also known as a false negative. This is known as a <strong>Type II (two) error</strong>.</p>
+<p>When we perform a hypothesis test we therefore need to balance the risk of stating that there is an association when there isn’t, and the risk of stating that there is no association when there is one.</p>
+<p>Depending on our research question, one or the other errors might be more problematic. For example, if we are testing a new drug we want to make sure it is effective, so we do not want to make a type I error (i.e.&nbsp;state that there is an association when there isn’t one). But if we’re testing the drug for side effects we want to make sure we don’t make a type II error (i.e.&nbsp;assert that there are no side effects when, in fact, there are).</p>
 </div>
 <div class="section" id="Directional-tests">
 <h2>Directional tests<a class="headerlink" href="#Directional-tests" title="Permalink to this headline">¶</a></h2>
-<p>One final consideration is the direction of our test. We can specify an
-alternative hypothesis that:</p>
+<p>One final consideration is the direction of our test. We can specify an alternative hypothesis that:</p>
 <ul class="simple">
 <li>simply states that there is a relationship between two variables;</li>
 <li>states that one variable is higher than the other, or</li>
 <li>states that one variable is lower than the other.</li>
 </ul>
-<p>If we simply state that there is an association we should use a
-two–tailed test, and this is what we should do by default unless we have
-a very good (and documented!) reason for using a directional
-(one–tailed) test.</p>
-<p>For example, we previously tested if there is an association between
-employment grade (NS–SEC) and housing tenure. We did not specify a
-direction, so we would usually use a two–tailed test. However, if we
-specified our alternative hypothesis with a direction, we would run a
-one–tailed test. For example, if our alternative hypothesis were:</p>
+<p>If we simply state that there is an association we should use a two–tailed test, and this is what we should do by default unless we have a very good (and documented!) reason for using a directional (one–tailed) test.</p>
+<p>For example, we previously tested if there is an association between employment grade (NS–SEC) and housing tenure. We did not specify a direction, so we would usually use a two–tailed test. However, if we specified our alternative hypothesis with a direction, we would run a one–tailed test. For example, if our alternative hypothesis were:</p>
 <blockquote>
-<div>People of higher employment grade are <strong>more likely</strong> to own their
-own home</div></blockquote>
-<p>we now have a directional test (i.e.&nbsp;we don’t think they’re less likely
-to own their own home). In this case we can use a one–tailed test.</p>
-<p>Note that we have stated our hypothesis <strong>before</strong> we ran the test; you
-cannot run a one–tailed test after the fact and claim you’ve found a
-directional association. Also note that if you do not find a directional
-association and later want to switch direction you cannot. Therefore
-one–tailed tests tend to be used when previous literature identifies a
-directional association and you want to use new data to test it.</p>
-<p>The reason for this skepticism of one–tailed tests is that they require
-a smaller difference between the two variables to be statistically
-significant. If you are performing a non–directional (two–tailed test)
-at a confidence level of 0.05, your have half of this at each end of
-your distribution (0.025) to work with to detect a difference. If you
-specify a directional (i.e.&nbsp;one–tailed test) you have more of the
-distribution to work with to detect a significant difference.</p>
+<div>People of higher employment grade are <strong>more likely</strong> to own their own home</div></blockquote>
+<p>we now have a directional test (i.e.&nbsp;we don’t think they’re less likely to own their own home). In this case we can use a one–tailed test.</p>
+<p>Note that we have stated our hypothesis <strong>before</strong> we ran the test; you cannot run a one–tailed test after the fact and claim you’ve found a directional association. Also note that if you do not find a directional association and later want to switch direction you cannot. Therefore one–tailed tests tend to be used when previous literature identifies a directional association and you want to use new data to test it.</p>
+<p>The reason for this skepticism of one–tailed tests is that they require a smaller difference between the two variables to be statistically significant. If you are performing a non–directional (two–tailed test) at a confidence level of 0.05, your have half of this at each end of your distribution (0.025) to work with to detect a difference. If you specify a directional (i.e.&nbsp;one–tailed test) you have more of the distribution to work with to detect a significant difference.</p>
 </div>
 </div>
 
@@ -827,6 +754,7 @@ distribution to work with to detect a significant difference.</p>
         <script type="text/javascript" src="_static/underscore.js"></script>
         <script type="text/javascript" src="_static/doctools.js"></script>
         <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     
 
   

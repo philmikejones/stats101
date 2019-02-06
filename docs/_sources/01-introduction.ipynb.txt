@@ -10,8 +10,13 @@
     "At its most simplistic (and I completely acknowledge that I'm massively generalising here), we usually seek to describe the world or quantify the world.\n",
     "For these tasks we use qualitative methods and quantitative methods respectively.\n",
     "\n",
-    "To quantify the world we might want to know things like, \"how many people have been a victim of crime?\", \"how many people have mental health problems?\", or \"how many people have social science degrees?\".\n",
-    "\n",
+    "To quantify the world we might want to know things like, \"how many people have been a victim of crime?\", \"how many people have mental health problems?\", or \"how many people have social science degrees?\"."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
     "## Inferring from a sample\n",
     "\n",
     "Sometimes we have complete (or near--complete) data about everybody in a population.\n",
@@ -37,6 +42,34 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
+    "## Types of samples\n",
+    "\n",
+    "Not all samples are created equal.\n",
+    "To be able to infer to a population we need to ensure our sample is *representative*.\n",
+    "If our sample is not representative the patterns and behaviours we find in the sample might not be present in the population.\n",
+    "As a very crude example, if we want to know how many years of formal education the population of the UK has on average we cannot simply sample individuals from a university, as these individuals are likely to have been in formal education for a greater number of years than average (especially so if you ask the staff, too).\n",
+    "\n",
+    "Samples that are representative are *random* which means that every member of our population of interest is as likely as any other to be included in our sample.\n",
+    "Samples that are not representative include convenience samples, snowball samples, or quota samples.\n",
+    "In our example above, every individual in the UK would need to be as likely to be asked as any other, whereas clearly by sampling at a university this is not the case.\n",
+    "\n",
+    "To ensure our sample is random we first decide what our population of interest is, based on our research question.\n",
+    "If we want to know what the average number of years of formal education is for all individuals in the UK, then all individuals in the UK is our population of interest.\n",
+    "\n",
+    "Our population doesn't have to be this large, though.\n",
+    "Our research question might be how much time, on average, do university students spend studying.\n",
+    "In this case our population of interest is students at university.\n",
+    "\n",
+    "The population of interest is also sometimes called a *sampling frame*. Essentially they both mean the individuals from which you draw your sample, and indicates that you have thought about what the population is that is appropriate for your research question.\n",
+    "\n",
+    "Alan Bryman's [Social Research Methods](https://books.google.co.uk/books?id=N2zQCgAAQBAJ) book has a great overview of sampling theory and procedure, and I thoroughly recommend you get a copy if you want to read more about this.\n",
+    "There are multiple editions but they don't change much, so if you find an older edition second hand for less money, go for it."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
     "## Description and inference\n",
     "\n",
     "We usually want to do two things with out sample to understand our population:\n",
@@ -52,6 +85,20 @@
     "\n",
     "- to test if differences in the sample are likely to be actual differences in the population (hypothesis testing)\n",
     "- to make predictions, for example by knowing if a person is male or female we can use this information to *predict* how likely they are to commit a crime"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Units of observation\n",
+    "\n",
+    "Throughout this website I usually refer to individuals (people) as the object of study.\n",
+    "As a social scientist studying individuals is most common for me, but the individuals you study do not necessarily need to be people.\n",
+    "\n",
+    "Your unit of observation could be almost anything, as long as they are of the same type.\n",
+    "For example, you could study many flowers, animals, organisations, or even vehicles.\n",
+    "What's important is that for any given data your unit of observation (your individuals) are the same type."
    ]
   }
  ],

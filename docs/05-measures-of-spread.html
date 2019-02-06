@@ -85,7 +85,9 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="01-introduction.html">Introduction</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="01-introduction.html#Inferring-from-a-sample">Inferring from a sample</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01-introduction.html#Types-of-samples">Types of samples</a></li>
 <li class="toctree-l2"><a class="reference internal" href="01-introduction.html#Description-and-inference">Description and inference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01-introduction.html#Units-of-observation">Units of observation</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="02-data-sources.html">Data sources</a></li>
@@ -279,18 +281,18 @@ div.nblast {
 
 /* input prompt */
 div.nbinput div.prompt pre {
-    color: #303F9F;
+    color: #307FC1;
 }
 
 /* output prompt */
 div.nboutput div.prompt pre {
-    color: #D84315;
+    color: #BF5B3D;
 }
 
 /* all prompts */
 div.nbinput div.prompt,
 div.nboutput div.prompt {
-    min-width: 8ex;
+    min-width: 5ex;
     padding-top: 0.4em;
     padding-right: 0.4em;
     text-align: right;
@@ -330,9 +332,9 @@ div.nboutput div.output_area {
 
 /* input area */
 div.nbinput div.input_area {
-    border: 1px solid #cfcfcf;
+    border: 1px solid #e0e0e0;
     border-radius: 2px;
-    background: #f7f7f7;
+    background: #f5f5f5;
 }
 
 /* override MathJax center alignment in output cells */
@@ -340,7 +342,7 @@ div.nboutput div[class*=MathJax] {
     text-align: left !important;
 }
 
-/* override sphinx.ext.pngmath center alignment in output cells */
+/* override sphinx.ext.imgmath center alignment in output cells */
 div.nboutput div.math p {
     text-align: left;
 }
@@ -390,6 +392,40 @@ div.nboutput div.output_area.stderr {
 .ansi-bold { font-weight: bold; }
 .ansi-underline { text-decoration: underline; }
 
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+
 /* CSS overrides for sphinx_rtd_theme */
 
 /* 24px margin */
@@ -406,12 +442,16 @@ div.nboutput div.output_area.stderr {
 .admonition > p:before {
     margin-right: 4px;  /* make room for the exclamation icon */
 }
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
 </style>
 <div class="section" id="Measures-of-spread">
 <h1>Measures of spread<a class="headerlink" href="#Measures-of-spread" title="Permalink to this headline">¶</a></h1>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [1]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -425,22 +465,13 @@ div.nboutput div.output_area.stderr {
 </pre></div>
 </div>
 </div>
-<p>We saw in the measures of central tendency section that the mean can be
-a poor representation of data if the data is skewed, and that we should
-therefore be careful when someone presents us with a mean (or average)
-without any further information.</p>
-<p>One of the types of ‘further information’ that can help us is a measure
-of spread of the data around the mean value. We usually use the
-<em>variance</em> and the <em>standard deviation</em> to quantify measure of spread.
-Both are easy to calculate, and even easier to convert between each
-other. We also sometimes see the range and inter–quartile range. These
-are simpler to calculate, but less useful.</p>
+<p>We saw in the measures of central tendency section that the mean can be a poor representation of data if the data is skewed, and that we should therefore be careful when someone presents us with a mean (or average) without any further information.</p>
+<p>One of the types of ‘further information’ that can help us is a measure of spread of the data around the mean value. We usually use the <em>variance</em> and the <em>standard deviation</em> to quantify measure of spread. Both are easy to calculate, and even easier to convert between each other. We also sometimes see the range and inter–quartile range. These are simpler to calculate, but less useful.</p>
 <div class="section" id="Range">
 <h2>Range<a class="headerlink" href="#Range" title="Permalink to this headline">¶</a></h2>
 <p>Simply the largest value, minus the smallest value.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -449,8 +480,7 @@ are simpler to calculate, but less useful.</p>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
@@ -458,21 +488,13 @@ are simpler to calculate, but less useful.</p>
 </pre></div>
 </div>
 </div>
-<p>This is the full spread of the data set so doesn’t tell us anything very
-useful in this case, and the range is very susceptible to outliers.
-Therefore the inter–quartile range is more common.</p>
+<p>This is the full spread of the data set so doesn’t tell us anything very useful in this case, and the range is very susceptible to outliers. Therefore the inter–quartile range is more common.</p>
 </div>
 <div class="section" id="Inter–quartile-range">
 <h2>Inter–quartile range<a class="headerlink" href="#Inter–quartile-range" title="Permalink to this headline">¶</a></h2>
-<p>As we saw above the range is very susceptible to outliers, so the
-inter–quartile range is effectively a ‘trimmed’ range by taking off the
-very lowest and the very highest values. In fact, we take off the top
-25% and the bottom 25% and specify this range. This has the disadvantage
-of only describing the middle 50% of our data, but this is usually
-outweighed by the fact that this is less susceptible to outliers.</p>
+<p>As we saw above the range is very susceptible to outliers, so the inter–quartile range is effectively a ‘trimmed’ range by taking off the very lowest and the very highest values. In fact, we take off the top 25% and the bottom 25% and specify this range. This has the disadvantage of only describing the middle 50% of our data, but this is usually outweighed by the fact that this is less susceptible to outliers.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -481,8 +503,7 @@ outweighed by the fact that this is less susceptible to outliers.</p>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
@@ -490,18 +511,15 @@ outweighed by the fact that this is less susceptible to outliers.</p>
 </pre></div>
 </div>
 </div>
-<p>It’s common to plot a <strong>boxplot</strong> to depict the range and interquartile
-range.</p>
+<p>It’s common to plot a <strong>boxplot</strong> to depict the range and interquartile range.</p>
 <p>The figure below is a boxplot of income:</p>
 <ul class="simple">
 <li>the mean is the green horizontal bar</li>
 <li>the interquartile range (representing 50% of the incomes) is the box</li>
-<li>the full range are the stalks (whiskers) at the very top and bottom
-of the figure</li>
+<li>the full range are the stalks (whiskers) at the very top and bottom of the figure</li>
 </ul>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -512,8 +530,7 @@ of the figure</li>
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
@@ -528,10 +545,7 @@ of the figure</li>
 <img alt="_images/05-measures-of-spread_7_1.png" src="_images/05-measures-of-spread_7_1.png" />
 </div>
 </div>
-<p>The range and inter–quartile range are useful when beginning to
-understand and explore your data, but are not usually reported. Instead
-the variance and standard deviation are more commonly reported, because
-they are more useful.</p>
+<p>The range and inter–quartile range are useful when beginning to understand and explore your data, but are not usually reported. Instead the variance and standard deviation are more commonly reported, because they are more useful.</p>
 </div>
 <div class="section" id="Variance">
 <h2>Variance<a class="headerlink" href="#Variance" title="Permalink to this headline">¶</a></h2>
@@ -544,28 +558,13 @@ they are more useful.</p>
 </ol>
 <div class="math notranslate nohighlight">
 \[\frac{\Sigma (x - \bar{x}) ^ 2}{n-1}\]</div>
-<p>The numerator (top half of the equation) is sometimes referred to as the
-‘sum of squares’.</p>
-<p>The denominator (bottom half of the equation) uses <span class="math notranslate nohighlight">\(n - 1\)</span> rather
-than simply the number of observations because we have reduced our
-degrees of freedom in assuming that the sample mean is the same as the
-population mean. This is known as <a class="reference external" href="https://en.wikipedia.org/wiki/Bessel%27s_correction">Bessel’s
-correction</a>.</p>
-<p>To calculate the variance of the population we must assume that the
-population mean is the same as the sample mean that we have observed. As
-we now effectively ‘know’ the population mean it means we can vary all
-but one of our observations, while the final observation is determined
-to make sure the mean remains constant.</p>
-<p>For example if our sample mean is 100 we assume our population mean is
-also 100. If we have two observations these might be 110 and 90 (mean
-100). If we change the 110 value to 120, the 90 value <em>must</em> change to
-80 to ensure the sample mean (and therefore the population mean) remains
-100, so there is only one degree of freedom. We would therefore use
-<span class="math notranslate nohighlight">\(2 - 1\)</span> as the denominator in our variance calculation.</p>
+<p>The numerator (top half of the equation) is sometimes referred to as the ‘sum of squares’.</p>
+<p>The denominator (bottom half of the equation) uses <span class="math notranslate nohighlight">\(n - 1\)</span> rather than simply the number of observations because we have reduced our degrees of freedom in assuming that the sample mean is the same as the population mean. This is known as <a class="reference external" href="https://en.wikipedia.org/wiki/Bessel%27s_correction">Bessel’s correction</a>.</p>
+<p>To calculate the variance of the population we must assume that the population mean is the same as the sample mean that we have observed. As we now effectively ‘know’ the population mean it means we can vary all but one of our observations, while the final observation is determined to make sure the mean remains constant.</p>
+<p>For example if our sample mean is 100 we assume our population mean is also 100. If we have two observations these might be 110 and 90 (mean 100). If we change the 110 value to 120, the 90 value <em>must</em> change to 80 to ensure the sample mean (and therefore the population mean) remains 100, so there is only one degree of freedom. We would therefore use <span class="math notranslate nohighlight">\(2 - 1\)</span> as the denominator in our variance calculation.</p>
 <p>The variance of our income data is:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -574,30 +573,23 @@ also 100. If we have two observations these might be 110 and 90 (mean
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
-<span></span>84230.344038909316
+<span></span>84230.34403890932
 </pre></div>
 </div>
 </div>
 </div>
 <div class="section" id="Standard-deviation">
 <h2>Standard deviation<a class="headerlink" href="#Standard-deviation" title="Permalink to this headline">¶</a></h2>
-<p>As you’ve probably noticed the variance is not in the units of the
-original data. This is where the standard deviation comes in. In fact
-the unit of the variance is the <em>square</em> of the unit of the original
-data. The standard deviation is therefore a measure of spread in the
-units of the original data, and is calculated simply by square rooting
-the variance:</p>
+<p>As you’ve probably noticed the variance is not in the units of the original data. This is where the standard deviation comes in. In fact the unit of the variance is the <em>square</em> of the unit of the original data. The standard deviation is therefore a measure of spread in the units of the original data, and is calculated simply by square rooting the variance:</p>
 <div class="math notranslate nohighlight">
 \[\sqrt{\frac{\Sigma (x - \bar{x}) ^ 2}{n-1}}\]</div>
 <p>The standard deviation of the income is therefore:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -606,8 +598,7 @@ the variance:</p>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
@@ -615,19 +606,11 @@ the variance:</p>
 </pre></div>
 </div>
 </div>
-<p>The standard deviation is a measure of how far the data points are on
-average from the mean. A small standard deviation means the mean fairly
-accurately represents the data; a large standard deviation means the
-mean does not represent the data well.</p>
-<p>In the case of our example the standard deviation of the income data is
-quite large compared to the mean, suggesting a lot of variability even
-in the trimmed income data. The histograms support this, and suggest the
-mean might not be as good as the median in summarising this data.</p>
-<p>In fact we can estimate that about 95% of cases fall between (I’ll get
-on to why I’m multiplying by 1.96 later):</p>
+<p>The standard deviation is a measure of how far the data points are on average from the mean. A small standard deviation means the mean fairly accurately represents the data; a large standard deviation means the mean does not represent the data well.</p>
+<p>In the case of our example the standard deviation of the income data is quite large compared to the mean, suggesting a lot of variability even in the trimmed income data. The histograms support this, and suggest the mean might not be as good as the median in summarising this data.</p>
+<p>In fact we can estimate that about 95% of cases fall between (I’ll get on to why I’m multiplying by 1.96 later):</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -636,8 +619,7 @@ on to why I’m multiplying by 1.96 later):</p>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
@@ -647,8 +629,7 @@ on to why I’m multiplying by 1.96 later):</p>
 </div>
 <p>and:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -657,17 +638,15 @@ on to why I’m multiplying by 1.96 later):</p>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
-<span></span>1087.1459201467301
+<span></span>1087.14592014673
 </pre></div>
 </div>
 </div>
-<p>This is most of the data set, so the variability of the data suggest the
-mean may not be a useful summary of the data.</p>
+<p>This is most of the data set, so the variability of the data suggest the mean may not be a useful summary of the data.</p>
 </div>
 </div>
 
@@ -717,6 +696,7 @@ mean may not be a useful summary of the data.</p>
         <script type="text/javascript" src="_static/underscore.js"></script>
         <script type="text/javascript" src="_static/doctools.js"></script>
         <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     
 
   

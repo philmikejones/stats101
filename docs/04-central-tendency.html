@@ -85,7 +85,9 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="01-introduction.html">Introduction</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="01-introduction.html#Inferring-from-a-sample">Inferring from a sample</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01-introduction.html#Types-of-samples">Types of samples</a></li>
 <li class="toctree-l2"><a class="reference internal" href="01-introduction.html#Description-and-inference">Description and inference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01-introduction.html#Units-of-observation">Units of observation</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="02-data-sources.html">Data sources</a></li>
@@ -279,18 +281,18 @@ div.nblast {
 
 /* input prompt */
 div.nbinput div.prompt pre {
-    color: #303F9F;
+    color: #307FC1;
 }
 
 /* output prompt */
 div.nboutput div.prompt pre {
-    color: #D84315;
+    color: #BF5B3D;
 }
 
 /* all prompts */
 div.nbinput div.prompt,
 div.nboutput div.prompt {
-    min-width: 8ex;
+    min-width: 5ex;
     padding-top: 0.4em;
     padding-right: 0.4em;
     text-align: right;
@@ -330,9 +332,9 @@ div.nboutput div.output_area {
 
 /* input area */
 div.nbinput div.input_area {
-    border: 1px solid #cfcfcf;
+    border: 1px solid #e0e0e0;
     border-radius: 2px;
-    background: #f7f7f7;
+    background: #f5f5f5;
 }
 
 /* override MathJax center alignment in output cells */
@@ -340,7 +342,7 @@ div.nboutput div[class*=MathJax] {
     text-align: left !important;
 }
 
-/* override sphinx.ext.pngmath center alignment in output cells */
+/* override sphinx.ext.imgmath center alignment in output cells */
 div.nboutput div.math p {
     text-align: left;
 }
@@ -390,6 +392,40 @@ div.nboutput div.output_area.stderr {
 .ansi-bold { font-weight: bold; }
 .ansi-underline { text-decoration: underline; }
 
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+
 /* CSS overrides for sphinx_rtd_theme */
 
 /* 24px margin */
@@ -406,12 +442,16 @@ div.nboutput div.output_area.stderr {
 .admonition > p:before {
     margin-right: 4px;  /* make room for the exclamation icon */
 }
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
 </style>
 <div class="section" id="Central-tendency">
 <h1>Central tendency<a class="headerlink" href="#Central-tendency" title="Permalink to this headline">¶</a></h1>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [1]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -425,33 +465,21 @@ div.nboutput div.output_area.stderr {
 </pre></div>
 </div>
 </div>
-<p>One of the first things we usually want to do is to explore and describe
-our data, before we begin any detailed analysis. Measures of central
-tendency are one of the first things we use to describe our data.</p>
-<p>Measures of central tendency is a fancy phrase for ‘average’. They are a
-single data point used to represent a ‘typical’ value from your data.
-Depending on your level of measurement you can use one or more measures
-of central tendency.</p>
-<div class="figure" id="id1">
-<img alt="There is more than one measure of central tendency" src="_images/average-meme.jpg" />
-<p class="caption"><span class="caption-text">There is more than one measure of central tendency</span></p>
-</div>
+<p>One of the first things we usually want to do is to explore and describe our data, before we begin any detailed analysis. Measures of central tendency are one of the first things we use to describe our data.</p>
+<p>Measures of central tendency is a fancy phrase for ‘average’. They are a single data point used to represent a ‘typical’ value from your data. Depending on your level of measurement you can use one or more measures of central tendency.</p>
+<p><img alt="There is more than one measure of central tendency" src="_images/average-meme.jpg" /></p>
 <div class="section" id="Mode">
 <h2>Mode<a class="headerlink" href="#Mode" title="Permalink to this headline">¶</a></h2>
-<p>The most common value. Mode is the only measure of central tendency you
-can provide for nominal data.</p>
-<p>For example, the variable <code class="docutils literal notranslate"><span class="pre">A121r</span></code> in our food data set is of household
-tenure type. The available options are:</p>
+<p>The most common value. Mode is the only measure of central tendency you can provide for nominal data.</p>
+<p>For example, the variable <code class="docutils literal notranslate"><span class="pre">A121r</span></code> in our food data set is of household tenure type. The available options are:</p>
 <ol class="arabic simple">
 <li>public rented (i.e.&nbsp;rented from a council)</li>
 <li>private rented (i.e.&nbsp;rented from a landlord)</li>
 <li>owned</li>
 </ol>
-<p>A frequency (count) table of this variable shows that <code class="docutils literal notranslate"><span class="pre">owned</span></code> is the
-most common type of tenure:</p>
+<p>A frequency (count) table of this variable shows that <code class="docutils literal notranslate"><span class="pre">owned</span></code> is the most common type of tenure:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -462,8 +490,7 @@ most common type of tenure:</p>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
@@ -477,14 +504,9 @@ Name: A121r, dtype: int64
 </div>
 <div class="section" id="Median">
 <h2>Median<a class="headerlink" href="#Median" title="Permalink to this headline">¶</a></h2>
-<p>The median is the ‘middle’ point. It’s only appropriate for ordered data
-(i.e.&nbsp;ordinal or numeric) and is calculated by arranging your data in
-order and selecting the mid–point. <code class="docutils literal notranslate"><span class="pre">P344pr</span></code> is the gross normal weekly
-household income for each respondent. The following are incomes for the
-first five respondents as an example:</p>
+<p>The median is the ‘middle’ point. It’s only appropriate for ordered data (i.e.&nbsp;ordinal or numeric) and is calculated by arranging your data in order and selecting the mid–point. <code class="docutils literal notranslate"><span class="pre">P344pr</span></code> is the gross normal weekly household income for each respondent. The following are incomes for the first five respondents as an example:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -493,8 +515,7 @@ first five respondents as an example:</p>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
@@ -509,8 +530,7 @@ Name: P344pr, dtype: float64
 </div>
 <p>The variable looks like this when we plot it as a distribution:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -521,8 +541,7 @@ Name: P344pr, dtype: float64
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
@@ -537,11 +556,9 @@ Name: P344pr, dtype: float64
 <img alt="_images/04-central-tendency_7_1.png" src="_images/04-central-tendency_7_1.png" />
 </div>
 </div>
-<p>If we arrange these in order and take the middle point we obtain the
-median income:</p>
+<p>If we arrange these in order and take the middle point we obtain the median income:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -550,32 +567,22 @@ median income:</p>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
-<span></span>476.79899999999998
+<span></span>476.799
 </pre></div>
 </div>
 </div>
-<p>If your data have an even number of items, the median is the mean
-(average) of the two middle points. For example, using the following
-example data with four data points - 2, 4, 6, 8 - there is no one middle
-point. Instead 4 and 6 are the middle points. The median is the mean of
-these, which is <span class="math notranslate nohighlight">\(\frac{(4 + 6)}{2} = 5\)</span>.</p>
-<p>The median is often considered more <em>robust</em> than the mean, which means
-it is less susceptible to outliers, for reasons we’ll get to in a
-moment.</p>
+<p>If your data have an even number of items, the median is the mean (average) of the two middle points. For example, using the following example data with four data points - 2, 4, 6, 8 - there is no one middle point. Instead 4 and 6 are the middle points. The median is the mean of these, which is <span class="math notranslate nohighlight">\(\frac{(4 + 6)}{2} = 5\)</span>.</p>
+<p>The median is often considered more <em>robust</em> than the mean, which means it is less susceptible to outliers, for reasons we’ll get to in a moment.</p>
 </div>
 <div class="section" id="Mean">
 <h2>Mean<a class="headerlink" href="#Mean" title="Permalink to this headline">¶</a></h2>
-<p>The mean is what most people think of when they think of an average. You
-simply “add them all up and divide by how many you have”. For example,
-the mean of the incomes is:</p>
+<p>The mean is what most people think of when they think of an average. You simply “add them all up and divide by how many you have”. For example, the mean of the incomes is:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -584,8 +591,7 @@ the mean of the incomes is:</p>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
@@ -593,18 +599,8 @@ the mean of the incomes is:</p>
 </pre></div>
 </div>
 </div>
-<p>If the incomes were an ideal normal distribution, the mean and the
-median (and mode) would be identical (more on the <a class="reference external" href="#Normal-distribution">normal
-distribution</a> later). In the wild, most
-distributions are not exactly normal (or ideal) so the mean and the
-median differ, as we have seen with our example data.</p>
-<p>If there are outliers in our data set these can affect the mean up or
-down. For example, if there are a few individuals in our data that are
-substantially wealthier than most this can affect the mean. They also
-affect the median, but not as much as the mean. For this reason we often
-consider the median a more <em>robust</em> measure of central tendency than the
-mean, and why you should be careful when someone presents a mean value
-without any additional information.</p>
+<p>If the incomes were an ideal normal distribution, the mean and the median (and mode) would be identical (more on the <a class="reference external" href="#Normal-distribution">normal distribution</a> later). In the wild, most distributions are not exactly normal (or ideal) so the mean and the median differ, as we have seen with our example data.</p>
+<p>If there are outliers in our data set these can affect the mean up or down. For example, if there are a few individuals in our data that are substantially wealthier than most this can affect the mean. They also affect the median, but not as much as the mean. For this reason we often consider the median a more <em>robust</em> measure of central tendency than the mean, and why you should be careful when someone presents a mean value without any additional information.</p>
 </div>
 </div>
 
@@ -654,6 +650,7 @@ without any additional information.</p>
         <script type="text/javascript" src="_static/underscore.js"></script>
         <script type="text/javascript" src="_static/doctools.js"></script>
         <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     
 
   

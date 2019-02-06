@@ -85,7 +85,9 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="01-introduction.html">Introduction</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="01-introduction.html#Inferring-from-a-sample">Inferring from a sample</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01-introduction.html#Types-of-samples">Types of samples</a></li>
 <li class="toctree-l2"><a class="reference internal" href="01-introduction.html#Description-and-inference">Description and inference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01-introduction.html#Units-of-observation">Units of observation</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="02-data-sources.html">Data sources</a></li>
@@ -279,18 +281,18 @@ div.nblast {
 
 /* input prompt */
 div.nbinput div.prompt pre {
-    color: #303F9F;
+    color: #307FC1;
 }
 
 /* output prompt */
 div.nboutput div.prompt pre {
-    color: #D84315;
+    color: #BF5B3D;
 }
 
 /* all prompts */
 div.nbinput div.prompt,
 div.nboutput div.prompt {
-    min-width: 8ex;
+    min-width: 5ex;
     padding-top: 0.4em;
     padding-right: 0.4em;
     text-align: right;
@@ -330,9 +332,9 @@ div.nboutput div.output_area {
 
 /* input area */
 div.nbinput div.input_area {
-    border: 1px solid #cfcfcf;
+    border: 1px solid #e0e0e0;
     border-radius: 2px;
-    background: #f7f7f7;
+    background: #f5f5f5;
 }
 
 /* override MathJax center alignment in output cells */
@@ -340,7 +342,7 @@ div.nboutput div[class*=MathJax] {
     text-align: left !important;
 }
 
-/* override sphinx.ext.pngmath center alignment in output cells */
+/* override sphinx.ext.imgmath center alignment in output cells */
 div.nboutput div.math p {
     text-align: left;
 }
@@ -390,6 +392,40 @@ div.nboutput div.output_area.stderr {
 .ansi-bold { font-weight: bold; }
 .ansi-underline { text-decoration: underline; }
 
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+
 /* CSS overrides for sphinx_rtd_theme */
 
 /* 24px margin */
@@ -406,12 +442,16 @@ div.nboutput div.output_area.stderr {
 .admonition > p:before {
     margin-right: 4px;  /* make room for the exclamation icon */
 }
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
 </style>
 <div class="section" id="Comparing-two-independent-groups">
 <h1>Comparing two independent groups<a class="headerlink" href="#Comparing-two-independent-groups" title="Permalink to this headline">¶</a></h1>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [1]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -427,39 +467,19 @@ div.nboutput div.output_area.stderr {
 </pre></div>
 </div>
 </div>
-<p>We’ve looked at correlation, which quantifies how much one variable is
-related to another variable of the same individual, for example height
-and weight, or income and expenditure on food. When it’s necessary to
-compare different groups, for example the height of men and height of
-women, we use different tests:</p>
+<p>We’ve looked at correlation, which quantifies how much one variable is related to another variable of the same individual, for example height and weight, or income and expenditure on food. When it’s necessary to compare different groups, for example the height of men and height of women, we use different tests:</p>
 <ul class="simple">
 <li>the parametric <span class="math notranslate nohighlight">\(t\)</span>–test, and</li>
 <li>the non–parametric Mann–Whitney U test</li>
 </ul>
-<p>These tests work by comparing the means to see if they are statistically
-significantly different. Obviously the <a class="reference external" href="06-standard-error-confidence-intervals.html">means of different samples will
-be different</a>, so how
-much they differ before we conclude they are statistically different
-depends on the variance of the groups.</p>
+<p>These tests work by comparing the means to see if they are statistically significantly different. Obviously the <a class="reference external" href="06-standard-error-confidence-intervals.html">means of different samples will be different</a>, so how much they differ before we conclude they are statistically different depends on the variance of the groups.</p>
 <div class="section" id="t–test">
 <h2><span class="math notranslate nohighlight">\(t\)</span>–test<a class="headerlink" href="#t–test" title="Permalink to this headline">¶</a></h2>
-<p>The independent samples <span class="math notranslate nohighlight">\(t\)</span>–test is used when comparing two
-independent groups, such as the heights of a group of males and the
-heights of a group of females. We have a sample of males and measure
-their heights, and a sample of females and measure their heights.
-Crucially the height of one respondent does not affect the height of
-another respondent, so the measurements are <em>independent</em>. The level of
-measurement of both groups should be continuous (numerical interval or
-ratio) and we are comparing the <em>same variable</em> (height).</p>
-<p>For our example we have ages of two groups: people from Sheffield and
-people from Eastbourne. We saw in an earlier section on <a class="reference external" href="06-standard-error-confidence-intervals.html#Comparing-means-and-confidence-intervals">standard errors
-and confidence
-intervals</a>
-that their means were different, and the confidence intervals suggested
-the population means were different also:</p>
+<p>The independent samples <span class="math notranslate nohighlight">\(t\)</span>–test is used when comparing two independent groups, such as the heights of a group of males and the heights of a group of females. We have a sample of males and measure their heights, and a sample of females and measure their heights. Crucially the height of one respondent does not affect the height of another respondent, so the measurements are <em>independent</em>. The level of measurement of both groups should be continuous (numerical interval or ratio) and we are
+comparing the <em>same variable</em> (height).</p>
+<p>For our example we have ages of two groups: people from Sheffield and people from Eastbourne. We saw in an earlier section on <a class="reference external" href="06-standard-error-confidence-intervals.html#Comparing-means-and-confidence-intervals">standard errors and confidence intervals</a> that their means were different, and the confidence intervals suggested the population means were different also:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -468,18 +488,16 @@ the population means were different also:</p>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
-<span></span>37.872098324944183
+<span></span>37.87209832494418
 </pre></div>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -488,22 +506,17 @@ the population means were different also:</p>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
-<span></span>42.833169033919447
+<span></span>42.83316903391945
 </pre></div>
 </div>
 </div>
-<p>The measurements are independent (i.e.&nbsp;the age of people in Sheffield
-does not affect the age of people in Eastbourne) and continuous
-(numerical) so we can use an independent samples <span class="math notranslate nohighlight">\(t\)</span>–test to
-statistically test if the means are different:</p>
+<p>The measurements are independent (i.e.&nbsp;the age of people in Sheffield does not affect the age of people in Eastbourne) and continuous (numerical) so we can use an independent samples <span class="math notranslate nohighlight">\(t\)</span>–test to statistically test if the means are different:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -514,31 +527,20 @@ statistically test if the means are different:</p>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Ttest_indResult(statistic=-58.843596901278822, pvalue=0.0)
+<span></span>Ttest_indResult(statistic=-58.84359690127882, pvalue=0.0)
 </pre></div>
 </div>
 </div>
-<p>The <span class="math notranslate nohighlight">\(p\)</span> value is <span class="math notranslate nohighlight">\(&lt;&lt; 0.01\)</span> so we can reject the null
-hypothesis that there is no difference between the ages of people in
-Sheffield and the ages of people in Eastbourne (i.e.&nbsp;there <em>is</em> a
-difference in mean age). In this case this is not surprising because we
-actually have two populations, but this is intended to be illustrative
-only.</p>
+<p>The <span class="math notranslate nohighlight">\(p\)</span> value is <span class="math notranslate nohighlight">\(&lt;&lt; 0.01\)</span> so we can reject the null hypothesis that there is no difference between the ages of people in Sheffield and the ages of people in Eastbourne (i.e.&nbsp;there <em>is</em> a difference in mean age). In this case this is not surprising because we actually have two populations, but this is intended to be illustrative only.</p>
 <div class="section" id="Assumptions">
 <h3>Assumptions<a class="headerlink" href="#Assumptions" title="Permalink to this headline">¶</a></h3>
-<p>As always, there are assumptions. We have met the assumption of
-independent observations and the variable (age) is continuous, so these
-assumptions were met. The <span class="math notranslate nohighlight">\(t\)</span>–test also assumes that if the sample
-sizes are small they should be normally distributed, but this is not
-relevant in our case. If you need to test for this, plot a QQ plot:</p>
+<p>As always, there are assumptions. We have met the assumption of independent observations and the variable (age) is continuous, so these assumptions were met. The <span class="math notranslate nohighlight">\(t\)</span>–test also assumes that if the sample sizes are small they should be normally distributed, but this is not relevant in our case. If you need to test for this, plot a QQ plot:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -547,15 +549,14 @@ relevant in our case. If you need to test for this, plot a QQ plot:</p>
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
 <span></span>((array([-4.3447271 , -4.14589489, -4.03774648, ...,  4.03774648,
           4.14589489,  4.3447271 ]),
   array([  0,   0,   0, ..., 100, 100, 100])),
- (24.361214673692874, 42.833169033919454, 0.98548394512715509))
+ (24.361214673692874, 42.833169033919454, 0.9854839451271551))
 </pre></div>
 </div>
 </div>
@@ -567,8 +568,7 @@ relevant in our case. If you need to test for this, plot a QQ plot:</p>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -577,15 +577,14 @@ relevant in our case. If you need to test for this, plot a QQ plot:</p>
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
 <span></span>((array([-4.70745961, -4.52329906, -4.423601  , ...,  4.423601  ,
           4.52329906,  4.70745961]),
   array([  0,   0,   0, ..., 100, 100, 100])),
- (22.700384057589815, 37.872098324944176, 0.98466093261250653))
+ (22.700384057589815, 37.872098324944176, 0.9846609326125065))
 </pre></div>
 </div>
 </div>
@@ -596,13 +595,9 @@ relevant in our case. If you need to test for this, plot a QQ plot:</p>
 <img alt="_images/11-comparing-two-independent-groups_9_1.png" src="_images/11-comparing-two-independent-groups_9_1.png" />
 </div>
 </div>
-<p>These are not normally distributed (if they were the blue points would
-lie along the red line), but this doesn’t matter in this case because we
-do not have small samples. We also need to check that the variances of
-the two groups are approximately equal using a Levene’s test:</p>
+<p>These are not normally distributed (if they were the blue points would lie along the red line), but this doesn’t matter in this case because we do not have small samples. We also need to check that the variances of the two groups are approximately equal using a Levene’s test:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -613,8 +608,7 @@ the two groups are approximately equal using a Levene’s test:</p>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
@@ -622,14 +616,9 @@ the two groups are approximately equal using a Levene’s test:</p>
 </pre></div>
 </div>
 </div>
-<p>Ah. The <span class="math notranslate nohighlight">\(p\)</span> value is highly statistically significant, so we
-should reject the null that the variances are not different (i.e.&nbsp;there
-are). In this case we should use values adjusted to correct for unequal
-variances (this is actually the default behaviour for
-<code class="docutils literal notranslate"><span class="pre">scipy.stats.ttest_ind()</span></code>):</p>
+<p>Ah. The <span class="math notranslate nohighlight">\(p\)</span> value is highly statistically significant, so we should reject the null that the variances are not different (i.e.&nbsp;there are). In this case we should use values adjusted to correct for unequal variances (this is actually the default behaviour for <code class="docutils literal notranslate"><span class="pre">scipy.stats.ttest_ind()</span></code>):</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -640,36 +629,23 @@ variances (this is actually the default behaviour for
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Ttest_indResult(statistic=-58.843596901278822, pvalue=0.0)
+<span></span>Ttest_indResult(statistic=-58.84359690127882, pvalue=0.0)
 </pre></div>
 </div>
 </div>
-<p>If the variances were approximately equal the <span class="math notranslate nohighlight">\(p\)</span> value would be
-<span class="math notranslate nohighlight">\(&gt; 0.05\)</span> and we would not reject the null. If this were the case
-we could perform an equal variances <span class="math notranslate nohighlight">\(t\)</span>–test, by specifying
-<code class="docutils literal notranslate"><span class="pre">equal_var</span> <span class="pre">=</span> <span class="pre">True</span></code>.</p>
+<p>If the variances were approximately equal the <span class="math notranslate nohighlight">\(p\)</span> value would be <span class="math notranslate nohighlight">\(&gt; 0.05\)</span> and we would not reject the null. If this were the case we could perform an equal variances <span class="math notranslate nohighlight">\(t\)</span>–test, by specifying <code class="docutils literal notranslate"><span class="pre">equal_var</span> <span class="pre">=</span> <span class="pre">True</span></code>.</p>
 </div>
 </div>
 <div class="section" id="Mann–Whitney-U">
 <h2>Mann–Whitney U<a class="headerlink" href="#Mann–Whitney-U" title="Permalink to this headline">¶</a></h2>
-<p>The Mann–Whitney U test is a non–parametric version of the
-<span class="math notranslate nohighlight">\(t\)</span>–test useful when we do not have continuous data (but the
-variable should be at least ordinal) or we otherwise violate one or more
-of the assumptions of the <span class="math notranslate nohighlight">\(t\)</span>–test. It stil assumes that the
-measurements are independent.</p>
-<p>Mann–Whitney U works by ranking the observations without considering the
-groups they’re from. If there was no difference between groups the sum
-of the ranks would be approximately equal. If there <em>is</em> a difference
-between groups the sum of the ranks for each group will differ. Using
-our example age data:</p>
+<p>The Mann–Whitney U test is a non–parametric version of the <span class="math notranslate nohighlight">\(t\)</span>–test useful when we do not have continuous data (but the variable should be at least ordinal) or we otherwise violate one or more of the assumptions of the <span class="math notranslate nohighlight">\(t\)</span>–test. It stil assumes that the measurements are independent.</p>
+<p>Mann–Whitney U works by ranking the observations without considering the groups they’re from. If there was no difference between groups the sum of the ranks would be approximately equal. If there <em>is</em> a difference between groups the sum of the ranks for each group will differ. Using our example age data:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -680,8 +656,7 @@ our example age data:</p>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
@@ -689,27 +664,13 @@ our example age data:</p>
 </pre></div>
 </div>
 </div>
-<p>And reassuringly we can see the statistic is statistically significant.
-We wouldn’t really use a Mann–Whitney U test for age (continuous) data;
-this is just to demonstrate the syntax and interpretation. Mann–Whitney
-U tests are useful in the social sciences though because we deal with
-ordinal data (e.g.&nbsp;Likert scales) a lot.</p>
+<p>And reassuringly we can see the statistic is statistically significant. We wouldn’t really use a Mann–Whitney U test for age (continuous) data; this is just to demonstrate the syntax and interpretation. Mann–Whitney U tests are useful in the social sciences though because we deal with ordinal data (e.g.&nbsp;Likert scales) a lot.</p>
 </div>
 <div class="section" id="Dependent-groups">
 <h2>Dependent groups<a class="headerlink" href="#Dependent-groups" title="Permalink to this headline">¶</a></h2>
-<p>The <span class="math notranslate nohighlight">\(t\)</span>–test and Mann–Whitney U test assume that the observations
-are independent. In our example the two groups are independent because
-the age of people in Sheffield does not affect the age of people in
-Eastbourne.</p>
-<p>There are situations when the observations are <em>dependent</em> and these
-tests are not appropriate for this type of data. In the social sciences,
-this is common with longitudinal data (data where the same individuals
-are asked a survey at different points in time). Such <em>repeated
-measures</em> data is not independent.</p>
-<p>In these cases we can test for differences in means, but I’m not going
-to go into how to do this here; there are plenty of resources to help.
-I’m bringing this up here so that you are mindful of the test(s) you use
-if you have repeated measures or longitudinal data.</p>
+<p>The <span class="math notranslate nohighlight">\(t\)</span>–test and Mann–Whitney U test assume that the observations are independent. In our example the two groups are independent because the age of people in Sheffield does not affect the age of people in Eastbourne.</p>
+<p>There are situations when the observations are <em>dependent</em> and these tests are not appropriate for this type of data. In the social sciences, this is common with longitudinal data (data where the same individuals are asked a survey at different points in time). Such <em>repeated measures</em> data is not independent.</p>
+<p>In these cases we can test for differences in means, but I’m not going to go into how to do this here; there are plenty of resources to help. I’m bringing this up here so that you are mindful of the test(s) you use if you have repeated measures or longitudinal data.</p>
 </div>
 </div>
 
@@ -759,6 +720,7 @@ if you have repeated measures or longitudinal data.</p>
         <script type="text/javascript" src="_static/underscore.js"></script>
         <script type="text/javascript" src="_static/doctools.js"></script>
         <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     
 
   
