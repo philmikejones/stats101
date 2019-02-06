@@ -90,7 +90,12 @@
 <li class="toctree-l2"><a class="reference internal" href="01-introduction.html#Units-of-observation">Units of observation</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Data sources</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Data sources</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Software">Software</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Data-structure">Data structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Tutorial-data">Tutorial data</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="03-levels-of-measurement.html">Levels of measurement</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="03-levels-of-measurement.html#Nominal">Nominal</a></li>
 <li class="toctree-l2"><a class="reference internal" href="03-levels-of-measurement.html#Ordinal">Ordinal</a></li>
@@ -450,11 +455,59 @@ div.rendered_html tbody tr:hover {
 </style>
 <div class="section" id="Data-sources">
 <h1>Data sources<a class="headerlink" href="#Data-sources" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="Software">
+<h2>Software<a class="headerlink" href="#Software" title="Permalink to this headline">¶</a></h2>
+<p>To be able to analyse your data you are first going to need to enter your data into your computer, in a software programme of your choice. Software for statistical and quantitative data include SPSS, R, Python (usually with Pandas), and Stata. Even Excel can be used for descriptive statistics and some basic analysis with additional modules!</p>
+<p>These pages focus on Python (specifically Python 3), but statistical and quantitative analysis is software–agnostic, and the principles here can be used with any software. Many beginners prefer SPSS because it is easier to get started with, but it is still powerful enough to do almost all analyses.</p>
+</div>
+<div class="section" id="Data-structure">
+<h2>Data structure<a class="headerlink" href="#Data-structure" title="Permalink to this headline">¶</a></h2>
+<p>Regardless of which software you choose to use, you will need to enter your data in the same format. Each row should correspond to one individual, and each column to one variable. This is often called <em>long form</em>. Here’s an example of what a data table might look like:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="11%" />
+<col width="14%" />
+<col width="14%" />
+<col width="60%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">id</th>
+<th class="head">age</th>
+<th class="head">sex</th>
+<th class="head">preferred hot drink</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>1</td>
+<td>36</td>
+<td>m</td>
+<td>coffee</td>
+</tr>
+<tr class="row-odd"><td>2</td>
+<td>44</td>
+<td>f</td>
+<td>tea</td>
+</tr>
+<tr class="row-even"><td>3</td>
+<td>52</td>
+<td>m</td>
+<td>hot chocolate</td>
+</tr>
+</tbody>
+</table>
+<p>Each row represents a person (person 1, 2, or 3) and each column represents a piece of information about that person, or a <em>variable</em>. Here we have age (a number), sex (male or female), and their preferred hot drink. Reading across the top row, we can see that person 1 is aged 36, is male, and prefers coffee.</p>
+<p>Secondary data (data that someone else has collected) will usually come in this form, and it is good practice to enter our primary data (data we collect) in this form too. To enter the above example data into a spreadsheet would look like this:</p>
+<p><img alt="Data entry in a spreadsheet programme" src="_images/data-entry-spreadsheet.png" /></p>
+<p>This can then be saved and entered into our analysis programme of choice.</p>
+</div>
+<div class="section" id="Tutorial-data">
+<h2>Tutorial data<a class="headerlink" href="#Tutorial-data" title="Permalink to this headline">¶</a></h2>
 <p>These tutorials use a number of teaching data sets available from the <a class="reference external" href="https://www.ukdataservice.ac.uk/">UK Data Service</a> and Nomisweb (FYI <a class="reference external" href="https://www.nomisweb.co.uk/api/v01/help">Nomisweb have a great API</a> for reproducible research) under terms of the <a class="reference external" href="http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/">Open Government License</a>:</p>
 <blockquote>
 <div>Office for National Statistics, University of Manchester, Cathie Marsh Institute for Social Research (CMIST), UK Data Service, 2016, Living Costs and Food Survey, 2013: Unrestricted Access Teaching Dataset, [data collection], Office for National Statistics, 2nd Edition, Office for National Statistics, [original data producer(s)]. Accessed 1 October 2018. SN: 7932, <a class="reference external" href="http://doi.org/10.5255/UKDA-SN-7932-2">http://doi.org/10.5255/UKDA-SN-7932-2</a>. Contains public sector information licensed under the Open Government Licence v2.0</div></blockquote>
 <blockquote>
 <div>Office for National Statistics, 2014, 2011 Census. Accessed October 2018. Contains public sector information licensed under the Open Government Licence v2.0.</div></blockquote>
+<p>The census data contains information about <em>areas</em>, rather than people, so areas are the individual unit of observation. The food dataset contains information about individual people.</p>
 <p>If you’re following along at home I download and process the data sets with scripts in the <a class="reference external" href="https://github.com/philmikejones/stats101/tree/master/src">src/ directory</a>.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
@@ -473,6 +526,7 @@ div.rendered_html tbody tr:hover {
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="o">%</span><span class="k">run</span> ../src/02-process.py
 </pre></div>
+</div>
 </div>
 </div>
 </div>

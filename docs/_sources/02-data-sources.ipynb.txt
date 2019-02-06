@@ -11,17 +11,60 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "These tutorials use a number of teaching data sets available from the [UK Data Service](https://www.ukdataservice.ac.uk/) and Nomisweb (FYI [Nomisweb have a great API](https://www.nomisweb.co.uk/api/v01/help) for reproducible research) under terms of the [Open Government License](http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/):\n",
+    "## Software\n",
     "\n",
-    "> Office for National Statistics, University of Manchester, Cathie Marsh Institute for Social Research (CMIST), UK Data Service, 2016, Living Costs and Food Survey, 2013: Unrestricted Access Teaching Dataset, [data collection], Office for National Statistics, 2nd Edition, Office for National Statistics, [original data producer(s)]. Accessed 1 October 2018. SN: 7932, http://doi.org/10.5255/UKDA-SN-7932-2. Contains public sector information licensed under the Open Government Licence v2.0\n",
+    "To be able to analyse your data you are first going to need to enter your data into your computer, in a software programme of your choice.\n",
+    "Software for statistical and quantitative data include SPSS, R, Python (usually with Pandas), and Stata.\n",
+    "Even Excel can be used for descriptive statistics and some basic analysis with additional modules!\n",
     "\n",
-    "> Office for National Statistics, 2014, 2011 Census. Accessed October 2018. Contains public sector information licensed under the Open Government Licence v2.0."
+    "These pages focus on Python (specifically Python 3), but statistical and quantitative analysis is software--agnostic, and the principles here can be used with any software.\n",
+    "Many beginners prefer SPSS because it is easier to get started with, but it is still powerful enough to do almost all analyses."
    ]
   },
   {
    "cell_type": "markdown",
    "metadata": {},
    "source": [
+    "## Data structure\n",
+    "\n",
+    "Regardless of which software you choose to use, you will need to enter your data in the same format.\n",
+    "Each row should correspond to one individual, and each column to one variable.\n",
+    "This is often called *long form*.\n",
+    "Here's an example of what a data table might look like:\n",
+    "\n",
+    "| id | age  | sex | preferred hot drink |\n",
+    "|----|------|-----|---------------------|\n",
+    "| 1  | 36   | m   | coffee              |\n",
+    "| 2  | 44   | f   | tea                 |\n",
+    "| 3  | 52   | m   | hot chocolate       |\n",
+    "\n",
+    "Each row represents a person (person 1, 2, or 3) and each column represents a piece of information about that person, or a *variable*.\n",
+    "Here we have age (a number), sex (male or female), and their preferred hot drink.\n",
+    "Reading across the top row, we can see that person 1 is aged 36, is male, and prefers coffee.\n",
+    "\n",
+    "Secondary data (data that someone else has collected) will usually come in this form, and it is good practice to enter our primary data (data we collect) in this form too.\n",
+    "To enter the above example data into a spreadsheet would look like this:\n",
+    "\n",
+    "![Data entry in a spreadsheet programme](_images/data-entry-spreadsheet.png)\n",
+    "\n",
+    "This can then be saved and entered into our analysis programme of choice."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Tutorial data\n",
+    "\n",
+    "These tutorials use a number of teaching data sets available from the [UK Data Service](https://www.ukdataservice.ac.uk/) and Nomisweb (FYI [Nomisweb have a great API](https://www.nomisweb.co.uk/api/v01/help) for reproducible research) under terms of the [Open Government License](http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/):\n",
+    "\n",
+    "> Office for National Statistics, University of Manchester, Cathie Marsh Institute for Social Research (CMIST), UK Data Service, 2016, Living Costs and Food Survey, 2013: Unrestricted Access Teaching Dataset, [data collection], Office for National Statistics, 2nd Edition, Office for National Statistics, [original data producer(s)]. Accessed 1 October 2018. SN: 7932, http://doi.org/10.5255/UKDA-SN-7932-2. Contains public sector information licensed under the Open Government Licence v2.0\n",
+    "\n",
+    "> Office for National Statistics, 2014, 2011 Census. Accessed October 2018. Contains public sector information licensed under the Open Government Licence v2.0.\n",
+    "\n",
+    "The census data contains information about *areas*, rather than people, so areas are the individual unit of observation.\n",
+    "The food dataset contains information about individual people.\n",
+    "\n",
     "If you're following along at home I download and process the data sets with scripts in the [src/ directory](https://github.com/philmikejones/stats101/tree/master/src)."
    ]
   },
@@ -69,7 +112,7 @@
    "name": "python",
    "nbconvert_exporter": "python",
    "pygments_lexer": "ipython3",
-   "version": "3.6.6"
+   "version": "3.7.2"
   }
  },
  "nbformat": 4,
